@@ -13,7 +13,7 @@ SIGNING_SECRET = os.environ['SIGNING_SECRET']
 
 # obtener dataframe del archivo excel
 reserbot_path = os.path.realpath(os.path.dirname(__file__))
-XLSX_FILE = read_excel(f'{reserbot_path}/dailies.xlsx', sheet_name='Table 2')
+XLSX_FILE = read_excel(f'{reserbot_path}/dailies.xlsx', sheet_name='Hoja1')
 
 # timezone local
 TIME_ZONE = pytz.timezone('America/Santiago')

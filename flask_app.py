@@ -38,7 +38,6 @@ def siguiente_daily():
 
 @app.route('/slack/events', methods=['POST'])
 def slack_event():
-    print('request:', request.get_json())
     challenge = request.get_json().get('challenge', '')
     return jsonify(challenge=challenge)
 
@@ -50,15 +49,13 @@ def message_estudio(payload):
     channel_id = event.get('channel')
     channel_name = client.conversations_info(channel=channel_id)['channel']['name']
     user_id = event.get('user')
-    text = event.get('text')
-    message = f'<@{user_id}> anótate en el excel :abogato: ->'
-    link = 'https://docs.google.com/spreadsheets/d/1FhaBUnW_hGk_siixvFUAjs0SZRw5iksFnSqI8XkiX3A/edit#gid=0'
-    if bot_id != user_id and channel_name == 'reserbot-shhhh' and any([kw in text for kw in keywords]):
+    if bot_id != user_id and channel_name == 'reserbot-shhhh' and any([kw in event.get('text', '') for kw in keywords]):
         slack_button_message(
-            channel=channel_id,
-            message=message,
-            button_text='Link al excel de estudio',
-            link=link
+            channel=event['channel'],
+            message_ts=event['ts'],
+            message=f'<@{user_id}> anótate en el excel :bonk-doge:',
+            button_text='Click aquí pa ir al excel :ola2:',
+            link='https://docs.google.com/spreadsheets/d/1FhaBUnW_hGk_siixvFUAjs0SZRw5iksFnSqI8XkiX3A/edit#gid=0'
         )
 
 
