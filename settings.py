@@ -12,7 +12,8 @@ BOT_TOKEN = os.environ['SLACK_TOKEN']
 SIGNING_SECRET = os.environ['SIGNING_SECRET']
 
 # obtener dataframe del archivo excel
-XLSX_FILE = read_excel('dailies.xlsx', sheet_name='Table 2') 
+reserbot_path = os.path.realpath(os.path.dirname(__file__))
+XLSX_FILE = read_excel(f'{reserbot_path}/dailies.xlsx', sheet_name='Table 2')
 
 # timezone local
 TIME_ZONE = pytz.timezone('America/Santiago')
