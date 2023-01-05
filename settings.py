@@ -17,3 +17,7 @@ XLSX_FILE = read_excel(f'{reserbot_path}/dailies.xlsx', sheet_name='Hoja1')
 
 # timezone local
 TIME_ZONE = pytz.timezone('America/Santiago')
+
+# channel to post to
+CHANNEL_PROD = '#reservo-ti'
+CHANNEL_DEV = '#reserbot-shhhh'
