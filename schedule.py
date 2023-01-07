@@ -15,44 +15,30 @@ message_text = f"Daily de hoy {now.strftime('%A %d')} la lidera {lider_daily[0]}
 
 if message_text:
     client.chat_scheduleMessage(
-        channel=CHANNEL_DEV,
-        post_at=(now.replace(hour=9, minute=00, second=0)).strftime('%s'),
-        text='prueba je'
-    )
-    client.chat_scheduleMessage(
         channel=CHANNEL_PROD,
         post_at=(now.replace(hour=9, minute=30, second=0)).strftime('%s'),
         text='mensaje daily',
-        blocks = [
-            {
-                "type": "section",
-                "text": {"type": "mrkdwn", "text": message_text},
-            },
-        ]
+        blocks = [{
+            "type": "section",
+            "text": {"type": "mrkdwn", "text": message_text},
+        }]
     )
     client.chat_scheduleMessage(
         channel=CHANNEL_PROD,
         post_at=(now.replace(hour=9, minute=55, second=0)).strftime('%s'),
         text='boton daily',
-        blocks = [
-            {
-    			"type": "actions",
-    			"elements": [
-    				{
-    					"type": "button",
-    					"text": {
-    						"type": "plain_text",
-    						"text": button_text,
-    						"emoji": True
-    					},
-    					"style": "primary",
-    					"url": url_daily,
-    					"value": "whereby",
-    					"action_id": "button-action"
-    				}
-    			]
-    		}
-
-        ]
+        blocks = [{
+			"type": "actions",
+			"elements": [{
+				"type": "button",
+				"text": {
+					"type": "plain_text",
+					"text": button_text,
+					"emoji": True
+				},
+				"style": "primary",
+				"url": url_daily,
+			}]
+		}]
     )
 
