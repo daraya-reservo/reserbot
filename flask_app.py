@@ -4,6 +4,7 @@ from settings import SIGNING_SECRET, BOT_TOKEN
 import slack
 from random import choice
 from schedule import lider_daily
+from slack_client import post_text_message
 
 
 app = Flask(__name__)
@@ -16,25 +17,8 @@ def index():
     return jsonify(message='Bot de Reservo')
 
 
-@app.route('/slack/events', methods=['POST'])
-def events():
-    return jsonify(challenge=request.get_json().get('challenge', ''))
-
-
 def lider_aleatorio_daily(channel):
     team = ('Agustín', 'Dani', 'Hiho', 'Isi', 'Lucho', 'Manu', 'Nach', 'Pancho', 'Pato', 'Seba', 'Val')
-    '''
-    client.chat_postMessage(
-        channel=channel,
-        blocks = [
-            {
-                "type": "section",
-                "text": {"type": "mrkdwn", "text": f"Hmmm que lidere {choice(team)} :shirabesleep:"}
-            },
-        ]
-    )
-    '''
-    from slack_client import post_text_message
     text = f"Hmmm que lidere {choice(team)} :shirabesleep:"
     post_text_message(channel, text)
 
@@ -78,6 +62,7 @@ def random():
 
 @app.route('/lider-daily', methods=['POST'])
 def daily():
+    '''
     client.chat_postMessage(
         channel=f'#{request.form.get("channel_name")}',
         blocks = [
@@ -87,6 +72,8 @@ def daily():
             },
         ]
     )
+    '''
+    post_text_message(f'#{request.form.get("channel_name")}', lider_daily() or "Hoy no toca daily")
     return Response(), 200
 
 
@@ -100,5 +87,8 @@ if __name__ == '__main__':
 
 
 """
+@app.route('/slack/events', methods=['POST'])
+def events():
+    return jsonify(challenge=request.get_json().get('challenge', ''))
 
 """
