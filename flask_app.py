@@ -23,6 +23,7 @@ def events():
 
 def lider_aleatorio_daily(channel):
     team = ('Agustín', 'Dani', 'Hiho', 'Isi', 'Lucho', 'Manu', 'Nach', 'Pancho', 'Pato', 'Seba', 'Val')
+    '''
     client.chat_postMessage(
         channel=channel,
         blocks = [
@@ -32,14 +33,17 @@ def lider_aleatorio_daily(channel):
             },
         ]
     )
+    '''
+    from slack_client import post_text_message
+    text = f"Hmmm que lidere {choice(team)} :shirabesleep:"
+    post_text_message(channel, text)
+
 
 
 @slack_event_adapter.on('message')
 def message(payload):
-    print('mensaje:', payload)
     event = payload['event']
     if any([kw in event['text'] for kw in ('estudio', 'estudiar')]):
-        # si las palabras 'estudio' o 'estudiar' estan en el mensaje publicado en el canal
         client.chat_postMessage(
             channel=event['channel'],
             thread_ts=event['ts'],
