@@ -3,6 +3,7 @@ from slackeventsapi import SlackEventAdapter
 from settings import SIGNING_SECRET, BOT_TOKEN
 import slack
 from random import choice
+from schedule import lider_daily
 
 
 app = Flask(__name__)
@@ -12,7 +13,7 @@ slack_event_adapter = SlackEventAdapter(SIGNING_SECRET, '/slack/events', app)
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
-    return jsonify(message='Bot de Reservo. Wena!')
+    return jsonify(message='Bot de Reservo')
 
 
 @app.route('/slack/events', methods=['POST'])
@@ -35,6 +36,7 @@ def lider_aleatorio_daily(channel):
 
 @slack_event_adapter.on('message')
 def message(payload):
+    print('mensaje:', payload)
     event = payload['event']
     if any([kw in event['text'] for kw in ('estudio', 'estudiar')]):
         # si las palabras 'estudio' o 'estudiar' estan en el mensaje publicado en el canal
@@ -67,6 +69,25 @@ def message(payload):
 @app.route('/random', methods=['POST'])
 def random():
     lider_aleatorio_daily(f'#{request.form.get("channel_name")}')
+    return Response(), 200
+
+
+@app.route('/lider-daily', methods=['POST'])
+def daily():
+    client.chat_postMessage(
+        channel=f'#{request.form.get("channel_name")}',
+        blocks = [
+            {
+                "type": "section",
+                "text": {"type": "mrkdwn", "text": lider_daily() or "Hoy no toca daily"}
+            },
+        ]
+    )
+    return Response(), 200
+
+
+@app.route('/siguiente-daily', methods=['POST'])
+def next():
     return Response(), 200
 
 

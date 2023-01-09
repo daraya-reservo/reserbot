@@ -5,14 +5,16 @@ from datetime import datetime
 
 
 client = slack.WebClient(token=BOT_TOKEN)
-
-locale.setlocale(locale.LC_TIME, 'es_ES.UTF-8')  # para setear el lenguaje en el server
 now = datetime.now()
-lider_daily = XLSX_FILE[XLSX_FILE['Día'] == now.strftime('%Y-%m-%d')]['Responsable'].values
-button_text = 'Link de la daily en WhereBy :ola2:'
-url_daily = 'https://whereby.com/reunion-tecnica-reservo'
-message_text = f"Daily de hoy {now.strftime('%A %d')} la lidera {lider_daily[0]} :finoseñores:" if lider_daily.size else None
 
+
+def lider_daily():
+    locale.setlocale(locale.LC_TIME, 'es_ES.UTF-8')  # para setear el lenguaje en el server
+    lider_daily = XLSX_FILE[XLSX_FILE['Día'] == now.strftime('%Y-%m-%d')]['Responsable'].values
+    return f"Daily de hoy {now.strftime('%A %d')} la lidera {lider_daily[0]} :finoseñores:" if lider_daily.size else None
+
+
+message_text = lider_daily()
 if message_text:
     client.chat_scheduleMessage(
         channel=CHANNEL_PROD,
@@ -33,12 +35,11 @@ if message_text:
 				"type": "button",
 				"text": {
 					"type": "plain_text",
-					"text": button_text,
+					"text": "Link de la daily en WhereBy :ola2:",
 					"emoji": True
 				},
 				"style": "primary",
-				"url": url_daily,
+				"url": "https://whereby.com/reunion-tecnica-reservo",
 			}]
 		}]
     )
-
