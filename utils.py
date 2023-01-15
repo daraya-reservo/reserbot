@@ -5,7 +5,7 @@ import os
 import pandas
 
 
-def lider_aleatorio():
+def lider_random():
     team = ('Agustín', 'Dani', 'Hiho', 'Isi', 'Lucho', 'Manu', 'Nach', 'Pancho', 'Pato', 'Seba', 'Val')
     return f'Que lidere {choice(team)} :rubyrun:'
 

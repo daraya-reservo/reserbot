@@ -25,7 +25,7 @@ def message_event(payload):
             btn_text='Link del excel de estudio 📚',
             url='https://docs.google.com/spreadsheets/d/1FhaBUnW_hGk_siixvFUAjs0SZRw5iksFnSqI8XkiX3A/edit#gid=0'
         )
-    elif event['text'] == 'lider-aleatorio':
+    elif event['text'] == 'lider-random':
         slack_client.post_text(
             channel=event['channel'],
             text=utils.lider_aleatorio()
@@ -37,11 +37,11 @@ def message_event(payload):
         )
 
 
-@app.route('/lider-aleatorio', methods=['POST'])
-def lider_aleatorio():
+@app.route('/lider-random', methods=['POST'])
+def lider_random():
     slack_client.post_text(
         channel=f'#{request.form.get("channel_name")}',
-        text=utils.lider_aleatorio()
+        text=utils.lider_random()
     )
     return Response(), 200
 
