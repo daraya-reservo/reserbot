@@ -20,7 +20,8 @@ def post_reply_message(channel, ts, text, btn_text, url):
         channel=channel,
         thread_ts=ts,
         reply_broadcast=True,
-        blocks = [{
+        blocks = [
+            {
                 'type': 'section',
                 'text': {'type': 'mrkdwn', 'text': text}
             },
@@ -36,5 +37,6 @@ def post_reply_message(channel, ts, text, btn_text, url):
                     'style': 'primary',
                     'url': url
                 }]
-            }]
+            }
+        ]
     )

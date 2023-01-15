@@ -4,7 +4,7 @@ from settings import SIGNING_SECRET, BOT_TOKEN
 import slack
 from random import choice
 from schedule import lider_daily
-from slack_client import post_text_message
+from slack_client import post_text_message, post_reply_message
 
 
 app = Flask(__name__)
@@ -28,6 +28,14 @@ def lider_aleatorio_daily(channel):
 def message(payload):
     event = payload['event']
     if any([kw in event['text'] for kw in ('estudio', 'estudiar')]):
+        post_reply_message(
+            channel=event['channel'], 
+            ts=event['ts'], 
+            text=f'<@{event["user"]}> anótate en el excel :bonk-doge:', 
+            btn_text='Link del excel de estudio 📚', 
+            url='https://docs.google.com/spreadsheets/d/1FhaBUnW_hGk_siixvFUAjs0SZRw5iksFnSqI8XkiX3A/edit#gid=0'
+        )
+        '''
         client.chat_postMessage(
             channel=event['channel'],
             thread_ts=event['ts'],
@@ -50,6 +58,7 @@ def message(payload):
     				}]
         		}]
         )
+        '''
     elif event['text'] == 'random-daily':
         lider_aleatorio_daily(event['channel'])
 
