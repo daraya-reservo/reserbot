@@ -5,6 +5,7 @@ import slack
 from random import choice
 from schedule import lider_daily
 from slack_client import post_text_message, post_reply_message
+from utils import lider_aleatorio_daily
 
 
 app = Flask(__name__)
@@ -15,13 +16,6 @@ slack_event_adapter = SlackEventAdapter(SIGNING_SECRET, '/slack/events', app)
 @app.route('/', methods=['GET', 'POST'])
 def index():
     return jsonify(message='Bot de Reservo')
-
-
-def lider_aleatorio_daily(channel):
-    team = ('Agustín', 'Dani', 'Hiho', 'Isi', 'Lucho', 'Manu', 'Nach', 'Pancho', 'Pato', 'Seba', 'Val')
-    text = f"Hmmm que lidere {choice(team)} :shirabesleep:"
-    post_text_message(channel, text)
-
 
 
 @slack_event_adapter.on('message')
@@ -35,37 +29,19 @@ def message(payload):
             btn_text='Link del excel de estudio 📚', 
             url='https://docs.google.com/spreadsheets/d/1FhaBUnW_hGk_siixvFUAjs0SZRw5iksFnSqI8XkiX3A/edit#gid=0'
         )
-        '''
-        client.chat_postMessage(
-            channel=event['channel'],
-            thread_ts=event['ts'],
-            reply_broadcast=True,
-            blocks = [{
-                    "type": "section",
-                    "text": {"type": "mrkdwn", "text": f"<@{event['user']}> anótate en el excel :bonk-doge:"}
-                },
-                {
-        			"type": "actions",
-        			"elements": [{
-    					"type": "button",
-    					"text": {
-    						"type": "plain_text",
-    						"text": 'Link del excel de estudio 📚',
-    						"emoji": True
-    					},
-    					"style": "primary",
-    					"url": 'https://docs.google.com/spreadsheets/d/1FhaBUnW_hGk_siixvFUAjs0SZRw5iksFnSqI8XkiX3A/edit#gid=0'
-    				}]
-        		}]
+    elif event['text'] == 'lider-aleatorio':
+        post_text_message(
+            channel=event['channel'], 
+            text=lider_aleatorio_daily()
         )
-        '''
-    elif event['text'] == 'random-daily':
-        lider_aleatorio_daily(event['channel'])
 
 
-@app.route('/random', methods=['POST'])
-def random():
-    lider_aleatorio_daily(f'#{request.form.get("channel_name")}')
+@app.route('/lider-aleatorio', methods=['POST'])
+def daily_aleatorio():
+    post_text_message(
+        channel=f'#{request.form.get("channel_name")}', 
+        text=lider_aleatorio_daily()
+    )
     return Response(), 200
 
 
