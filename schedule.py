@@ -1,4 +1,4 @@
-from settings import BOT_TOKEN, XLSX_FILE, CHANNEL_PROD, CHANNEL_DEV
+from settings import BOT_TOKEN, XLSX_FILE, CHANNEL_PROD
 import slack
 import locale
 from datetime import datetime
