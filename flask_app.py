@@ -21,7 +21,8 @@ def index():
 @slack_event_adapter.on('message')
 def message(payload):
     event = payload['event']
-    if any([kw in event['text'] for kw in ('estudio', 'estudiar')]):
+    message_text = event.get('text')
+    if any([kw in message_text for kw in ('estudio', 'estudiar')]):
         post_reply_message(
             channel=event['channel'], 
             ts=event['ts'], 
@@ -29,7 +30,7 @@ def message(payload):
             btn_text='Link del excel de estudio 📚', 
             url='https://docs.google.com/spreadsheets/d/1FhaBUnW_hGk_siixvFUAjs0SZRw5iksFnSqI8XkiX3A/edit#gid=0'
         )
-    elif event['text'] == 'lider-aleatorio':
+    elif message_text == 'lider-aleatorio':
         post_text_message(
             channel=event['channel'], 
             text=lider_aleatorio_daily()
