@@ -47,7 +47,7 @@ def lider_random():
 
 
 @app.route('/lider-daily', methods=['POST'])
-def daily():
+def lider_daily():
     slack_client.post_text(
         channel=f'#{request.form.get("channel_name")}',
         text=utils.lider_daily() or "Hoy no toca daily :shirabesleep:"
