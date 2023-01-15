@@ -15,10 +15,10 @@ def index():
 
 
 @slack_event_adapter.on('message')
-def message(payload):
+def message_event(payload):
     event = payload['event']
     if any([kw in event['text'] for kw in ('estudio', 'estudiar')]):
-        slack_client.post_reply_message(
+        slack_client.post_reply(
             channel=event['channel'],
             ts=event['ts'],
             text=f'<@{event["user"]}> anótate en el excel :bonk-doge:',
@@ -26,12 +26,12 @@ def message(payload):
             url='https://docs.google.com/spreadsheets/d/1FhaBUnW_hGk_siixvFUAjs0SZRw5iksFnSqI8XkiX3A/edit#gid=0'
         )
     elif event['text'] == 'lider-aleatorio':
-        slack_client.post_text_message(
+        slack_client.post_text(
             channel=event['channel'],
             text=utils.lider_aleatorio()
         )
     elif event['text'] == 'lider-siguiente':
-        slack_client.post_text_message(
+        slack_client.post_text(
             channel=event['channel'],
             text=utils.lider_siguiente()
         )
@@ -39,7 +39,7 @@ def message(payload):
 
 @app.route('/lider-aleatorio', methods=['POST'])
 def lider_aleatorio():
-    slack_client.post_text_message(
+    slack_client.post_text(
         channel=f'#{request.form.get("channel_name")}',
         text=utils.lider_aleatorio()
     )
@@ -48,7 +48,7 @@ def lider_aleatorio():
 
 @app.route('/lider-daily', methods=['POST'])
 def daily():
-    slack_client.post_text_message(
+    slack_client.post_text(
         channel=f'#{request.form.get("channel_name")}',
         text=utils.lider_daily() or "Hoy no toca daily :shirabesleep:"
     )
@@ -57,7 +57,7 @@ def daily():
 
 @app.route('/lider-siguiente', methods=['POST'])
 def lider_siguiente():
-    slack_client.post_text_message(
+    slack_client.post_text(
         channel=f'#{request.form.get("channel_name")}',
         text=utils.lider_siguiente()
     )
