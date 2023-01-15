@@ -1,12 +1,12 @@
 from flask import Flask, request, Response, jsonify
 from slackeventsapi import SlackEventAdapter
-from settings import SIGNING_SECRET
+import settings
 import slack_client
 import utils
 
 
 app = Flask(__name__)
-slack_event_adapter = SlackEventAdapter(SIGNING_SECRET, '/slack/events', app)
+slack_event_adapter = SlackEventAdapter(settings.SIGNING_SECRET, '/slack/events', app)
 
 
 @app.route('/', methods=['GET', 'POST'])
