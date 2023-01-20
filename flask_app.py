@@ -28,7 +28,7 @@ def message_event(payload):
     elif event['text'] == 'lider-random':
         slack_client.post_text(
             channel=event['channel'],
-            text=utils.lider_aleatorio()
+            text=utils.lider_random()
         )
     elif event['text'] == 'lider-siguiente':
         slack_client.post_text(
