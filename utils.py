@@ -6,7 +6,7 @@ import pandas
 
 
 def lider_random():
-    team = ('Agustín', 'Dani', 'Hiho', 'Isi', 'Lucho', 'Manu', 'Nach', 'Pancho', 'Pato', 'Seba', 'Val')
+    team = ('Agustín', 'Dani', 'Hiho', 'Lucho', 'Manu', 'Pancho', 'Pato', 'Seba', 'Val')
     return f'Que lidere {choice(team)} :rubyrun:'
 
 
