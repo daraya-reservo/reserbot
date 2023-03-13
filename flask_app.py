@@ -17,7 +17,7 @@ def index():
 @slack_event_adapter.on('message')
 def message_event(payload):
     event = payload['event']
-    if any([kw in event['text'] for kw in ('estudio', 'estudiar')]):
+    if any([kw in event['text'].lower() for kw in ('estudio', 'estudiar')]):
         slack_client.post_reply(
             channel=event['channel'],
             ts=event['ts'],
