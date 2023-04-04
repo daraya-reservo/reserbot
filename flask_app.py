@@ -35,6 +35,8 @@ def message_event(payload):
             channel=event['channel'],
             text=utils.lider_siguiente()
         )
+    elif event['text'] == 'reserbot-debugger':
+        pass
 
 
 @app.route('/lider-random', methods=['POST'])
