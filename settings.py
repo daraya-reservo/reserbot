@@ -12,3 +12,6 @@ SIGNING_SECRET = os.environ['SIGNING_SECRET']
 # canales para postear mensajes
 CHANNEL_PROD = '#reservo-ti'
 CHANNEL_DEV = '#reserbot-shhhh'
+
+# api key de openai
+API_KEY = os.environ['OPENAI_APIKEY']

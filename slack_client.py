@@ -12,11 +12,9 @@ def post_text(channel, text):
     )
 
 
-def post_reply(channel, ts, text, btn_text, url):
+def post_reply(channel, text, btn_text, url):
     client.chat_postMessage(
         channel=channel,
-        thread_ts=ts,
-        reply_broadcast=True,
         blocks = [
             {
                 'type': 'section',

@@ -1,4 +1,5 @@
 from flask import Flask, request, Response, jsonify
+import openai
 from slackeventsapi import SlackEventAdapter
 import settings
 import slack_client
@@ -7,22 +8,30 @@ import utils
 
 app = Flask(__name__)
 slack_event_adapter = SlackEventAdapter(settings.SIGNING_SECRET, '/slack/events', app)
+openai.api_key = settings.API_KEY
 
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
     return jsonify(message='Bot de Reservo')
 
-
 @slack_event_adapter.on('message')
 def message_event(payload):
     event = payload['event']
-    if any([kw in event['text'].lower() for kw in ('estudio', 'estudiar')]):
+    if event['text'].startswith('chatgpt:'):
+        response = openai.ChatCompletion.create(
+            model="gpt-3.5-turbo",
+            messages=[{"role": "user", "content": event['text'].split('chatgpt:')[1]}]
+        )
+        slack_client.post_text(
+            channel=event['channel'],
+            text=response.choices[0].message.content
+        )
+    elif any([kw in event['text'].lower() for kw in ('estudio', 'estudiar')]):
         slack_client.post_reply(
             channel=event['channel'],
-            ts=event['ts'],
             text=f'<@{event["user"]}> anótate en el excel :bonk-doge:',
-            btn_text='Link del excel de estudio 📚',
+            btn_text='Link al excel de estudio 📚',
             url='https://docs.google.com/spreadsheets/d/1FhaBUnW_hGk_siixvFUAjs0SZRw5iksFnSqI8XkiX3A/edit#gid=0'
         )
     elif event['text'] == 'lider-random':
@@ -38,7 +47,6 @@ def message_event(payload):
     elif event['text'] == 'reserbot-debugger':
         pass
 
-
 @app.route('/lider-random', methods=['POST'])
 def lider_random():
     slack_client.post_text(
@@ -47,7 +55,6 @@ def lider_random():
     )
     return Response(), 200
 
-
 @app.route('/lider-daily', methods=['POST'])
 def lider_daily():
     slack_client.post_text(
@@ -55,7 +62,6 @@ def lider_daily():
         text=utils.lider_daily() or "Hoy no toca daily :shirabesleep:"
     )
     return Response(), 200
-
 
 @app.route('/lider-siguiente', methods=['POST'])
 def lider_siguiente():
