@@ -19,15 +19,19 @@ def index():
 def message_event(payload):
     event = payload['event']
     if event['text'].startswith('chatgpt:'):
-        response = openai.ChatCompletion.create(
-            model="gpt-3.5-turbo",
-            messages=[{"role": "user", "content": event['text'].split('chatgpt:')[1]}]
+        response = openai.Completion.create(
+            model="text-davinci-003",
+            prompt=event['text'].split('chatgpt:')[1],
+            max_tokens=250,
+            temperature=0,
+            n=1,
         )
+        chatgpt_text = response.choices[0].text
         slack_client.post_text(
             channel=event['channel'],
-            text=response.choices[0].message.content
+            text=chatgpt_text,
         )
-    elif any([kw in event['text'].lower() for kw in ('estudio', 'estudiar')]):
+    elif any([kw in event['text'].lower() for kw in ('estudio', 'estudiar')]) and not event.get('bot_id'):
         slack_client.post_reply(
             channel=event['channel'],
             text=f'<@{event["user"]}> anótate en el excel :bonk-doge:',
