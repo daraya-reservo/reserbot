@@ -59,3 +59,38 @@ def schedule_button(channel, text, post_at, url):
 			}]
 		}]
     )
+
+def schedule_buttons(channel, buttons, post_at):
+    elements = []
+    for button in buttons:
+        elements.append({
+            "type": "button",
+            "text": {
+                "type": "plain_text",
+                "text": button["text"]
+            },
+            "url": button["url"]
+        })
+    client.chat_scheduleMessage(
+        channel=channel,
+        post_at=post_at,
+        text='botones programados',
+        blocks = [
+            {
+                "type": "divider"
+            },
+            {
+                "type": "actions",
+                "elements": elements
+		    },
+		]
+    )
+
+
+
+
+
+
+
+
+
