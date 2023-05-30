@@ -14,4 +14,4 @@ CHANNEL_PROD = '#reservo-ti'
 CHANNEL_DEV = '#reserbot-shhhh'
 
 # api key de openai
-API_KEY = os.environ['OPENAI_APIKEY']
+API_KEY = os.environ.get('OPENAI_APIKEY')

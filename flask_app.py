@@ -18,10 +18,12 @@ def index():
 @slack_event_adapter.on('message')
 def message_event(payload):
     event = payload['event']
-    if event['text'].startswith('chatgpt:'):
+    message = event.get('text', '')
+    '''
+    if message.startswith('chatgpt:'):
         response = openai.Completion.create(
             model="text-davinci-003",
-            prompt=event['text'].split('chatgpt:')[1],
+            prompt=text.split('chatgpt:')[1],
             max_tokens=250,
             temperature=0,
             n=1,
@@ -31,24 +33,25 @@ def message_event(payload):
             channel=event['channel'],
             text=chatgpt_text,
         )
-    elif any([kw in event['text'].lower() for kw in ('estudio', 'estudiar')]) and not event.get('bot_id'):
+    '''
+    if any([kw in message.lower() for kw in ('estudio', 'estudiar')]) and not event.get('bot_id'):
         slack_client.post_reply(
             channel=event['channel'],
             text=f'<@{event["user"]}> anótate en el excel :bonk-doge:',
             btn_text='Link al excel de estudio 📚',
             url='https://docs.google.com/spreadsheets/d/1FhaBUnW_hGk_siixvFUAjs0SZRw5iksFnSqI8XkiX3A/edit#gid=0'
         )
-    elif event['text'] == 'lider-random':
+    elif message == 'lider-random':
         slack_client.post_text(
             channel=event['channel'],
             text=utils.lider_random()
         )
-    elif event['text'] == 'lider-siguiente':
+    elif message == 'lider-siguiente':
         slack_client.post_text(
             channel=event['channel'],
             text=utils.lider_siguiente()
         )
-    elif event['text'] == 'reserbot-debugger':
+    elif message == 'reserbot-debugger':
         pass
 
 @app.route('/lider-random', methods=['POST'])
