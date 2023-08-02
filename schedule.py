@@ -20,10 +20,6 @@ if message_lider_daily:
     )
     trello_boards = [
         {
-            "text": "Tablero Diseño UI/UX",
-            "url": "https://trello.com/b/wvxXNSUg/reservo-ux-ui",
-        },
-        {
             "text": "Tablero Cluster",
             "url": "https://trello.com/b/s1dqAbWZ/tablero-cluster-ux-ui-desarrollo",
         },
