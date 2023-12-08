@@ -17,14 +17,14 @@ def message_event(payload):
     event = payload['event']
     message = event.get('text', '')
     if 'estudio' in message.lower() and event.get('bot_id') is None:
-        slack_client.post_reply(
+        slack_client.post_message(
             channel=event['channel'],
             text=f'<@{event["user"]}> anótate en el excel :bonk-doge:',
             btn_text='Link al excel de estudio 📚',
             url=settings.URL_EXCEL_ESTUDIO
         )
     elif message == 'lider-random':
-        slack_client.post_text(
+        slack_client.post_message(
             channel=event['channel'],
             text=f'Que lidere {random.choice(settings.TEAM)} :rubyrun:'
         )
@@ -32,7 +32,7 @@ def message_event(payload):
     #     settings.a += 1
     #     print(settings.a)
     #     from utils import lider_daily
-    #     slack_client.post_reply(
+    #     slack_client.post_message(
     #         channel=event['channel'],
     #         text=lider_daily() or 'jiji',
     #         btn_text='tablero :trello: daily :discord:',
@@ -41,7 +41,7 @@ def message_event(payload):
 
 @app.route('/lider-random', methods=['POST'])
 def lider_random():
-    slack_client.post_text(
+    slack_client.post_message(
         channel=f'#{request.form.get("channel_name")}',
         text=f'Que lidere {random.choice(settings.TEAM)} :rubyrun:'
     )

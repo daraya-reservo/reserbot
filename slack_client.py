@@ -4,41 +4,6 @@ import slack
 
 client = slack.WebClient(token=settings.BOT_TOKEN)
 
-def post_text(channel, text):
-    client.chat_postMessage(
-        channel=channel,
-        blocks=[
-            {
-                'type': 'section', 
-                'text': {'type': 'mrkdwn','text': text}
-            }
-        ]
-    )
-
-def post_reply(channel, text, btn_text, url):
-    client.chat_postMessage(
-        channel=channel,
-        blocks = [
-            {
-                'type': 'section',
-                'text': {'type': 'mrkdwn', 'text': text}
-            },
-            {
-                'type': 'actions',
-                'elements': [{
-                    'type': 'button',
-                    'text': {
-                        'type': 'plain_text', 
-                        'text': btn_text, 
-                        'emoji': True
-                    },
-                    'style': 'primary',
-                    'url': url
-                }]
-            }
-        ]
-    )
-
 def post_message(channel, text, btn_text=None, url=None):
     blocks = [
         {
@@ -93,9 +58,6 @@ def schedule_buttons(channel, buttons, post_at):
         post_at=post_at,
         text='botones programados',
         blocks = [
-            {
-                "type": "divider"
-            },
             {
                 "type": "actions",
                 "elements": elements
