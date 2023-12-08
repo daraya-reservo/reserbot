@@ -39,6 +39,32 @@ def post_reply(channel, text, btn_text, url):
         ]
     )
 
+def post_message(channel, text, btn_text=None, url=None):
+    blocks = [
+        {
+            'type': 'section',
+            'text': {'type': 'mrkdwn', 'text': text}
+        }
+    ]
+    if btn_text:
+        blocks.append({
+            'type': 'actions',
+            'elements': [{
+                'type': 'button',
+                'text': {
+                    'type': 'plain_text',
+                    'text': btn_text,
+                    'emoji': True
+                },
+                'style': 'primary',
+                'url': url
+            }]
+        })
+    client.chatPostMessage(
+        channel=channel,
+        blocks=blocks
+    )
+
 def schedule_text(channel, text, post_at):
     client.chat_scheduleMessage(
         channel=channel,
