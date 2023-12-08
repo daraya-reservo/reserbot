@@ -13,5 +13,22 @@ SIGNING_SECRET = os.environ['SIGNING_SECRET']
 CHANNEL_PROD = '#reservo-ti'
 CHANNEL_DEV = '#reserbot-shhhh'
 
-# api key de openai
-API_KEY = os.environ.get('OPENAI_APIKEY')
+# links relevantes
+URL_EXCEL_ESTUDIO = 'https://docs.google.com/spreadsheets/d/1FhaBUnW_hGk_siixvFUAjs0SZRw5iksFnSqI8XkiX3A/edit#gid=0'
+URL_DISCORD_DAILY = 'https://discord.com/channels/897964285559472158/1014947999010533416'
+URL_TRELLO = 'https://trello.com/b/dZnTCMi3/tablero-desarrollo'
+
+
+TEAM = [
+    'Agustín',
+    'Dani',
+    'Hiho',
+    'Juan',
+    'Lucho',
+    'Manu',
+    'Pancho',
+    'Pato',
+    'Seba',
+    'Val',
+    'Vicky',
+]
