@@ -18,7 +18,7 @@ URL_EXCEL_ESTUDIO = 'https://docs.google.com/spreadsheets/d/1FhaBUnW_hGk_siixvFU
 URL_DISCORD_DAILY = 'https://discord.com/channels/897964285559472158/1014947999010533416'
 URL_TRELLO = 'https://trello.com/b/dZnTCMi3/tablero-desarrollo'
 
-
+a = 0
 TEAM = [
     'Agustín',
     'Dani',

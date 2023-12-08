@@ -29,6 +29,8 @@ def message_event(payload):
             text=f'Que lidere {random.choice(settings.TEAM)} :rubyrun:'
         )
     elif message == 'holi':
+        settings.a += 1
+        print(settings.a)
         from utils import lider_daily
         slack_client.post_reply(
             channel=event['channel'],
