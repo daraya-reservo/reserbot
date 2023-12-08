@@ -9,7 +9,7 @@ load_dotenv(dotenv_path=env_path)
 BOT_TOKEN = os.environ['SLACK_TOKEN']
 SIGNING_SECRET = os.environ['SIGNING_SECRET']
 
-# canales para postear mensajes
+# canales a los que se envían mensajes
 CHANNEL_PROD = '#reservo-ti'
 CHANNEL_DEV = '#reserbot-shhhh'
 

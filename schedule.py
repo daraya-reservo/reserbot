@@ -14,7 +14,7 @@ if lider_daily:
     )
     buttons = [
         {
-            "text": "Daily :discord:",
+            "text": "Daily :discord2:",
             "url": settings.URL_DISCORD_DAILY,
         },
         {
