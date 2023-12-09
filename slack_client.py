@@ -30,39 +30,30 @@ def post_message(channel, text, btn_text=None, url=None):
         blocks=blocks
     )
 
-def schedule_text(channel, text, post_at):
-    client.chat_scheduleMessage(
-        channel=channel,
-        post_at=post_at,
-        text='texto programado',
-        blocks = [{
-            "type": "section",
-            "text": {"type": "mrkdwn", "text": text},
-        }]
-    )
 
-def schedule_buttons(channel, buttons, post_at):
-    elements = []
-    for button in buttons:
-        elements.append({
-            "type": "button",
-            "text": {
-                "type": "plain_text",
-                "text": button["text"]
-            },
-            "style": "primary",
-            "url": button["url"]
+def schedule_message(channel, post_at, text=None, buttons=None):
+    blocks = []
+    if text:
+        blocks.append({
+            'type': 'section',
+            'text': {'type': 'mrkdwn', 'text': text}
+        })
+    if buttons:
+        elements = [{
+            'type': 'button',
+            'text': {'type': 'plain_text', 'text': button['text']},
+            'style': 'primary',
+            'url': button['url']
+        } for button in buttons]
+        blocks.append({
+            'type': 'actions',
+            'elements': elements,
         })
     client.chat_scheduleMessage(
         channel=channel,
         post_at=post_at,
-        text='botones programados',
-        blocks = [
-            {
-                "type": "actions",
-                "elements": elements
-            },
-		]
+        text='mensaje programado',
+        blocks=blocks
     )
 
 

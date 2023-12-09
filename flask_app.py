@@ -26,24 +26,14 @@ def message_event(payload):
     elif message == 'lider-random':
         slack_client.post_message(
             channel=event['channel'],
-            text=f'Que lidere {random.choice(settings.TEAM)} :rubyrun:'
+            text=f'Que lidere {random.choice([member[0] for member in settings.TEAM])} :rubyrun:'
         )
-    # elif message == 'holi':
-    #     settings.a += 1
-    #     print(settings.a)
-    #     from utils import lider_daily
-    #     slack_client.post_message(
-    #         channel=event['channel'],
-    #         text=lider_daily() or 'jiji',
-    #         btn_text='tablero :trello: daily :discord:',
-    #         url=settings.URL_DISCORD_DAILY,
-    #     )
 
 @app.route('/lider-random', methods=['POST'])
 def lider_random():
     slack_client.post_message(
         channel=f'#{request.form.get("channel_name")}',
-        text=f'Que lidere {random.choice(settings.TEAM)} :rubyrun:'
+        text=f'Que lidere {random.choice([member[0] for member in settings.TEAM])} :rubyrun:'
     )
     return Response(), 200
 
