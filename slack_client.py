@@ -25,7 +25,7 @@ def post_message(channel, text, btn_text=None, url=None):
                 'url': url
             }]
         })
-    client.chatPostMessage(
+    client.chat_postMessage(
         channel=channel,
         blocks=blocks
     )
