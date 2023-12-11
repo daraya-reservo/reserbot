@@ -1,8 +1,8 @@
 from flask import Flask, request, Response, jsonify
-import random
 from slackeventsapi import SlackEventAdapter
 import settings
 import slack_client
+import utils
 
 
 app = Flask(__name__)
@@ -26,14 +26,14 @@ def message_event(payload):
     elif message == 'lider-random':
         slack_client.post_message(
             channel=event['channel'],
-            text=f'Que lidere {random.choice([member[0] for member in settings.TEAM])} :rubyrun:'
+            text=f'Que lidere {utils.get_random_teammate()} :rubyrun:'
         )
 
 @app.route('/lider-random', methods=['POST'])
 def lider_random():
     slack_client.post_message(
         channel=f'#{request.form.get("channel_name")}',
-        text=f'Que lidere {random.choice([member[0] for member in settings.TEAM])} :rubyrun:'
+        text=f'Que lidere {utils.get_random_teammate()} :rubyrun:'
     )
     return Response(), 200
 

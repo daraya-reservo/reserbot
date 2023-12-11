@@ -18,21 +18,19 @@ URL_EXCEL_ESTUDIO = 'https://docs.google.com/spreadsheets/d/1FhaBUnW_hGk_siixvFU
 URL_DISCORD_DAILY = 'https://discord.com/channels/897964285559472158/1014947999010533416'
 URL_TRELLO = 'https://trello.com/b/dZnTCMi3/tablero-desarrollo'
 URL_API_FERIADOS = 'https://date.nager.at/api/v3/publicholidays/'
-# https://sparkbyexamples.com/python/sort-list-of-tuples-in-python/
+URL_NOTION_NEWSLETTERS = 'https://www.notion.so/softwarereservo/Newsletter-semanal-a9fdabf7c2fc42e3ab0ea631da2e3b07'
 
-
-a = 0
-TEAM = [
-    ['Hiho', 0],
-    ['Nach', 0],
-    ['Agustín', 0],
-    ['Dani', 0],
-    ['Juan', 0],
-    ['Lucho', 0],
-    ['Manu', 0],
-    ['Pancho', 0],
-    ['Pato', 0],
-    ['Seba', 0],
-    ['Val', 1],
-    ['Vicky', 1],
-]
+TEAM = {
+    'Agustín': 0,
+    'Dani': 0,
+    'Juan': 0,
+    'Hiho': 0,
+    'Lucho': 0,
+    'Manu': 0,
+    'Nach': 0,
+    'Pancho': 0,
+    'Pato': 0,
+    'Seba': 0,
+    'Val': 0,
+    'Vicky': 0,
+}
