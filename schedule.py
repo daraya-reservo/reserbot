@@ -4,9 +4,9 @@ import slack_client
 import utils
 
 
+today = datetime.now()
 lider_daily = utils.lider_daily()
 if lider_daily:
-    today = datetime.now()
     slack_client.schedule_message(
         channel=settings.CHANNEL_PROD,
         post_at=(today.replace(hour=9, minute=35, second=0)).strftime('%s'),
@@ -28,7 +28,6 @@ if lider_daily:
         buttons=buttons,
     )
 
-today = datetime.now()
 if today.weekday() == 0: # monday
     first_workday = today + timedelta(days=1) if utils.is_holiday(today) else today
     slack_client.schedule_message(
@@ -39,18 +38,24 @@ if today.weekday() == 0: # monday
             'url': settings.URL_NOTION_NEWSLETTERS
         }]
     )
+else:
+    slack_client.post_message(
+        channel=settings.CHANNEL_DEV,
+        buttons=[{
+            'text': f'Leer newsletter {first_workday}', 
+            'url': settings.URL_NOTION_NEWSLETTERS
+        }]
+    )
 
 
 daily_leader = utils.get_daily_leader()
-if daily_leader:
-    today = datetime.now()
-    print('------------PROBANDO FUNCION DAILY NUEVA-------------')
-    print('today: ', today.strftime('%A %d'))
-    print('lider daily: ', daily_leader)
-    print('team: ', settings.TEAM)
-    print('------------PROBANDO FUNCION DAILY NUEVA-------------')
-    slack_client.post_message(
-        channel=settings.CHANNEL_DEV,
-        text=f'Hoy {today.strftime("%A %d")} lidera :star: {daily_leader} :star:'
-    )
+print('------------PROBANDO FUNCION DAILY NUEVA-------------')
+print('today: ', today.strftime('%A %d'))
+print('lider daily: ', daily_leader)
+print('team: ', settings.TEAM)
+print('------------PROBANDO FUNCION DAILY NUEVA-------------')
+slack_client.post_message(
+    channel=settings.CHANNEL_DEV,
+    text=f'Hoy {today.strftime("%A %d")} lidera :star: {daily_leader} :star:'
+)
 

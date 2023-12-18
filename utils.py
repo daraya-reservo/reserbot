@@ -26,11 +26,17 @@ import settings
 
 
 def is_holiday(date):
+    print('is_holiday')
     api_response = requests.get(f'{settings.URL_API_FERIADOS}{date.year}/CL')
     holidays = json.loads(api_response.content)
+    print(holidays)
+    print(date.strftime('%Y-%m-%d'))
+    print(date.strftime('%Y-%m-%d') in holidays)
     return date.strftime('%Y-%m-%d') in holidays
 
 def get_daily_leader():
+    print('==================================')
+    print('get_daily_leader')
     locale.setlocale(locale.LC_TIME, 'es_ES.UTF-8')
     today = datetime.now(pytz.timezone('America/Santiago'))
     if today.weekday() >= 5 or is_holiday(today):
@@ -45,9 +51,11 @@ def get_daily_leader():
     elif today.weekday() == 4: 
         del teammates['Vicky']
         del teammates['Hiho']
+    print("teammates", teammates)
 
     daily_leader = next(iter(teammates))
     settings.TEAM[daily_leader] += 1
+    print("settings.TEAM" , settings.TEAM)
     return daily_leader
 
 def get_random_teammate():
