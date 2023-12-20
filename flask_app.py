@@ -14,6 +14,7 @@ def index():
 
 @slack_event_adapter.on('message')
 def message_event(payload):
+    print('payload', payload)
     event = payload['event']
     message = event.get('text', '')
     if 'estudio' in message.lower() and event.get('bot_id') is None:
@@ -31,6 +32,8 @@ def message_event(payload):
 
 @app.route('/lider-random', methods=['POST'])
 def lider_random():
+    print('-----------------------------')
+    print(request.form)
     slack_client.post_message(
         channel=f'#{request.form.get("channel_name")}',
         text=f'Que lidere {utils.get_random_teammate()} :rubyrun:'
