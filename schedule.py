@@ -32,7 +32,7 @@ if lider_daily:
         post_at=(today.replace(hour=9, minute=50, second=0)).strftime('%s'),
         buttons=buttons,
     )
-
+print('today.weekday(): ' + today.weekday())
 if today.weekday() == 0: # monday
     first_workday = today + timedelta(days=1) if utils.is_holiday(today) else today
     slack_client.schedule_message(
