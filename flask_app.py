@@ -13,9 +13,8 @@ def index():
     return jsonify(message='Bot de Reservo')
 
 @slack_event_adapter.on('message')
-def message_event(payload):
-    print('payload', payload)
-    event = payload['event']
+def message_event(data):
+    event = data['event']
     message = event.get('text', '')
     if 'estudio' in message.lower() and event.get('bot_id') is None:
         slack_client.post_message(
@@ -29,11 +28,14 @@ def message_event(payload):
             channel=event['channel'],
             text=f'Que lidere {utils.get_random_teammate()} :rubyrun:'
         )
+    elif message == 'get-daily-leader':
+        slack_client.post_message(
+            channel=event['channel'],
+            text=utils.get_daily_leader()
+        )
 
 @app.route('/lider-random', methods=['POST'])
 def lider_random():
-    print('-----------------------------')
-    print(request.form)
     slack_client.post_message(
         channel=f'#{request.form.get("channel_name")}',
         text=f'Que lidere {utils.get_random_teammate()} :rubyrun:'
