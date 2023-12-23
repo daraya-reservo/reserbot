@@ -47,7 +47,7 @@ def get_daily_leader():
     locale.setlocale(locale.LC_TIME, 'es_ES.UTF-8')
     today = datetime.now(pytz.timezone('America/Santiago'))
     if today.weekday() >= 5 or is_holiday(today):
-        return None
+        return ''
     settings.TEAM = dict(sorted(settings.TEAM.items(), key=operator.itemgetter(1)))
     teammates = settings.TEAM
     if today.weekday() == 0: 
