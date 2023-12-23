@@ -31,7 +31,7 @@ def message_event(data):
     elif message == 'get-daily-leader':
         slack_client.post_message(
             channel=event['channel'],
-            text=utils.get_daily_leader()
+            text='el lider sera ' + utils.get_daily_leader()
         )
 
 @app.route('/lider-random', methods=['POST'])
