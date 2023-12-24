@@ -42,7 +42,7 @@ def message_event(data):
     elif message == 'working-day':
         slack_client.post_message(
             channel=event['channel'],
-            text=f'Hoy es dia laboral? {utils.working_day()}'
+            text=f'Hoy es dia laboral? {"Si" if utils.is_working_day() else "No"}'
         )
 
 @app.route('/lider-random', methods=['POST'])

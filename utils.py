@@ -23,28 +23,21 @@ import pytz
 import random
 import requests
 import settings
+import csv
 
 
-def working_day():
+def is_working_day():
     print('==================================')
     print('working_day()')
     print('==================================')
     locale.setlocale(locale.LC_TIME, 'es_ES.UTF-8')
     today = datetime.now(pytz.timezone('America/Santiago'))
-    print('holidays_url: ', f'{settings.URL_API_FERIADOS}{today.year}/CL')
-    holidays_resp = requests.get(
-        f'{settings.URL_API_FERIADOS}{today.year}/CL',
-        headers={
-            'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8',
-            'User-Agent': 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:120.0) Gecko/20100101 Firefox/120.0',
-            'Accept-Encoding': 'gzip, deflate, br'
-        }    
-    )
-    holidays = json.loads(holidays_resp.content.decode())
-    print('holidays: ', holidays)
-    today_not_holiday = today.strftime('%Y-%m-%d') not in holidays
-    today_not_weekend = today.weekday() < 5
-    return today_not_holiday and today_not_weekend
+    with open(f'publicholiday.CL.{today.year}.csv', newline='') as csvfile:
+        reader = csv.DictReader(csvfile)
+        for row in reader:
+            if row['Date'] == today.strftime('%Y-%m-%d'):
+                return False
+    return today.weekday() < 5
 
 
 def get_daily_leader():
@@ -53,7 +46,7 @@ def get_daily_leader():
     print('==================================')
     locale.setlocale(locale.LC_TIME, 'es_ES.UTF-8')
     today = datetime.now(pytz.timezone('America/Santiago'))
-    #if not working_day():
+    #if not is_working_day():
     #    return ''
 
     team_members = list(settings.TEAM.items())
