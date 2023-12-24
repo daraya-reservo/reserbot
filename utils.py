@@ -31,6 +31,7 @@ def working_day():
     print('==================================')
     locale.setlocale(locale.LC_TIME, 'es_ES.UTF-8')
     today = datetime.now(pytz.timezone('America/Santiago'))
+    print('holidays_url: ', f'{settings.URL_API_FERIADOS}{today.year}/CL')
     holidays = requests.get(f'{settings.URL_API_FERIADOS}{today.year}/CL')
     holidays = json.loads(holidays.content)
     print('holidays: ', holidays)
