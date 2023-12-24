@@ -38,7 +38,7 @@ def working_day():
             'User-Agent': 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:120.0) Gecko/20100101 Firefox/120.0'
         }    
     )
-    holidays = json.loads(holidays_resp.content)
+    holidays = json.loads(holidays_resp.content.decode())
     print('holidays: ', holidays)
     today_not_holiday = today.strftime('%Y-%m-%d') not in holidays
     today_not_weekend = today.weekday() < 5
