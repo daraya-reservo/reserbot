@@ -38,7 +38,7 @@ def message_event(data):
             channel=event['channel'],
             text='a',
             btn_text='Leer newsletter',
-            url='settings.URL_NOTION_NEWSLETTERS'
+            url=settings.URL_NOTION_NEWSLETTERS
         )
 
 @app.route('/lider-random', methods=['POST'])
