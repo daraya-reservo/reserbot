@@ -41,25 +41,13 @@ if lider_daily:
         buttons=buttons,
     )
 
-if today.weekday() == 0: # monday
-    first_workday = today + timedelta(days=1) if utils.is_holiday(today) else today
-    slack_client.schedule_message(
-        channel=settings.CHANNEL_DEV,
-        post_at=(first_workday.replace(hour=10, minute=25, second=0)).strftime('%s'),
-        buttons=[{
-            'text': 'Leer newsletter',
-            'url': settings.URL_NOTION_NEWSLETTERS
-        }]
-    )
-else:
-    slack_client.post_message(
-        channel=settings.CHANNEL_DEV,
-        buttons=[{
-            'text': f'Leer newsletter {first_workday}',
-            'url': settings.URL_NOTION_NEWSLETTERS
-        }]
-    )
-
-
-
-
+# if today.weekday() == 0: # monday
+#     first_workday = today + timedelta(days=1) if utils.is_holiday(today) else today
+#     slack_client.schedule_message(
+#         channel=settings.CHANNEL_DEV,
+#         post_at=(first_workday.replace(hour=10, minute=25, second=0)).strftime('%s'),
+#         buttons=[{
+#             'text': 'Leer newsletter',
+#             'url': settings.URL_NOTION_NEWSLETTERS
+#         }]
+#     )

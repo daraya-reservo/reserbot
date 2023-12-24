@@ -25,19 +25,18 @@ import requests
 import settings
 
 
-def is_holiday(date):
+def working_day():
     print('==================================')
-    print('is_holiday()')
+    print('working_day()')
     print('==================================')
-    api_response = requests.get(f'{settings.URL_API_FERIADOS}{date.year}/CL')
-    holidays = json.loads(api_response.content)
+    locale.setlocale(locale.LC_TIME, 'es_ES.UTF-8')
+    today = datetime.now(pytz.timezone('America/Santiago'))
+    holidays = requests.get(f'{settings.URL_API_FERIADOS}{today.year}/CL')
+    holidays = json.loads(holidays.content)
     print('holidays: ', holidays)
-    print('date: ', date.strftime('%Y-%m-%d'))
-    print(date.strftime('%Y-%m-%d') in holidays)
-    print('==================================')
-    print('end of is_holiday()')
-    print('==================================')
-    return date.strftime('%Y-%m-%d') in holidays
+    today_not_holiday = today.strftime('%Y-%m-%d') not in holidays
+    today_not_weekend = today.weekday() < 5
+    return today_not_holiday and today_not_weekend
 
 
 def get_daily_leader():
@@ -46,7 +45,7 @@ def get_daily_leader():
     print('==================================')
     locale.setlocale(locale.LC_TIME, 'es_ES.UTF-8')
     today = datetime.now(pytz.timezone('America/Santiago'))
-    #if today.weekday() >= 5 or is_holiday(today):
+    #if not working_day():
     #    return ''
 
     team_members = list(settings.TEAM.items())
