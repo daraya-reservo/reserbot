@@ -33,6 +33,13 @@ def message_event(data):
             channel=event['channel'],
             text='el lider sera ' + utils.get_daily_leader()
         )
+    elif message == 'get-newsletter':
+        slack_client.post_message(
+            channel=event['channel'],
+            text='',
+            btn_text='Leer newsletter',
+            url='settings.URL_NOTION_NEWSLETTERS'
+        )
 
 @app.route('/lider-random', methods=['POST'])
 def lider_random():

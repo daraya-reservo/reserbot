@@ -18,7 +18,7 @@ if lider_daily:
     slack_client.schedule_message(
         channel=settings.CHANNEL_DEV,
         post_at=(today.replace(hour=9, minute=35, second=0)).strftime('%s'),
-        text=f'Hoy {today.strftime("%A %d")} lidera {lider_daily} :finoseñores:'
+        text=f'Hoy {today.strftime("%A %d")} lidera {daily_leader} :rubyrun:'
     )
     slack_client.schedule_message(
         channel=settings.CHANNEL_PROD,
