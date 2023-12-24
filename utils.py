@@ -46,15 +46,19 @@ def get_daily_leader():
     print('==================================')
     locale.setlocale(locale.LC_TIME, 'es_ES.UTF-8')
     today = datetime.now(pytz.timezone('America/Santiago'))
-    if today.weekday() >= 5 or is_holiday(today):
-        return ''
+    #if today.weekday() >= 5 or is_holiday(today):
+    #    return ''
+
+    team_members = list(settings.TEAM.items())
+    random.shuffle(team_members)
+    settings.TEAM = dict(team_members)
     settings.TEAM = dict(sorted(settings.TEAM.items(), key=operator.itemgetter(1)))
     teammates = settings.TEAM
-    if today.weekday() == 0: 
+    if today.weekday() == 0:
         del teammates['Nach']
-    elif today.weekday() == 3: 
+    elif today.weekday() == 3:
         del teammates['Vicky']
-    elif today.weekday() == 4: 
+    elif today.weekday() == 4:
         del teammates['Vicky']
         del teammates['Hiho']
     print("teammates", teammates)
