@@ -32,7 +32,9 @@ def is_working_day():
     print('==================================')
     locale.setlocale(locale.LC_TIME, 'es_ES.UTF-8')
     today = datetime.now(pytz.timezone('America/Santiago'))
-    with open(f'publicholiday.CL.{today.year}.csv', newline='') as csvfile:
+    project_path = os.path.realpath(os.path.dirname(__file__))
+    csv_holidays = f'{project_path}/publicholiday.CL.{today.year}.csv'
+    with open(csv_holidays, newline='') as csvfile:
         reader = csv.DictReader(csvfile)
         for row in reader:
             if row['Date'] == today.strftime('%Y-%m-%d'):
