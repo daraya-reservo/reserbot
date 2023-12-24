@@ -35,7 +35,9 @@ def working_day():
     holidays_resp = requests.get(
         f'{settings.URL_API_FERIADOS}{today.year}/CL',
         headers={
-            'User-Agent': 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:120.0) Gecko/20100101 Firefox/120.0'
+            'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8',
+            'User-Agent': 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:120.0) Gecko/20100101 Firefox/120.0',
+            'Accept-Encoding': 'gzip, deflate, br'
         }    
     )
     holidays = json.loads(holidays_resp.content.decode())
