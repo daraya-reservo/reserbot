@@ -4,13 +4,13 @@ import slack
 
 client = slack.WebClient(token=settings.BOT_TOKEN)
 
-def post_message(channel, text, btn_text=None, url=None):
-    blocks = [
-        {
+def post_message(channel, text=None, btn_text=None, url=None):
+    blocks = []
+    if text:
+        blocks.append({
             'type': 'section',
             'text': {'type': 'mrkdwn', 'text': text}
-        }
-    ]
+        })
     if btn_text:
         blocks.append({
             'type': 'actions',
