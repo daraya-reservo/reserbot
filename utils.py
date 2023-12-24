@@ -32,7 +32,12 @@ def working_day():
     locale.setlocale(locale.LC_TIME, 'es_ES.UTF-8')
     today = datetime.now(pytz.timezone('America/Santiago'))
     print('holidays_url: ', f'{settings.URL_API_FERIADOS}{today.year}/CL')
-    holidays_resp = requests.get(f'{settings.URL_API_FERIADOS}{today.year}/CL')
+    holidays_resp = requests.get(
+        f'{settings.URL_API_FERIADOS}{today.year}/CL',
+        headers={
+            'User-Agent': 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:120.0) Gecko/20100101 Firefox/120.0'
+        }    
+    )
     holidays = json.loads(holidays_resp.content)
     print('holidays: ', holidays)
     today_not_holiday = today.strftime('%Y-%m-%d') not in holidays
