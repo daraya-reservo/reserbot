@@ -39,6 +39,11 @@ def message_event(data):
             btn_text='Leer newsletter',
             url=settings.URL_NOTION_NEWSLETTERS
         )
+    elif message == 'working-day':
+        slack_client.post_message(
+            channel=event['channel'],
+            text=f'Hoy es dia laboral? {utils.working_day()}'
+        )
 
 @app.route('/lider-random', methods=['POST'])
 def lider_random():
