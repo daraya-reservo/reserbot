@@ -36,7 +36,7 @@ def message_event(data):
     elif message == 'get-newsletter':
         slack_client.post_message(
             channel=event['channel'],
-            text='',
+            text='a',
             btn_text='Leer newsletter',
             url='settings.URL_NOTION_NEWSLETTERS'
         )
