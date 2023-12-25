@@ -15,12 +15,12 @@ print('team: ', settings.TEAM)
 print('------------PROBANDO FUNCION DAILY NUEVA-------------')
 
 if lider_daily:
-    slack_client.schedule_message(
+    slack_client.schedule(
         channel=settings.CHANNEL_DEV,
         post_at=(today.replace(hour=9, minute=35, second=0)).strftime('%s'),
         text=f'Hoy {today.strftime("%A %d")} lidera {daily_leader} :rubyrun:'
     )
-    slack_client.schedule_message(
+    slack_client.schedule(
         channel=settings.CHANNEL_PROD,
         post_at=(today.replace(hour=9, minute=35, second=0)).strftime('%s'),
         text=f'Hoy {today.strftime("%A %d")} lidera {lider_daily} :finoseñores:',
@@ -35,7 +35,7 @@ if lider_daily:
             "url": settings.URL_TRELLO,
         }
     ]
-    slack_client.schedule_message(
+    slack_client.schedule(
         channel=settings.CHANNEL_PROD,
         post_at=(today.replace(hour=9, minute=50, second=0)).strftime('%s'),
         buttons=buttons,
@@ -43,7 +43,7 @@ if lider_daily:
 
 # if today.weekday() == 0: # monday
 #     first_workday = today + timedelta(days=1) if utils.is_holiday(today) else today
-#     slack_client.schedule_message(
+#     slack_client.schedule(
 #         channel=settings.CHANNEL_DEV,
 #         post_at=(first_workday.replace(hour=10, minute=25, second=0)).strftime('%s'),
 #         buttons=[{

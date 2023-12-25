@@ -19,6 +19,7 @@ from datetime import datetime
 import json
 import locale
 import operator
+import os
 import pytz
 import random
 import requests
@@ -27,13 +28,10 @@ import csv
 
 
 def is_working_day():
-    print('==================================')
-    print('working_day()')
-    print('==================================')
     locale.setlocale(locale.LC_TIME, 'es_ES.UTF-8')
     today = datetime.now(pytz.timezone('America/Santiago'))
     project_path = os.path.realpath(os.path.dirname(__file__))
-    csv_holidays = f'{project_path}/publicholiday.CL.{today.year}.csv'
+    csv_holidays = f'{project_path}/csv/publicholiday.CL.{today.year}.csv'
     with open(csv_holidays, newline='') as csvfile:
         reader = csv.DictReader(csvfile)
         for row in reader:
@@ -43,9 +41,6 @@ def is_working_day():
 
 
 def get_daily_leader():
-    print('==================================')
-    print('get_daily_leader()')
-    print('==================================')
     locale.setlocale(locale.LC_TIME, 'es_ES.UTF-8')
     today = datetime.now(pytz.timezone('America/Santiago'))
     #if not is_working_day():
@@ -57,20 +52,16 @@ def get_daily_leader():
     settings.TEAM = dict(sorted(settings.TEAM.items(), key=operator.itemgetter(1)))
     teammates = settings.TEAM
     if today.weekday() == 0:
-        del teammates['Nach']
+        teammates = {key: teammates[key] for key in teammates if key != 'Nach'}
     elif today.weekday() == 3:
-        del teammates['Vicky']
+        teammates = {key: teammates[key] for key in teammates if key != 'Vicky'}
     elif today.weekday() == 4:
-        del teammates['Vicky']
-        del teammates['Hiho']
+        teammates = {key: teammates[key] for key in teammates if key not in ('Vicky', 'Hiho')}
     print("teammates", teammates)
 
     daily_leader = next(iter(teammates))
     settings.TEAM[daily_leader] += 1
     print("settings.TEAM" , settings.TEAM)
-    print('==================================')
-    print('end of get_daily_leader()')
-    print('==================================')
     return daily_leader
 
 def get_random_teammate():

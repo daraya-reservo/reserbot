@@ -4,7 +4,7 @@ import slack
 
 client = slack.WebClient(token=settings.BOT_TOKEN)
 
-def post_message(channel, text=None, btn_text=None, url=None):
+def post(channel, text=None, btn_text=None, url=None):
     blocks = []
     if text:
         blocks.append({
@@ -31,7 +31,7 @@ def post_message(channel, text=None, btn_text=None, url=None):
     )
 
 
-def schedule_message(channel, post_at, text=None, buttons=None):
+def schedule(channel, post_at, text=None, buttons=None):
     blocks = []
     if text:
         blocks.append({
