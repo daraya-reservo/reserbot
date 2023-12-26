@@ -43,7 +43,7 @@ def is_working_day():
 def get_daily_leader():
     locale.setlocale(locale.LC_TIME, 'es_ES.UTF-8')
     today = datetime.now(pytz.timezone('America/Santiago'))
-    #if not is_working_day():
+    #if is_working_da|y() is False:
     #    return ''
 
     team_members = list(settings.TEAM.items())

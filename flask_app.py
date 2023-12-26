@@ -21,7 +21,7 @@ def message_event(data):
             channel=event['channel'],
             text=f'<@{event["user"]}> anótate en el excel :bonk-doge:',
             btn_text='Link al excel de estudio 📚',
-            url=settings.URL_EXCEL_ESTUDIO
+            url=settings.URL_ESTUDIO
         )
     elif message == 'lider-random':
         slack_client.post(
