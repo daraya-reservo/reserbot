@@ -28,16 +28,6 @@ def message_event(data):
             channel=event['channel'],
             text=f'Que lidere {utils.get_random_teammate()} :rubyrun:'
         )
-    elif message == 'get-daily-leader':
-        slack_client.post(
-            channel=event['channel'],
-            text='el lider sera ' + utils.get_daily_leader()
-        )
-    elif message == 'working-day':
-        slack_client.post(
-            channel=event['channel'],
-            text=f'Hoy es dia laboral? {"Si" if utils.is_working_day() else "No"}'
-        )
 
 @app.route('/lider-random', methods=['POST'])
 def lider_random():

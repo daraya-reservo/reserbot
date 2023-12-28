@@ -27,43 +27,53 @@ import settings
 import csv
 
 
-def is_working_day():
-    locale.setlocale(locale.LC_TIME, 'es_ES.UTF-8')
-    today = datetime.now(pytz.timezone('America/Santiago'))
+def is_working_day(date_input):
     project_path = os.path.realpath(os.path.dirname(__file__))
-    csv_holidays = f'{project_path}/csv/publicholiday.CL.{today.year}.csv'
+    csv_holidays = f'{project_path}/csv/publicholiday.CL.{date_input.year}.csv'
     with open(csv_holidays, newline='') as csvfile:
         reader = csv.DictReader(csvfile)
         for row in reader:
-            if row['Date'] == today.strftime('%Y-%m-%d'):
+            if row['Date'] == date_input.strftime('%Y-%m-%d'):
                 return False
-    return today.weekday() < 5
+    return date_input.weekday() < 5
+
+
+def get_team():
+    project_path = os.path.realpath(os.path.dirname(__file__))
+    with open(f'{project_path}/team.json', 'r') as json_file:
+        team_as_dict = json.load(json_file)
+    return team_as_dict
+
+
+def update_team(team_as_dict):
+    project_path = os.path.realpath(os.path.dirname(__file__))
+    team_as_json = json.dumps(team_as_dict, indent=4)
+    with open(f'{project_path}/team.json', 'w') as json_file:
+        json_file.write(team_as_json)
 
 
 def get_daily_leader():
     locale.setlocale(locale.LC_TIME, 'es_ES.UTF-8')
     today = datetime.now(pytz.timezone('America/Santiago'))
-    #if is_working_da|y() is False:
-    #    return ''
-
-    team_members = list(settings.TEAM.items())
+    if not is_working_day(today):
+       return ''
+    team = get_team()
+    team_members = list(team.items())
     random.shuffle(team_members)
-    settings.TEAM = dict(team_members)
-    settings.TEAM = dict(sorted(settings.TEAM.items(), key=operator.itemgetter(1)))
-    teammates = settings.TEAM
+    teammates = dict(sorted(dict(team_members).items(), key=operator.itemgetter(1)))
     if today.weekday() == 0:
         teammates = {key: teammates[key] for key in teammates if key != 'Nach'}
     elif today.weekday() == 3:
         teammates = {key: teammates[key] for key in teammates if key != 'Vicky'}
     elif today.weekday() == 4:
-        teammates = {key: teammates[key] for key in teammates if key not in ('Vicky', 'Hiho')}
-    print("teammates", teammates)
-
+        teammates = {key: teammates[key] for key in teammates if key not in ('Hiho', 'Vicky')}
     daily_leader = next(iter(teammates))
-    settings.TEAM[daily_leader] += 1
-    print("settings.TEAM" , settings.TEAM)
+    team[daily_leader] += 1
+    update_team(team)
     return daily_leader
 
+
 def get_random_teammate():
-    teammates = list(settings.TEAM.keys())
+    team = get_team()
+    teammates = list(team.keys())
     return random.choice(teammates)

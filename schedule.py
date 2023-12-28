@@ -10,8 +10,9 @@ daily_leader = utils.get_daily_leader()
 print('------------PROBANDO FUNCION DAILY NUEVA-------------')
 print('today: ', today.strftime('%A %d'))
 print('lider daily primera forma: ', lider_daily)
+print('team antes: ', utils.get_team() )
 print('lider daily segunda forma: ', daily_leader)
-print('team: ', settings.TEAM)
+print('team despues: ', utils.get_team() )
 print('------------PROBANDO FUNCION DAILY NUEVA-------------')
 
 if lider_daily:
