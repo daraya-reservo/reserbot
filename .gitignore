@@ -3,3 +3,6 @@ venv/
 __pycache__/
 *.sh
 *.json
+*.json
+team.json
+team.json
