@@ -43,12 +43,21 @@ if lider_daily:
     )
 
 if today.weekday() == 0:
-    first_workday = today + timedelta(days=1) if utils.is_holiday(today) else today
+    first_workday = today if utils.is_working_day(today) else today + timedelta(days=1) 
     slack_client.schedule(
         channel='#reserbot-shhhh',
-        post_at=(first_workday.replace(hour=10, minute=25, second=0)).strftime('%s'),
+        post_at=(first_workday.replace(hour=10, minute=30, second=0)).strftime('%s'),
         buttons=[{
             'text': 'Leer newsletter',
+            'url': settings.URL_NEWSLETTERS
+        }]
+    )
+else:
+    slack_client.schedule(
+        channel='#reserbot-shhhh',
+        post_at=(today.replace(hour=10, minute=30, second=0)).strftime('%s'),
+        buttons=[{
+            'text': f'Hoy {today.strftime("%s")} no es lunes ni martes',
             'url': settings.URL_NEWSLETTERS
         }]
     )
