@@ -1,24 +1,22 @@
+import csv
 from datetime import datetime
 import json
-import locale
 import operator
 import os
-import pytz
 import random
 import requests
 import settings
-import csv
 
 
-def is_working_day(date_input):
+def working_day(today):
     project_path = os.path.realpath(os.path.dirname(__file__))
-    csv_holidays = f'{project_path}/csv/publicholiday.CL.{date_input.year}.csv'
+    csv_holidays = f'{project_path}/csv/publicholiday.CL.{today.year}.csv'
     with open(csv_holidays, newline='') as csvfile:
         reader = csv.DictReader(csvfile)
         for row in reader:
-            if row['Date'] == date_input.strftime('%Y-%m-%d'):
+            if row['Date'] == today.strftime('%Y-%m-%d'):
                 return False
-    return date_input.weekday() < 5
+    return today.weekday() < 5
 
 
 def get_team():
@@ -35,10 +33,8 @@ def update_team(team_as_dict):
         json_file.write(team_as_json)
 
 
-def get_daily_leader():
-    locale.setlocale(locale.LC_TIME, 'es_ES.UTF-8')
-    today = datetime.now(pytz.timezone('America/Santiago'))
-    if not is_working_day(today):
+def get_daily_leader(today):
+    if not working_day(today):
        return ''
     team = get_team()
     team_members = list(team.items())
