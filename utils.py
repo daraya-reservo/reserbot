@@ -7,7 +7,6 @@ import random
 import requests
 import settings
 
-
 def working_day(today):
     project_path = os.path.realpath(os.path.dirname(__file__))
     csv_holidays = f'{project_path}/csv/publicholiday.CL.{today.year}.csv'
@@ -41,10 +40,13 @@ def get_daily_leader(today):
     random.shuffle(team_members)
     teammates = dict(sorted(dict(team_members).items(), key=operator.itemgetter(1)))
     if today.weekday() == 0:
+        # lunes Nach no trabaja
         teammates = {key: teammates[key] for key in teammates if key != 'Nach'}
     elif today.weekday() == 3:
+        # jueves Vicky en área de ventas
         teammates = {key: teammates[key] for key in teammates if key != 'Vicky'}
     elif today.weekday() == 4:
+        # viernes no están Hiho ni Vicky
         teammates = {key: teammates[key] for key in teammates if key not in ('Hiho', 'Vicky')}
     daily_leader = next(iter(teammates))
     team[daily_leader] += 1

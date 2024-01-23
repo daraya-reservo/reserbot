@@ -5,7 +5,6 @@ import settings
 import slack_client
 import utils
 
-
 locale.setlocale(locale.LC_TIME, 'es_ES.UTF-8')
 today = datetime.now(pytz.timezone('America/Santiago'))
 print('team antes: ', utils.get_team() )

@@ -1,15 +1,18 @@
 import settings
 import slack
 
-
 client = slack.WebClient(token=settings.BOT_TOKEN)
+
 
 def post(channel, text=None, btn_text=None, url=None):
     blocks = []
     if text:
         blocks.append({
             'type': 'section',
-            'text': {'type': 'mrkdwn', 'text': text}
+            'text': {
+                'type': 'mrkdwn', 
+                'text': text
+            }
         })
     if btn_text:
         blocks.append({
@@ -55,12 +58,3 @@ def schedule(channel, post_at, text=None, buttons=None):
         text='mensaje programado',
         blocks=blocks
     )
-
-
-
-
-
-
-
-
-

@@ -4,13 +4,14 @@ import settings
 import slack_client
 import utils
 
-
 app = Flask(__name__)
 slack_event_adapter = SlackEventAdapter(settings.SIGNING_SECRET, '/slack/events', app)
+
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
     return jsonify(message='Bot de Reservo')
+
 
 @slack_event_adapter.on('message')
 def message_event(data):
@@ -28,6 +29,7 @@ def message_event(data):
             channel=event['channel'],
             text=f'Que lidere {utils.get_random_teammate()} :rubyrun:'
         )
+
 
 @app.route('/lider-random', methods=['POST'])
 def lider_random():
