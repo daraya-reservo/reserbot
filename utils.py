@@ -1,11 +1,8 @@
 import csv
-from datetime import datetime
 import json
 import operator
 import os
 import random
-import requests
-import settings
 
 def working_day(today):
     project_path = os.path.realpath(os.path.dirname(__file__))
