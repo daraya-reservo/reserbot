@@ -14,7 +14,7 @@ print('team despues: ', utils.get_team() )
 if daily_leader:
     slack_client.schedule(
         channel='#reservo-ti',
-        post_at=(today.replace(hour=9, minute=9, second=0)).strftime('%s'),
+        post_at=(today.replace(hour=9, minute=9 if today.weekday()!=2 else 30, second=0)).strftime('%s'),
         text=f'Hoy {today.strftime("%A %d")} lidera {daily_leader} :rubyrun:'
     )
     buttons = [
@@ -29,7 +29,7 @@ if daily_leader:
     ]
     slack_client.schedule(
         channel='#reservo-ti',
-        post_at=(today.replace(hour=9, minute=10, second=0)).strftime('%s'),
+        post_at=(today.replace(hour=9, minute=10 if today.weekday()!=2 else 31, second=0)).strftime('%s'),
         buttons=buttons,
     )
     if today.weekday() == 0:
