@@ -7,9 +7,7 @@ import utils
 
 locale.setlocale(locale.LC_TIME, 'es_ES.UTF-8')
 today = datetime.now(pytz.timezone('America/Santiago'))
-print('team antes: ', utils.get_team() )
 daily_leader = utils.get_daily_leader(today)
-print('team despues: ', utils.get_team() )
 
 if daily_leader:
     slack_client.schedule(
@@ -35,7 +33,7 @@ if daily_leader:
     if today.weekday() == 0:
         slack_client.schedule(
             channel='#reservo-ti',
-            post_at=(today.replace(hour=10, minute=30, second=0)).strftime('%s'),
+            post_at=(today.replace(hour=11, minute=00, second=0)).strftime('%s'),
             buttons=[{
                 'text': 'Leer newsletter',
                 'url': settings.URL_NEWSLETTERS
