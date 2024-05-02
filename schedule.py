@@ -30,6 +30,22 @@ if daily_leader:
         post_at=(today.replace(hour=9, minute=10 if today.weekday()!=2 else 31, second=0)).strftime('%s'),
         buttons=buttons,
     )
+    slack_client.schedule(
+        channel='#reservo-ti',
+        post_at=(today.replace(hour=8, minute=55, second=0)).strftime('%s'),
+        buttons=[{
+            'text': 'Recuerda marcar entrada :shirabesleep:',
+            'url': settings.URL_ENTRADA_SALIDA
+        }]
+    )
+    slack_client.schedule(
+        channel='#reservo-ti',
+        post_at=(today.replace(hour=17, minute=55, second=0)).strftime('%s'),
+        buttons=[{
+            'text': 'Recuerda marcar salida :rubyrun:',
+            'url': settings.URL_ENTRADA_SALIDA
+        }]
+    )
     if today.weekday() == 0:
         slack_client.schedule(
             channel='#reservo-ti',
