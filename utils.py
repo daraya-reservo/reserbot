@@ -37,11 +37,8 @@ def get_daily_leader(today):
     if today.weekday() == 0:
         # lunes Nach no trabaja
         teammates = {key: teammates[key] for key in teammates if key != 'Nach'}
-    elif today.weekday() == 3:
-        # jueves Vicky en área de ventas
-        teammates = {key: teammates[key] for key in teammates if key != 'Vicky'}
-    elif today.weekday() == 4:
-        # viernes no están Hiho ni Vicky
+    elif today.weekday() in (3, 4):
+        # jueves/viernes Vicky en área de ventas
         teammates = {key: teammates[key] for key in teammates if key != 'Vicky'}
     daily_leader = next(iter(teammates))
     team[daily_leader] += 1
