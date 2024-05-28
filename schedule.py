@@ -30,12 +30,3 @@ if daily_leader:
         post_at=(today.replace(hour=9, minute=10 if today.weekday()!=2 else 31, second=0)).strftime('%s'),
         buttons=buttons,
     )
-    if today.weekday() == 0:
-        slack_client.schedule(
-            channel='#reservo-ti',
-            post_at=(today.replace(hour=11, minute=00, second=0)).strftime('%s'),
-            buttons=[{
-                'text': 'Leer newsletter',
-                'url': settings.URL_NEWSLETTERS
-            }]
-        )
