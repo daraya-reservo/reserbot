@@ -9,7 +9,8 @@ BOT_TOKEN = os.environ.get('SLACK_TOKEN')
 SIGNING_SECRET = os.environ.get('SIGNING_SECRET')
 
 # links relevantes
-URL_ESTUDIO = 'https://docs.google.com/spreadsheets/d/1FhaBUnW_hGk_siixvFUAjs0SZRw5iksFnSqI8XkiX3A/edit#gid=0'
+# URL_ESTUDIO = 'https://docs.google.com/spreadsheets/d/1FhaBUnW_hGk_siixvFUAjs0SZRw5iksFnSqI8XkiX3A/edit#gid=0'
+URL_ESTUDIO = 'https://docs.google.com/spreadsheets/d/1FhaBUnW_hGk_siixvFUAjs0SZRw5iksFnSqI8XkiX3A/edit?gid=1385494284#gid=1385494284'
 URL_DISCORD = 'https://discord.com/channels/897964285559472158/1014947999010533416'
 URL_TRELLO = 'https://trello.com/b/dZnTCMi3/tablero-desarrollo'
 URL_NEWSLETTERS = 'https://www.notion.so/softwarereservo/Newsletter-semanal-a9fdabf7c2fc42e3ab0ea631da2e3b07'
