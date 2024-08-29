@@ -17,8 +17,8 @@ if daily_leader:
     )
     buttons = [
         {
-            "text": "Daily :discord2:",
-            "url": settings.URL_DISCORD,
+            "text": "Meet :meet:",
+            "url": settings.URL_MEET,
         },
         {
             "text": "Tablero :trello:",
