@@ -1,60 +1,48 @@
 import settings
 import slack
 
+
 client = slack.WebClient(token=settings.BOT_TOKEN)
 
-
-def post(channel, text=None, btn_text=None, url=None):
-    blocks = []
+def prepare_message(text=None, buttons=None):
+    message = []
     if text:
-        blocks.append({
+        message.append({
             'type': 'section',
             'text': {
-                'type': 'mrkdwn', 
+                'type': 'mrkdwn',
                 'text': text
             }
         })
-    if btn_text:
-        blocks.append({
+    if buttons:
+        btn_elements = [{
+            'type': 'button',
+            'text': {
+                'type': 'plain_text',
+                'text': button['text'],
+                'emoji': True
+            },
+            'style': 'primary',
+            'url': button['url']
+        } for button in buttons]
+        message.append({
             'type': 'actions',
-            'elements': [{
-                'type': 'button',
-                'text': {
-                    'type': 'plain_text',
-                    'text': btn_text,
-                    'emoji': True
-                },
-                'style': 'primary',
-                'url': url
-            }]
+            'elements': btn_elements
         })
+    return message
+
+def post_message(channel, text=None, buttons=None):
+    blocks = prepare_message(text=text, buttons=buttons)
     client.chat_postMessage(
         channel=channel,
         blocks=blocks
     )
 
-
-def schedule(channel, post_at, text=None, buttons=None):
-    blocks = []
-    if text:
-        blocks.append({
-            'type': 'section',
-            'text': {'type': 'mrkdwn', 'text': text}
-        })
-    if buttons:
-        elements = [{
-            'type': 'button',
-            'text': {'type': 'plain_text', 'text': button['text']},
-            'style': 'primary',
-            'url': button['url']
-        } for button in buttons]
-        blocks.append({
-            'type': 'actions',
-            'elements': elements,
-        })
+def schedule_message(channel, post_at, text=None, buttons=None):
+    blocks = prepare_message(text=text, buttons=buttons)
     client.chat_scheduleMessage(
         channel=channel,
         post_at=post_at,
+        blocks=blocks,
         text='mensaje programado',
-        blocks=blocks
     )
