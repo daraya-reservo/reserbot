@@ -34,12 +34,6 @@ def get_daily_leader(today):
     team_members = list(team.items())
     random.shuffle(team_members)
     teammates = dict(sorted(dict(team_members).items(), key=operator.itemgetter(1)))
-    if today.weekday() == 0:
-        # lunes Nach no trabaja
-        teammates = {key: teammates[key] for key in teammates if key != 'Nach'}
-    elif today.weekday() in (3, 4):
-        # jueves/viernes Vicky en área de ventas
-        teammates = {key: teammates[key] for key in teammates if key != 'Vicky'}
     daily_leader = next(iter(teammates))
     team[daily_leader] += 1
     update_team(team)
