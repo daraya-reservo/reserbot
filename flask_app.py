@@ -39,6 +39,10 @@ def lider_random():
         )
     return Response(), 200
 
+@app.route('/lider-daily-hoy', methods=['POST'])
+def lider_daily_hoy():
+    return Response(request.form), 200
+
 
 if __name__ == '__main__':
     app.run(port=5000)
