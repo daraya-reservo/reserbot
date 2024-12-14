@@ -31,7 +31,7 @@ def message_event(data):
 def lider_random():
     slack_client.post_message(
         channel=f'#{request.form.get("channel_name")}',
-        text=f'Que lidere {utils.get_random_teammate()} :rubyrun:'
+        text=f'Que lidere {utils.get_lider_random()} :rubyrun:'
     )
     return Response(), 200
 
