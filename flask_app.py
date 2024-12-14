@@ -30,6 +30,7 @@ def message_event(data):
 
 @app.route('/lider-random', methods=['POST'])
 def lider_random():
+    global team_members
     if team_members:
         lider_random, team_members = utils.get_lider_random(team_members)
         slack_client.post_message(
