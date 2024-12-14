@@ -3,22 +3,22 @@ import locale
 import pytz
 import settings
 import slack_client
-import utils
+from utils import get_lider_daily
 
 
 locale.setlocale(locale.LC_TIME, 'es_ES.UTF-8')
 today = datetime.now(pytz.timezone('America/Santiago'))
-daily_leader = utils.get_daily_leader(today)
+lider_daily = get_lider_daily(today)
 
-if daily_leader:
+if lider_daily:
     slack_client.schedule_message(
-        channel='#reservo-ti',
-        post_at=(today.replace(hour=9, minute=10 if today.weekday()!=2 else 30, second=0)).strftime('%s'),
-        text=f'Hoy {today.strftime("%A %d")} lidera {daily_leader} :rubyrun:'
+        channel=settings.CHANNEL_TESTING,
+        post_at=(today.replace(hour=9, minute=0, second=0)).strftime('%s'),
+        text=f'Hoy {today.strftime("%A %d")} lidera {lider_daily} :rubyrun:'
     )
     slack_client.schedule_message(
-        channel='#reservo-ti',
-        post_at=(today.replace(hour=9, minute=10 if today.weekday()!=2 else 30, second=30)).strftime('%s'),
+        channel=settings.CHANNEL_TESTING,
+        post_at=(today.replace(hour=9, minute=0, second=5)).strftime('%s'),
         buttons=[
             {
                 "text": "Meet :meet:",

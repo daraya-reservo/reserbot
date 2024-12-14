@@ -8,6 +8,10 @@ load_dotenv(dotenv_path=env_path)
 BOT_TOKEN = os.environ.get('SLACK_TOKEN')
 SIGNING_SECRET = os.environ.get('SIGNING_SECRET')
 
+# canales de slack
+CHANNEL_TESTING = '#reserbot-shhhh'
+CHANNEL_PRODUCTION = '#reservo-ti'
+
 # links relevantes
 URL_ESTUDIO = 'https://docs.google.com/spreadsheets/d/1FhaBUnW_hGk_siixvFUAjs0SZRw5iksFnSqI8XkiX3A/edit?gid=1385494284#gid=1385494284'
 URL_MEET = 'https://meet.google.com/sft-muqe-ziq?authuser=0'

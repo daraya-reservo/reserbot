@@ -5,15 +5,15 @@ import os
 import random
 
 
-def working_day(today):
+def rest_day(today):
+    if today.weekday() in [5, 6]:
+        return True
     project_path = os.path.realpath(os.path.dirname(__file__))
-    csv_holidays = f'{project_path}/csv/publicholiday.CL.{today.year}.csv'
-    with open(csv_holidays, newline='') as csvfile:
-        reader = csv.DictReader(csvfile)
-        for row in reader:
-            if row['Date'] == today.strftime('%Y-%m-%d'):
-                return False
-    return today.weekday() < 5
+    holidays_path = f'{project_path}/csv/publicholiday.CL.{today.year}.csv'
+    with open(holidays_path) as holidays_file:
+        holidays = csv.DictReader(holidays_file)
+        formatted_day = today.strftime('%Y-%m-%d')
+        return formatted_day in [day['Date'] for day in holidays]
 
 def get_team():
     project_path = os.path.realpath(os.path.dirname(__file__))
@@ -27,19 +27,46 @@ def update_team(team_as_dict):
     with open(f'{project_path}/team.json', 'w') as json_file:
         json_file.write(team_as_json)
 
-def get_daily_leader(today):
-    if not working_day(today):
-       return ''
+def get_lider_daily(today):
+    if rest_day(today):
+       return None
     team = get_team()
-    team_members = list(team.items())
-    random.shuffle(team_members)
-    teammates = dict(sorted(dict(team_members).items(), key=operator.itemgetter(1)))
+    members = list(team.items())
+    random.shuffle(members)
+    teammates = dict(sorted(dict(members).items(), key=operator.itemgetter(1)))
     daily_leader = next(iter(teammates))
     team[daily_leader] += 1
     update_team(team)
     return daily_leader
 
-def get_random_teammate():
-    team = get_team()
-    teammates = list(team.keys())
-    return random.choice(teammates)
+def get_lider_random(team_members):
+    lider_random = random.choice(team_members)
+    team_members.remove(lider_random)
+    return lider_random, team_members
+
+def build_message(text=None, buttons=None):
+    message = []
+    if text:
+        message.append({
+            'type': 'section',
+            'text': {
+                'type': 'mrkdwn',
+                'text': text
+            }
+        })
+    if buttons:
+        btn_elements = [{
+            'type': 'button',
+            'text': {
+                'type': 'plain_text',
+                'text': button['text'],
+                'emoji': True
+            },
+            'style': 'primary',
+            'url': button['url']
+        } for button in buttons]
+        message.append({
+            'type': 'actions',
+            'elements': btn_elements
+        })
+    return message
