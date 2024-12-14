@@ -6,6 +6,7 @@ import utils
 
 app = Flask(__name__)
 slack_event_adapter = SlackEventAdapter(settings.SIGNING_SECRET, '/slack/events', app)
+team_members = list(utils.get_team().keys())
 
 
 @app.route('/', methods=['GET', 'POST'])
@@ -29,10 +30,12 @@ def message_event(data):
 
 @app.route('/lider-random', methods=['POST'])
 def lider_random():
-    slack_client.post_message(
-        channel=f'#{request.form.get("channel_name")}',
-        text=f'Que lidere {utils.get_lider_random()} :rubyrun:'
-    )
+    if team_members:
+        lider_random, team_members = utils.get_lider_random(team_members)
+        slack_client.post_message(
+            channel=settings.CHANNEL_TESTING,  # f'#{request.form.get("channel_name")}',
+            text=f'Que lidere {lider_random} :rubyrun:'
+        )
     return Response(), 200
 
 
