@@ -41,6 +41,7 @@ def lider_random():
 
 @app.route('/lider-daily-hoy', methods=['POST'])
 def lider_daily_hoy():
+    print(request.form.get('channel_name'))
     return Response(request.form), 200
 
 
