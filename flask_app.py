@@ -41,9 +41,14 @@ def lider_random():
 
 @app.route('/lider-daily-hoy', methods=['POST'])
 def lider_daily_hoy():
+    if request.form.get('user_name') == 'daraya':
+        slack_client.post_message(
+            channel=settings.CHANNEL_TESTING,  # f'#{request.form.get("channel_name")}',
+            text='jkhjkh'
+        )
     print(request.form)
     print(request.form.get('channel_name'))
-    return Response(request.form), 200
+    return Response(), 200
 
 
 if __name__ == '__main__':
