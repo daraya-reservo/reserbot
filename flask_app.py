@@ -46,8 +46,14 @@ def lider_daily_hoy():
             channel=settings.CHANNEL_TESTING,  # f'#{request.form.get("channel_name")}',
             text='jkhjkh'
         )
-    print(request.form)
-    print(request.form.get('channel_name'))
+    return Response(), 200
+
+@app.route('/lider-daily', methods=['POST'])
+def lider_daily():
+    slack_client.post_message(
+        channel=settings.CHANNEL_TESTING,  # f'#{request.form.get("channel_name")}',
+        text=utils.get_lider_daily()
+    )
     return Response(), 200
 
 
