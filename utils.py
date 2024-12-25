@@ -56,7 +56,7 @@ def get_lider_daily():
             lider = integrante['dailies']
         elif integrante['dailies'] == lider['dailies']:
             lider = random.choice([lider, integrante])
-    return lider['nombre']
+    return lider['tag']
 
 def get_lider_random(integrantes):
     lider_random = random.choice(integrantes)
