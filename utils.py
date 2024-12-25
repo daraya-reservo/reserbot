@@ -61,7 +61,7 @@ def update_team(team_as_list):
 
 def get_lider_daily():
     integrantes_equipo = get_integrantes_equipo(filtrar_disponibles=True)
-    print(integrantes_equipo)
+    print(min(integrantes_equipo, key=lambda integrante:integrante['dailies']))
     # members = list(integrantes_equipo.items())
     # random.shuffle(members)
     # teammates = dict(sorted(dict(members).items(), key=operator.itemgetter(1)))

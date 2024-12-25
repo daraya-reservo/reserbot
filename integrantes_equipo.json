@@ -8,67 +8,67 @@
     {
         "nombre": "Dani",
         "tag": "daraya",
-        "dailies": 0,
+        "dailies": 1,
         "disponible": true
     },
     {
         "nombre": "Hiho",
         "tag": "ndelgado",
-        "dailies": 0,
+        "dailies": 1,
         "disponible": true
     },
     {
         "nombre": "Juan",
         "tag": "jecclefield",
-        "dailies": 0,
+        "dailies": 1,
         "disponible": true
     },
     {
         "nombre": "Lucho",
         "tag": "lpinochet",
-        "dailies": 0,
+        "dailies": 1,
         "disponible": true
     },
     {
         "nombre": "Manu",
         "tag": "mgrandon",
-        "dailies": 0,
+        "dailies": 1,
         "disponible": true
     },
     {
         "nombre": "Nach",
         "tag": "imachuca",
-        "dailies": 0,
+        "dailies": 1,
         "disponible": true
     },
     {
         "nombre": "Pancho",
         "tag": "fvilla",
-        "dailies": 0,
+        "dailies": 1,
         "disponible": true
     },
     {
         "nombre": "Pato",
         "tag": "ptapia",
-        "dailies": 0,
+        "dailies": 1,
         "disponible": true
     },
     {
         "nombre": "Seba",
         "tag": "sconcha",
-        "dailies": 0,
+        "dailies": 1,
         "disponible": true
     },
     {
         "nombre": "Val",
         "tag": "vgutierrez",
-        "dailies": 0,
+        "dailies": 1,
         "disponible": true
     },
     {
         "nombre": "Vicky",
         "tag": "vmartinez",
-        "dailies": 0,
+        "dailies": 1,
         "disponible": true
     }
 ]
