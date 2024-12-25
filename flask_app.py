@@ -59,7 +59,7 @@ def lider_daily():
     return Response(), 200
 
 @app.route('/vacaciones', methods=['POST'])
-def lider_daily():
+def vacaciones():
     slack_client.post_message(
         channel=settings.CHANNEL_TESTING,  # f'#{request.form.get("channel_name")}',
         text=utils.get_lider_daily()
