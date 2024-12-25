@@ -50,7 +50,7 @@
     {
         "nombre": "Pato",
         "tag": "ptapia",
-        "dailies": 1,
+        "dailies": 0,
         "disponible": true
     },
     {
@@ -68,7 +68,7 @@
     {
         "nombre": "Vicky",
         "tag": "vmartinez",
-        "dailies": 1,
+        "dailies": 0,
         "disponible": true
     }
 ]
