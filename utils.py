@@ -61,14 +61,14 @@ def update_team(team_as_list):
 
 def get_lider_daily():
     integrantes_equipo = get_integrantes_equipo(filtrar_disponibles=True)
-
+    print(integrantes_equipo)
     # members = list(integrantes_equipo.items())
     # random.shuffle(members)
     # teammates = dict(sorted(dict(members).items(), key=operator.itemgetter(1)))
     # daily_leader = next(iter(teammates))
     # integrantes_equipo[daily_leader] += 1
     # update_team(integrantes_equipo)
-    return integrantes_equipo
+    return 'integrantes_equipo'
 
 def get_lider_random(integrantes):
     lider_random = random.choice(integrantes)
