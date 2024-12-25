@@ -44,7 +44,7 @@ def lider_daily_hoy():
     if request.form.get('user_name') == 'daraya':
         slack_client.post_message(
             channel=settings.CHANNEL_TESTING,  # f'#{request.form.get("channel_name")}',
-            text='jkhjkh'
+            text='<@daraya>'
         )
     return Response(), 200
 
@@ -55,6 +55,8 @@ def lider_daily():
         text=utils.get_lider_daily()
     )
     return Response(), 200
+
+
 
 
 if __name__ == '__main__':

@@ -18,3 +18,6 @@ URL_MEET = 'https://meet.google.com/sft-muqe-ziq?authuser=0'
 URL_TRELLO = 'https://trello.com/b/dZnTCMi3/tablero-desarrollo'
 URL_NEWSLETTERS = 'https://www.notion.so/softwarereservo/Newsletter-semanal-a9fdabf7c2fc42e3ab0ea631da2e3b07'
 URL_ENTRADA_SALIDA = 'https://app.ctrlit.cl/ctrl/dial/web/eJUVR0SMli'
+
+# ruta del proyecto
+RUTA_PROYECTO = os.path.realpath(os.path.dirname(__file__))
