@@ -65,4 +65,4 @@ def get_lider_al_azar():
     global integrantes_aux
     lider_al_azar = random.choice(integrantes_aux)
     integrantes_aux.remove(lider_al_azar)
-    return lider_al_azar
+    return lider_al_azar['nombre']
