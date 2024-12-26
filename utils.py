@@ -1,7 +1,7 @@
 import csv
 import json
 import random
-import settings
+from settings import RUTA_PROYECTO
 
 
 def es_dia_habil(dia):
@@ -9,7 +9,7 @@ def es_dia_habil(dia):
     if dia.weekday() in [5, 6]:
         return False
     # abro archivo de feriados
-    ruta_archivo_feriados = f'{settings.RUTA_PROYECTO}/csv/publicholiday.CL.{dia.year}.csv'  # ver README
+    ruta_archivo_feriados = f'{RUTA_PROYECTO}/csv/publicholiday.CL.{dia.year}.csv'  # ver README
     archivo_feriados = open(ruta_archivo_feriados)
     feriados = csv.DictReader(archivo_feriados)
     archivo_feriados.close()
@@ -20,12 +20,12 @@ def es_dia_habil(dia):
 
 def get_integrantes_equipo(filtrar_disponibles=True):
     # abro archivo de integrantes del equipo
-    json_equipo = open(f'{settings.RUTA_PROYECTO}/integrantes_equipo.json')
+    json_equipo = open(f'{RUTA_PROYECTO}/integrantes_equipo.json')
     integrantes_equipo = json.load(json_equipo)
     json_equipo.close()
     # filtro los integrantes disponibles
     if filtrar_disponibles:
-        return [integrante for integrante in integrantes_equipo if integrante['disponible']]
+        integrantes_equipo = [integrante for integrante in integrantes_equipo if integrante['disponible']]
     return integrantes_equipo
 
 def update_dailies_equipo(tag_integrante):
@@ -33,59 +33,36 @@ def update_dailies_equipo(tag_integrante):
     for integrante in integrantes_equipo:
         if integrante['tag'] == tag_integrante:
             integrante['dailies'] += 1
-    update_equipo(integrantes_equipo)
+    _update_equipo(integrantes_equipo)
 
-def update_disponibilidad_equipo(tag_integrante):
+def update_vacaciones(tag_integrante):
     integrantes_equipo = get_integrantes_equipo(filtrar_disponibles=False)
     for integrante in integrantes_equipo:
         if integrante['tag'] == tag_integrante:
             integrante['disponible'] = not integrante['disponible']
-    update_equipo(integrantes_equipo)
+    _update_equipo(integrantes_equipo)
 
-def update_equipo(integrantes_equipo):
+def _update_equipo(integrantes_equipo):
     integrantes_equipo = json.dumps(integrantes_equipo, indent=4)
-    json_equipo = open(f'{settings.RUTA_PROYECTO}/integrantes_equipo.json', 'w')
+    json_equipo = open(f'{RUTA_PROYECTO}/integrantes_equipo.json', 'w')
     json_equipo.write(integrantes_equipo)
     json_equipo.close()
 
-def get_lider_daily():
-    integrantes_equipo = get_integrantes_equipo(filtrar_disponibles=True)
-    lider = integrantes_equipo[0]
-    for integrante in integrantes_equipo:
-        if integrante['dailies'] < lider['dailies']:
+def get_lider():
+    integrantes_disponibles = get_integrantes_equipo(filtrar_disponibles=True)
+    # lidera el que tenga menos dailies
+    lider = integrantes_disponibles[0]
+    for integrante in integrantes_disponibles:
+        if integrante['dailies'] <= lider['dailies']:
             lider = integrante['dailies']
         elif integrante['dailies'] == lider['dailies']:
             lider = random.choice([lider, integrante])
     return lider['tag']
 
-def get_lider_random(integrantes):
-    lider_random = random.choice(integrantes)
-    integrantes.remove(lider_random)
-    return lider_random, integrantes
+integrantes_aux = get_integrantes_equipo(filtrar_disponibles=True)
 
-def build_message(text=None, buttons=None):
-    message = []
-    if text:
-        message.append({
-            'type': 'section',
-            'text': {
-                'type': 'mrkdwn',
-                'text': text
-            }
-        })
-    if buttons:
-        btn_elements = [{
-            'type': 'button',
-            'text': {
-                'type': 'plain_text',
-                'text': button['text'],
-                'emoji': True
-            },
-            'style': 'primary',
-            'url': button['url']
-        } for button in buttons]
-        message.append({
-            'type': 'actions',
-            'elements': btn_elements
-        })
-    return message
+def get_lider_al_azar():
+    global integrantes_aux
+    lider_al_azar = random.choice(integrantes_aux)
+    integrantes_aux.remove(lider_al_azar)
+    return lider_al_azar

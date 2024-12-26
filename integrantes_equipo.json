@@ -1,73 +1,73 @@
 [
     {
         "nombre": "Agust\u00edn",
-        "tag": "apradenas",
+        "tag": "@apradenas",
         "dailies": 0,
         "disponible": true
     },
     {
         "nombre": "Dani",
-        "tag": "daraya",
+        "tag": "@daraya",
         "dailies": 1,
         "disponible": true
     },
     {
         "nombre": "Hiho",
-        "tag": "ndelgado",
+        "tag": "@ndelgado",
         "dailies": 1,
         "disponible": true
     },
     {
         "nombre": "Juan",
-        "tag": "jecclefield",
+        "tag": "@jecclefield",
         "dailies": 1,
         "disponible": true
     },
     {
         "nombre": "Lucho",
-        "tag": "lpinochet",
+        "tag": "@lpinochet",
         "dailies": 1,
         "disponible": true
     },
     {
         "nombre": "Manu",
-        "tag": "mgrandon",
+        "tag": "@mgrandon",
         "dailies": 1,
         "disponible": true
     },
     {
         "nombre": "Nach",
-        "tag": "imachuca",
+        "tag": "@imachuca",
         "dailies": 1,
         "disponible": true
     },
     {
         "nombre": "Pancho",
-        "tag": "fvilla",
+        "tag": "@fvilla",
         "dailies": 1,
         "disponible": true
     },
     {
         "nombre": "Pato",
-        "tag": "ptapia",
+        "tag": "@ptapia",
         "dailies": 0,
         "disponible": true
     },
     {
         "nombre": "Seba",
-        "tag": "sconcha",
+        "tag": "@sconcha",
         "dailies": 1,
         "disponible": true
     },
     {
         "nombre": "Val",
-        "tag": "vgutierrez",
+        "tag": "@vgutierrez",
         "dailies": 1,
         "disponible": true
     },
     {
         "nombre": "Vicky",
-        "tag": "vmartinez",
+        "tag": "@vmartinez",
         "dailies": 0,
         "disponible": true
     }

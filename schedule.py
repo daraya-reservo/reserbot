@@ -2,17 +2,19 @@ from datetime import datetime
 import locale
 import pytz
 import settings
-import slack_client
-import utils
+from bot_interface import programar_mensaje
+from utils import es_dia_habil, get_lider
 
 locale.setlocale(locale.LC_TIME, 'es_ES.UTF-8')
 hoy = datetime.now(pytz.timezone('America/Santiago'))
 
-if utils.es_dia_habil(hoy):
-    slack_client.schedule_message(
+if es_dia_habil(hoy):
+    hoy_formatted = hoy.strftime("%A %d")
+    lider = get_lider()
+    programar_mensaje(
         channel=settings.CHANNEL_TESTING,
         post_at=(hoy.replace(hour=9, minute=0, second=0)).strftime('%s'),
-        text=f'Hoy {hoy.strftime("%A %d")} lidera la daily {utils.get_lider_daily()} :goodmorning:',
+        text=f'Hoy {hoy_formatted} lidera la daily {lider} :goodmorning:',
         buttons=[
             {
                 "text": "Link a Meet :meet:",
