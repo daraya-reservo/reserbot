@@ -30,33 +30,38 @@ def message_event(data):
 
 @app.route('/lider-al-azar', methods=['POST'])
 def lider_al_azar():
-    lider = utils.get_lider_al_azar()
-    publicar_mensaje(
-        channel=settings.CHANNEL_TESTING,  # f'#{request.form.get("channel_name")}',
-        text=f'Que lidere {lider} :rubyrun:'
-    )
-    return Response(), 200
-
-@app.route('/lider-daily-hoy', methods=['POST'])
-def lider_daily_hoy():
-    if request.form['user_name'] == 'daraya':
-        lider = request.form['text']
-        utils.update_dailies_equipo(lider)
+    try:
+        lider = utils.get_lider_al_azar()
         publicar_mensaje(
-            channel=settings.CHANNEL_TESTING,
-            text=f'Hoy lideró {lider}'
+            channel=settings.CHANNEL_TESTING,  # f'#{request.form.get("channel_name")}',
+            text=f'Que lidere {lider} :rubyrun:'
         )
+    # error cuando ya no quedan integrantes para la seleccion random de lider
+    except IndexError: 
+        pass
     return Response(), 200
 
-@app.route('/vacaciones', methods=['POST'])
-def vacaciones():
+@app.route('/actualizar-dailies', methods=['POST'])
+def actualizar_dailies():
     if request.form['user_name'] == 'daraya':
         integrante = request.form['text']
-        utils.update_vacaciones(integrante)
+        utils.update_dailies(integrante)
         publicar_mensaje(
             channel=settings.CHANNEL_TESTING,
-            text=f'{integrante} se tomará unos días'
+            text=f'Hoy lideró {integrante}'
         )
+    return Response(), 200
+
+@app.route('/actualizar-disponibilidad', methods=['POST'])
+def actualizar_disponibilidad():
+    if request.form['user_name'] == 'daraya':
+        integrante_tag = request.form['text']
+        integrante_actualizado = utils.update_disponibilidad(integrante_tag)
+        if not integrante_actualizado['disponible']:
+            publicar_mensaje(
+                channel=settings.CHANNEL_TESTING,
+                text=f'{integrante_actualizado['nombre']} se tomará unos días :rubyrun:'
+            )
     return Response(), 200
 
 

@@ -28,19 +28,21 @@ def get_integrantes_equipo(filtrar_disponibles=True):
         integrantes_equipo = [integrante for integrante in integrantes_equipo if integrante['disponible']]
     return integrantes_equipo
 
-def update_dailies_equipo(tag_integrante):
+def update_dailies(tag_integrante):
     integrantes_equipo = get_integrantes_equipo(filtrar_disponibles=False)
     for integrante in integrantes_equipo:
         if integrante['tag'] == tag_integrante:
             integrante['dailies'] += 1
     _update_equipo(integrantes_equipo)
 
-def update_vacaciones(tag_integrante):
+def update_disponibilidad(tag_integrante):
     integrantes_equipo = get_integrantes_equipo(filtrar_disponibles=False)
     for integrante in integrantes_equipo:
         if integrante['tag'] == tag_integrante:
             integrante['disponible'] = not integrante['disponible']
+            integrante_actualizado = integrante
     _update_equipo(integrantes_equipo)
+    return integrante_actualizado
 
 def _update_equipo(integrantes_equipo):
     integrantes_equipo = json.dumps(integrantes_equipo, indent=4)
@@ -48,18 +50,15 @@ def _update_equipo(integrantes_equipo):
     json_equipo.write(integrantes_equipo)
     json_equipo.close()
 
+
 def get_lider():
-    integrantes_disponibles = get_integrantes_equipo(filtrar_disponibles=True)
-    # lidera el que tenga menos dailies
-    lider = integrantes_disponibles[0]
-    for integrante in integrantes_disponibles:
-        if integrante['dailies'] <= lider['dailies']:
-            lider = integrante['dailies']
-        elif integrante['dailies'] == lider['dailies']:
-            lider = random.choice([lider, integrante])
+    integrantes_disponibles = get_integrantes_equipo()
+    # lidera el que tenga menor numero de dailies lideradas
+    random.shuffle(integrantes_disponibles)
+    lider = min(integrantes_disponibles, key=lambda i:i['dailies'])
     return lider['tag']
 
-integrantes_aux = get_integrantes_equipo(filtrar_disponibles=True)
+integrantes_aux = get_integrantes_equipo()
 
 def get_lider_al_azar():
     global integrantes_aux
