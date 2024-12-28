@@ -30,7 +30,7 @@ def message_event(data):
 @app.route('/lider-al-azar', methods=['POST'])
 def lider_al_azar():
     print(utils.get_integrantes_equipo(filtrar_disponibles=False))
-    print(utils.get_integrantes_equipo(de_vacaciones=True))
+    print(utils.get_integrantes_equipo(filtrar_disponibles=False, de_vacaciones=True))
     lider_al_azar = utils.get_lider_al_azar()
     if lider_al_azar:
         publicar_mensaje(
