@@ -16,11 +16,10 @@ def index():
 def message_event(data):
     event = data['event']
     mensaje = event.get('text', '').lower()
-    channel = settings.TEST_ENV # event['channel']
     mensaje_estudio = 'estudio' in mensaje and event.get('bot_id') is None
     if mensaje_estudio:
         publicar_mensaje(
-            channel=channel,
+            channel=settings.TEST_ENV, # event['channel'],
             text=f'<@{event["user"]}> anótate en el excel :bonk-doge:',
             buttons=[{
                 'text': 'Link al excel 📚',
@@ -30,6 +29,7 @@ def message_event(data):
 
 @app.route('/lider-al-azar', methods=['POST'])
 def lider_al_azar():
+    print(utils.get_integrantes_equipo(de_vacaciones=True))
     lider_al_azar = utils.get_lider_al_azar()
     if lider_al_azar:
         publicar_mensaje(
@@ -43,12 +43,6 @@ def actualizar_dailies():
     if request.form['user_name'] == 'daraya':
         integrante = request.form['text']
         utils.update_dailies(integrante)
-        publicar_mensaje(
-            channel=settings.TEST_ENV,
-            text=f'Hoy lideró {integrante}'
-        )
-    print('integrantes actualizados')
-    print(utils.get_integrantes_equipo(filtrar_disponibles=False))
     return Response(), 200
 
 @app.route('/actualizar-disponibilidad', methods=['POST'])
@@ -56,13 +50,6 @@ def actualizar_disponibilidad():
     if request.form['user_name'] == 'daraya':
         integrante_tag = request.form['text']
         integrante_actualizado = utils.update_disponibilidad(integrante_tag)
-        if not integrante_actualizado['disponible']:
-            publicar_mensaje(
-                channel=settings.TEST_ENV,
-                text=f'{integrante_actualizado["nombre"]} se tomará unos días :rubyrun:'
-            )
-        print('integrante actualizado')
-        print(integrante_actualizado)
     return Response(), 200
 
 

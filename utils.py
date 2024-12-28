@@ -18,7 +18,7 @@ def es_dia_habil(dia):
     lista_feriados = [feriado['Date'] for feriado in feriados]
     return dia_format not in lista_feriados
 
-def get_integrantes_equipo(filtrar_disponibles=True):
+def get_integrantes_equipo(filtrar_disponibles=True, de_vacaciones=False):
     # abro archivo de integrantes del equipo
     json_equipo = open(f'{RUTA_PROYECTO}/integrantes_equipo.json')
     integrantes_equipo = json.load(json_equipo)
@@ -26,6 +26,8 @@ def get_integrantes_equipo(filtrar_disponibles=True):
     # filtro los integrantes disponibles
     if filtrar_disponibles:
         integrantes_equipo = [integrante for integrante in integrantes_equipo if integrante['disponible']]
+    if de_vacaciones:
+        integrantes_equipo = [integrante for integrante in integrantes_equipo if not integrante['disponible']]
     return integrantes_equipo
 
 def update_dailies(integrante_tag):
@@ -33,7 +35,10 @@ def update_dailies(integrante_tag):
     for integrante in integrantes_equipo:
         if integrante['tag'] == integrante_tag:
             integrante['dailies'] += 1
+            integrante_actualizado = integrante
+            break
     _update_equipo(integrantes_equipo)
+    return integrante_actualizado
 
 def update_disponibilidad(integrante_tag):
     integrantes_equipo = get_integrantes_equipo(filtrar_disponibles=False)
@@ -41,6 +46,7 @@ def update_disponibilidad(integrante_tag):
         if integrante['tag'] == integrante_tag:
             integrante['disponible'] = not integrante['disponible']
             integrante_actualizado = integrante
+            break
     _update_equipo(integrantes_equipo)
     return integrante_actualizado
 
@@ -55,7 +61,7 @@ def get_lider():
     integrantes_disponibles = get_integrantes_equipo()
     # lidera el que tenga menor numero de dailies lideradas
     random.shuffle(integrantes_disponibles)
-    lider = min(integrantes_disponibles, key=lambda i:i['dailies'])
+    lider = min(integrantes_disponibles, key=lambda i:i['dailies']).get('tag')
     return lider
 
 integrantes_aux = get_integrantes_equipo()
