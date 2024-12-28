@@ -59,7 +59,7 @@ def actualizar_disponibilidad():
         if not integrante_actualizado['disponible']:
             publicar_mensaje(
                 channel=settings.TEST_ENV,
-                text=f'{integrante_actualizado['nombre']} se tomará unos días :rubyrun:'
+                text=f'{integrante_actualizado["nombre"]} se tomará unos días :rubyrun:'
             )
         print('integrantes actualizados')
         print(utils.get_integrantes_equipo())
