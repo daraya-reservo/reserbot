@@ -28,17 +28,17 @@ def get_integrantes_equipo(filtrar_disponibles=True):
         integrantes_equipo = [integrante for integrante in integrantes_equipo if integrante['disponible']]
     return integrantes_equipo
 
-def update_dailies(tag_integrante):
+def update_dailies(integrante_tag):
     integrantes_equipo = get_integrantes_equipo(filtrar_disponibles=False)
     for integrante in integrantes_equipo:
-        if integrante['tag'] == tag_integrante:
+        if integrante['tag'] == integrante_tag:
             integrante['dailies'] += 1
     _update_equipo(integrantes_equipo)
 
-def update_disponibilidad(tag_integrante):
+def update_disponibilidad(integrante_tag):
     integrantes_equipo = get_integrantes_equipo(filtrar_disponibles=False)
     for integrante in integrantes_equipo:
-        if integrante['tag'] == tag_integrante:
+        if integrante['tag'] == integrante_tag:
             integrante['disponible'] = not integrante['disponible']
             integrante_actualizado = integrante
     _update_equipo(integrantes_equipo)
@@ -56,12 +56,15 @@ def get_lider():
     # lidera el que tenga menor numero de dailies lideradas
     random.shuffle(integrantes_disponibles)
     lider = min(integrantes_disponibles, key=lambda i:i['dailies'])
-    return lider['tag']
+    return lider
 
 integrantes_aux = get_integrantes_equipo()
 
 def get_lider_al_azar():
     global integrantes_aux
-    lider_al_azar = random.choice(integrantes_aux)
+    try:
+        lider_al_azar = random.choice(integrantes_aux)
+    except IndexError:  # cuando integrantes_aux está vacia
+        return None
     integrantes_aux.remove(lider_al_azar)
-    return lider_al_azar['nombre']
+    return lider_al_azar

@@ -16,7 +16,7 @@ def index():
 def message_event(data):
     event = data['event']
     mensaje = event.get('text', '').lower()
-    channel = settings.CHANNEL_TESTING # event['channel']
+    channel = settings.TEST_ENV # event['channel']
     mensaje_estudio = 'estudio' in mensaje and event.get('bot_id') is None
     if mensaje_estudio:
         publicar_mensaje(
@@ -30,15 +30,12 @@ def message_event(data):
 
 @app.route('/lider-al-azar', methods=['POST'])
 def lider_al_azar():
-    try:
-        lider = utils.get_lider_al_azar()
+    lider_al_azar = utils.get_lider_al_azar()
+    if lider_al_azar:
         publicar_mensaje(
-            channel=settings.CHANNEL_TESTING,  # f'#{request.form.get("channel_name")}',
-            text=f'Que lidere {lider} :rubyrun:'
+            channel=settings.TEST_ENV,  # f'#{request.form.get("channel_name")}',
+            text=f'Que lidere {lider_al_azar['nombre']} :rubyrun:'
         )
-    # error cuando ya no quedan integrantes para la seleccion random de lider
-    except IndexError: 
-        pass
     return Response(), 200
 
 @app.route('/actualizar-dailies', methods=['POST'])
@@ -47,7 +44,7 @@ def actualizar_dailies():
         integrante = request.form['text']
         utils.update_dailies(integrante)
         publicar_mensaje(
-            channel=settings.CHANNEL_TESTING,
+            channel=settings.TEST_ENV,
             text=f'Hoy lideró {integrante}'
         )
     return Response(), 200
@@ -59,7 +56,7 @@ def actualizar_disponibilidad():
         integrante_actualizado = utils.update_disponibilidad(integrante_tag)
         if not integrante_actualizado['disponible']:
             publicar_mensaje(
-                channel=settings.CHANNEL_TESTING,
+                channel=settings.TEST_ENV,
                 text=f'{integrante_actualizado['nombre']} se tomará unos días :rubyrun:'
             )
     return Response(), 200
