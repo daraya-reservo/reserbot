@@ -34,7 +34,7 @@ def lider_al_azar():
     if lider_al_azar:
         publicar_mensaje(
             channel=settings.TEST_ENV,  # f'#{request.form.get("channel_name")}',
-            text=f'Que lidere {lider_al_azar['nombre']} :rubyrun:'
+            text=f'Que lidere {lider_al_azar["nombre"]} :rubyrun:'
         )
     return Response(), 200
 
