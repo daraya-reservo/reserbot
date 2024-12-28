@@ -48,7 +48,7 @@ def actualizar_dailies():
             text=f'Hoy lideró {integrante}'
         )
     print('integrantes actualizados')
-    print(utils.get_integrantes_equipo())
+    print(utils.get_integrantes_equipo(filtrar_disponibles=False))
     return Response(), 200
 
 @app.route('/actualizar-disponibilidad', methods=['POST'])
@@ -61,8 +61,8 @@ def actualizar_disponibilidad():
                 channel=settings.TEST_ENV,
                 text=f'{integrante_actualizado["nombre"]} se tomará unos días :rubyrun:'
             )
-        print('integrantes actualizados')
-        print(utils.get_integrantes_equipo())
+        print('integrante actualizado')
+        print(integrante_actualizado)
     return Response(), 200
 
 
