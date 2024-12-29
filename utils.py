@@ -18,20 +18,20 @@ def es_dia_habil(dia):
     lista_feriados = [feriado['Date'] for feriado in feriados]
     return dia_format not in lista_feriados
 
-def get_integrantes_equipo(filtrar_disponibles=True, de_vacaciones=False):
+def get_integrantes_equipo(solo_disponibles=False, de_vacaciones=False):
     # abro archivo de integrantes del equipo
     json_equipo = open(f'{RUTA_PROYECTO}/integrantes_equipo.json')
     integrantes_equipo = json.load(json_equipo)
     json_equipo.close()
     # filtro los integrantes disponibles
-    if filtrar_disponibles:
+    if solo_disponibles:
         integrantes_equipo = [integrante for integrante in integrantes_equipo if integrante['disponible']]
-    if de_vacaciones:
+    elif de_vacaciones:
         integrantes_equipo = [integrante for integrante in integrantes_equipo if not integrante['disponible']]
     return integrantes_equipo
 
 def update_dailies(integrante_tag):
-    integrantes_equipo = get_integrantes_equipo(filtrar_disponibles=False)
+    integrantes_equipo = get_integrantes_equipo()
     for integrante in integrantes_equipo:
         if integrante['tag'] == integrante_tag:
             integrante['dailies'] += 1
@@ -41,7 +41,7 @@ def update_dailies(integrante_tag):
     return integrante_actualizado
 
 def update_disponibilidad(integrante_tag):
-    integrantes_equipo = get_integrantes_equipo(filtrar_disponibles=False)
+    integrantes_equipo = get_integrantes_equipo()
     for integrante in integrantes_equipo:
         if integrante['tag'] == integrante_tag:
             integrante['disponible'] = not integrante['disponible']
@@ -58,13 +58,13 @@ def _update_equipo(integrantes_equipo):
 
 
 def get_lider():
-    integrantes_disponibles = get_integrantes_equipo()
+    integrantes_disponibles = get_integrantes_equipo(solo_disponibles=True)
     # lidera el que tenga menor numero de dailies lideradas
     random.shuffle(integrantes_disponibles)
     lider = min(integrantes_disponibles, key=lambda i:i['dailies']).get('tag')
     return lider
 
-integrantes_aux = get_integrantes_equipo()
+integrantes_aux = get_integrantes_equipo(solo_disponibles=True)
 
 def get_lider_al_azar():
     global integrantes_aux

@@ -29,8 +29,11 @@ def message_event(data):
 
 @app.route('/lider-al-azar', methods=['POST'])
 def lider_al_azar():
-    print(utils.get_integrantes_equipo(filtrar_disponibles=False))
-    print(utils.get_integrantes_equipo(filtrar_disponibles=False, de_vacaciones=True))
+    integrantes_no_disponibles = utils.get_integrantes_equipo(de_vacaciones=True)
+    publicar_mensaje(
+        channel=settings.TEST_ENV,
+        text=f'Hoy no se encuentran disponibles {integrantes_no_disponibles} :goodmorning:',
+    )
     lider_al_azar = utils.get_lider_al_azar()
     if lider_al_azar:
         publicar_mensaje(
@@ -42,15 +45,15 @@ def lider_al_azar():
 @app.route('/actualizar-dailies', methods=['POST'])
 def actualizar_dailies():
     if request.form['user_name'] == 'daraya':
-        integrante = request.form['text']
-        utils.update_dailies(integrante)
+        integrante_tag = request.form['text']
+        utils.update_dailies(integrante_tag)
     return Response(), 200
 
 @app.route('/actualizar-disponibilidad', methods=['POST'])
 def actualizar_disponibilidad():
     if request.form['user_name'] == 'daraya':
         integrante_tag = request.form['text']
-        integrante_actualizado = utils.update_disponibilidad(integrante_tag)
+        utils.update_disponibilidad(integrante_tag)
     return Response(), 200
 
 
