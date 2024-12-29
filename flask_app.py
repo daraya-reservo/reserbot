@@ -30,10 +30,12 @@ def message_event(data):
 @app.route('/lider-al-azar', methods=['POST'])
 def lider_al_azar():
     integrantes_no_disponibles = [i['nombre'] for i in utils.get_integrantes_equipo(de_vacaciones=True)]
-    publicar_mensaje(
-        channel=settings.TEST_ENV,
-        text=f'Hoy no están: {", ".join(integrantes_no_disponibles)}',
-    )
+    if integrantes_no_disponibles:
+        text = f'Hoy no estará: {", ".join(integrantes_no_disponibles)}'
+        publicar_mensaje(
+            channel=settings.TEST_ENV,
+            text=text,
+        )
     lider_al_azar = utils.get_lider_al_azar()
     if lider_al_azar:
         publicar_mensaje(
