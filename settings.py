@@ -9,8 +9,8 @@ BOT_TOKEN = os.environ.get('SLACK_TOKEN')
 SIGNING_SECRET = os.environ.get('SIGNING_SECRET')
 
 # canales de slack
-TEST_ENV = '#reserbot-shhhh'
-PRODUCTION_ENV = '#reservo-ti'
+DEBUG_ENV = '#reserbot-shhhh'
+PROD_ENV = '#reservo-ti'
 
 # links relevantes
 URL_ESTUDIO = 'https://docs.google.com/spreadsheets/d/1FhaBUnW_hGk_siixvFUAjs0SZRw5iksFnSqI8XkiX3A/edit?gid=1385494284#gid=1385494284'

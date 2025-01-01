@@ -2,6 +2,7 @@ import csv
 import json
 import random
 from settings import RUTA_PROYECTO
+import integrantes_equipo as gggg
 
 
 def es_dia_habil(dia):
@@ -19,6 +20,7 @@ def es_dia_habil(dia):
     return dia_format not in lista_feriados
 
 def get_integrantes_equipo(solo_disponibles=False, de_vacaciones=False):
+    print(gggg)
     # abro archivo de integrantes del equipo
     json_equipo = open(f'{RUTA_PROYECTO}/integrantes_equipo.json')
     integrantes_equipo = json.load(json_equipo)
@@ -35,20 +37,21 @@ def update_dailies(integrante_tag):
     for integrante in integrantes_equipo:
         if integrante['tag'] == integrante_tag:
             integrante['dailies'] += 1
-            integrante_actualizado = integrante
             break
+    
     _update_equipo(integrantes_equipo)
-    return integrante_actualizado
 
 def update_disponibilidad(integrante_tag):
     integrantes_equipo = get_integrantes_equipo()
     for integrante in integrantes_equipo:
         if integrante['tag'] == integrante_tag:
             integrante['disponible'] = not integrante['disponible']
-            integrante_actualizado = integrante
+            break
+    for integrante in gggg:
+        if integrante['tag'] == integrante_tag:
+            integrante['disponible'] = not integrante['disponible']
             break
     _update_equipo(integrantes_equipo)
-    return integrante_actualizado
 
 def _update_equipo(integrantes_equipo):
     integrantes_equipo = json.dumps(integrantes_equipo, indent=4)
@@ -56,13 +59,12 @@ def _update_equipo(integrantes_equipo):
     json_equipo.write(integrantes_equipo)
     json_equipo.close()
 
-
 def get_lider():
     integrantes_disponibles = get_integrantes_equipo(solo_disponibles=True)
     # lidera el que tenga menor numero de dailies lideradas
     random.shuffle(integrantes_disponibles)
     lider = min(integrantes_disponibles, key=lambda i:i['dailies']).get('tag')
-    return lider
+    return lider['tag']
 
 integrantes_aux = get_integrantes_equipo(solo_disponibles=True)
 
@@ -73,4 +75,4 @@ def get_lider_al_azar():
     except IndexError:  # cuando integrantes_aux está vacia
         return None
     integrantes_aux.remove(lider_al_azar)
-    return lider_al_azar
+    return lider_al_azar['nombre']

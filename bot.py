@@ -1,17 +1,23 @@
-import settings
+from settings import (
+    BOT_TOKEN,
+    DEBUG_ENV,
+    PROD_ENV
+)
 import slack
 
 
-client = slack.WebClient(token=settings.BOT_TOKEN)
+client = slack.WebClient(token=BOT_TOKEN)
 
-def publicar_mensaje(channel, text=None, buttons=None):
+def publicar_mensaje(text=None, buttons=None, debug=True):
+    channel = DEBUG_ENV if debug else PROD_ENV
     blocks = _build_blocks(text=text, buttons=buttons)
     client.chat_postMessage(
         channel=channel,
         blocks=blocks
     )
 
-def programar_mensaje(channel, post_at, text=None, buttons=None):
+def programar_mensaje(post_at, text=None, buttons=None, debug=True):
+    channel = DEBUG_ENV if debug else PROD_ENV
     blocks = _build_blocks(text=text, buttons=buttons)
     client.chat_scheduleMessage(
         channel=channel,

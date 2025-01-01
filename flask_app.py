@@ -1,7 +1,7 @@
 from flask import Flask, request, Response, jsonify
 from slackeventsapi import SlackEventAdapter
 import settings
-from bot_interface import publicar_mensaje
+import bot
 import utils
 
 app = Flask(__name__)
@@ -18,29 +18,22 @@ def message_event(data):
     mensaje = event.get('text', '').lower()
     mensaje_estudio = 'estudio' in mensaje and event.get('bot_id') is None
     if mensaje_estudio:
-        publicar_mensaje(
-            channel=settings.TEST_ENV, # event['channel'],
+        bot.publicar_mensaje(
             text=f'<@{event["user"]}> anótate en el excel :bonk-doge:',
             buttons=[{
                 'text': 'Link al excel 📚',
                 'url': settings.URL_ESTUDIO
-            }]
+            }],
+            debug=True
         )
 
 @app.route('/lider-al-azar', methods=['POST'])
 def lider_al_azar():
-    integrantes_no_disponibles = [i['nombre'] for i in utils.get_integrantes_equipo(de_vacaciones=True)]
-    if integrantes_no_disponibles:
-        text = f'Hoy no estará: {", ".join(integrantes_no_disponibles)}'
-        publicar_mensaje(
-            channel=settings.TEST_ENV,
-            text=text,
-        )
     lider_al_azar = utils.get_lider_al_azar()
     if lider_al_azar:
-        publicar_mensaje(
-            channel=settings.TEST_ENV,  # f'#{request.form.get("channel_name")}',
-            text=f'Que lidere {lider_al_azar["nombre"]} :rubyrun:'
+        bot.publicar_mensaje(
+            text=f'Que lidere {lider_al_azar} :rubyrun:',
+            debug=True
         )
     return Response(), 200
 
