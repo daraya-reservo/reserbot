@@ -1,4 +1,4 @@
-[
+integrantes = [
     {
         "nombre": "Agust\u00edn",
         "tag": "@apradenas",

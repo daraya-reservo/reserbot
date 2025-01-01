@@ -2,7 +2,7 @@ import csv
 import json
 import random
 from settings import RUTA_PROYECTO
-import integrantes_equipo as gggg
+from integrantes_equipo import integrantes
 
 
 def es_dia_habil(dia):
@@ -47,7 +47,7 @@ def update_disponibilidad(integrante_tag):
         if integrante['tag'] == integrante_tag:
             integrante['disponible'] = not integrante['disponible']
             break
-    for integrante in gggg:
+    for integrante in integrantes:
         if integrante['tag'] == integrante_tag:
             integrante['disponible'] = not integrante['disponible']
             break
