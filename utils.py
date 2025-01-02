@@ -37,7 +37,6 @@ def update_dailies(integrante_tag):
         if integrante['tag'] == integrante_tag:
             integrante['dailies'] += 1
             break
-    
     _update_equipo(integrantes_equipo)
 
 def update_disponibilidad(integrante_tag):
@@ -48,6 +47,8 @@ def update_disponibilidad(integrante_tag):
             break
     for integrante in integrantes:
         if integrante['tag'] == integrante_tag:
+            print(integrantes)
+            print(integrante)
             integrante['disponible'] = not integrante['disponible']
             break
     _update_equipo(integrantes_equipo)
