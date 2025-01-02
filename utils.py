@@ -15,10 +15,10 @@ def es_dia_habil(dia):
     ruta_archivo_feriados = f'{settings.RUTA_PROYECTO}/csv/publicholiday.CL.{dia.year}.csv'  # ver README
     archivo_feriados = open(ruta_archivo_feriados)
     feriados = csv.DictReader(archivo_feriados)
+    lista_feriados = [feriado['Date'] for feriado in feriados]
     archivo_feriados.close()
     # chequea que el dia no esté en lista de feriados
     dia_format = dia.strftime('%Y-%m-%d')
-    lista_feriados = [feriado['Date'] for feriado in feriados]
     return dia_format not in lista_feriados
 
 def update_dailies(integrante_tag):
