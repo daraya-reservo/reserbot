@@ -49,8 +49,9 @@ def update_disponibilidad(integrante_tag):
         if integrante['tag'] == integrante_tag:
             print(integrantes)
             print(integrante)
-            # integrante['disponible'] = not integrante['disponible']
-            integrantes[idx]['disponible'] = not integrantes[idx]['disponible']
+            integrante['disponible'] = not integrante['disponible']
+            integrantes[idx] = integrante
+            print('ajoy')
             break
     _update_equipo(integrantes_equipo)
 
