@@ -20,7 +20,6 @@ def es_dia_habil(dia):
     return dia_format not in lista_feriados
 
 def get_integrantes_equipo(solo_disponibles=False, de_vacaciones=False):
-    print(gggg)
     # abro archivo de integrantes del equipo
     json_equipo = open(f'{RUTA_PROYECTO}/integrantes_equipo.json')
     integrantes_equipo = json.load(json_equipo)
