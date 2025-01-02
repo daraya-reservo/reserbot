@@ -1,4 +1,5 @@
 from flask import Flask, request, Response, jsonify
+from flask_sqlalchemy import SQLAlchemy
 from slackeventsapi import SlackEventAdapter
 import settings
 import bot
@@ -7,6 +8,17 @@ import utils
 app = Flask(__name__)
 slack_event_adapter = SlackEventAdapter(settings.SIGNING_SECRET, '/slack/events', app)
 
+SQLALCHEMY_DATABASE_URI = "mysql+mysqlconnector://{username}:{password}@{hostname}/{databasename}".format(
+    username="darayadcc",
+    password="reserbot",
+    hostname="darayadcc.mysql.pythonanywhere-services.com",
+    databasename="darayadcc$reserbot",
+)
+app.config["SQLALCHEMY_DATABASE_URI"] = SQLALCHEMY_DATABASE_URI
+app.config["SQLALCHEMY_POOL_RECYCLE"] = 299
+app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
+
+db = SQLAlchemy(app)
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
