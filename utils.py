@@ -2,7 +2,7 @@ import csv
 import json
 import random
 from settings import RUTA_PROYECTO
-from integrantes_equipo import integrantes
+from equipo import get_integrantes_equipo, update_integrantes_equipo
 
 
 def es_dia_habil(dia):
@@ -19,18 +19,6 @@ def es_dia_habil(dia):
     lista_feriados = [feriado['Date'] for feriado in feriados]
     return dia_format not in lista_feriados
 
-def get_integrantes_equipo(solo_disponibles=False, de_vacaciones=False):
-    # abro archivo de integrantes del equipo
-    json_equipo = open(f'{RUTA_PROYECTO}/integrantes_equipo.json')
-    integrantes_equipo = json.load(json_equipo)
-    json_equipo.close()
-    # filtro los integrantes disponibles
-    if solo_disponibles:
-        integrantes_equipo = [integrante for integrante in integrantes_equipo if integrante['disponible']]
-    elif de_vacaciones:
-        integrantes_equipo = [integrante for integrante in integrantes_equipo if not integrante['disponible']]
-    return integrantes_equipo
-
 def update_dailies(integrante_tag):
     integrantes_equipo = get_integrantes_equipo()
     for integrante in integrantes_equipo:
@@ -45,14 +33,6 @@ def update_disponibilidad(integrante_tag):
         if integrante['tag'] == integrante_tag:
             integrante['disponible'] = not integrante['disponible']
             break
-    for idx, integrante in enumerate(integrantes):
-        if integrante['tag'] == integrante_tag:
-            print(integrantes)
-            print(integrante)
-            integrante['disponible'] = not integrante['disponible']
-            integrantes[idx] = integrante
-            print('ajoy')
-            break
     _update_equipo(integrantes_equipo)
 
 def _update_equipo(integrantes_equipo):
@@ -60,6 +40,7 @@ def _update_equipo(integrantes_equipo):
     json_equipo = open(f'{RUTA_PROYECTO}/integrantes_equipo.json', 'w')
     json_equipo.write(integrantes_equipo)
     json_equipo.close()
+    update_integrantes_equipo(integrantes_equipo)
 
 def get_lider():
     integrantes_disponibles = get_integrantes_equipo(solo_disponibles=True)

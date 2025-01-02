@@ -1,4 +1,8 @@
-integrantes = [
+from settings import RUTA_PROYECTO
+import json
+
+
+integrantes_equipo = [
     {
         "nombre": "Agust\u00edn",
         "tag": "@apradenas",
@@ -72,3 +76,16 @@ integrantes = [
         "disponible": True
     }
 ]
+
+def get_integrantes_equipo(solo_disponibles=False, de_vacaciones=False):
+    global integrantes_equipo
+    # filtro los integrantes disponibles
+    if solo_disponibles:
+        integrantes_equipo = [integrante for integrante in integrantes_equipo if integrante['disponible']]
+    elif de_vacaciones:
+        integrantes_equipo = [integrante for integrante in integrantes_equipo if not integrante['disponible']]
+    return integrantes_equipo
+
+def update_integrantes_equipo(integrantes):
+    global integrantes_equipo
+    integrantes_equipo = integrantes
