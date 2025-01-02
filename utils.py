@@ -29,6 +29,7 @@ def update_dailies(integrante_tag):
 
 def update_disponibilidad(integrante_tag):
     integrantes_equipo = get_integrantes_equipo()
+    print(integrantes_equipo)
     for integrante in integrantes_equipo:
         if integrante['tag'] == integrante_tag:
             integrante['disponible'] = not integrante['disponible']
