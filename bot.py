@@ -1,15 +1,17 @@
-from settings import (
-    BOT_TOKEN,
-    DEBUG_ENV,
-    PROD_ENV
-)
+# Reserbot
+import settings
+
+# Third Party
 import slack
 
 
-client = slack.WebClient(token=BOT_TOKEN)
+client = slack.WebClient(token=settings.BOT_TOKEN)
 
 def publicar_mensaje(text=None, buttons=None, debug=True):
-    channel = DEBUG_ENV if debug else PROD_ENV
+    channel = (
+        settings.DEBUG_ENV if debug 
+        else settings.PROD_ENV
+    )
     blocks = _build_blocks(text=text, buttons=buttons)
     client.chat_postMessage(
         channel=channel,
@@ -17,7 +19,10 @@ def publicar_mensaje(text=None, buttons=None, debug=True):
     )
 
 def programar_mensaje(post_at, text=None, buttons=None, debug=True):
-    channel = DEBUG_ENV if debug else PROD_ENV
+    channel = (
+        settings.DEBUG_ENV if debug 
+        else settings.PROD_ENV
+    )
     blocks = _build_blocks(text=text, buttons=buttons)
     client.chat_scheduleMessage(
         channel=channel,

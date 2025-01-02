@@ -1,8 +1,10 @@
+# Standard Library
 import csv
-import json
 import random
-from settings import RUTA_PROYECTO
-from equipo import get_integrantes_equipo, update_integrantes_equipo
+
+# Reserbot
+import equipo
+import settings
 
 
 def es_dia_habil(dia):
@@ -10,7 +12,7 @@ def es_dia_habil(dia):
     if dia.weekday() in [5, 6]:
         return False
     # abro archivo de feriados
-    ruta_archivo_feriados = f'{RUTA_PROYECTO}/csv/publicholiday.CL.{dia.year}.csv'  # ver README
+    ruta_archivo_feriados = f'{settings.RUTA_PROYECTO}/csv/publicholiday.CL.{dia.year}.csv'  # ver README
     archivo_feriados = open(ruta_archivo_feriados)
     feriados = csv.DictReader(archivo_feriados)
     archivo_feriados.close()
@@ -20,29 +22,29 @@ def es_dia_habil(dia):
     return dia_format not in lista_feriados
 
 def update_dailies(integrante_tag):
-    integrantes_equipo = get_integrantes_equipo()
+    integrantes_equipo = equipo.get_integrantes_equipo()
     for integrante in integrantes_equipo:
         if integrante['tag'] == integrante_tag:
             integrante['dailies'] += 1
             break
-    update_integrantes_equipo(integrantes_equipo)
+    equipo.update_integrantes_equipo(integrantes_equipo)
 
 def update_disponibilidad(integrante_tag):
-    integrantes_equipo = get_integrantes_equipo()
+    integrantes_equipo = equipo.get_integrantes_equipo()
     for integrante in integrantes_equipo:
         if integrante['tag'] == integrante_tag:
             integrante['disponible'] = not integrante['disponible']
             break
-    update_integrantes_equipo(integrantes_equipo)
+    equipo.update_integrantes_equipo(integrantes_equipo)
 
 def get_lider():
-    integrantes_disponibles = get_integrantes_equipo(solo_disponibles=True)
+    integrantes_disponibles = equipo.get_integrantes_equipo(solo_disponibles=True)
     # lidera el que tenga menor numero de dailies lideradas
     random.shuffle(integrantes_disponibles)
     lider = min(integrantes_disponibles, key=lambda i:i['dailies']).get('tag')
     return lider['tag']
 
-integrantes_aux = get_integrantes_equipo(solo_disponibles=True)
+integrantes_aux = equipo.get_integrantes_equipo(solo_disponibles=True)
 
 def get_lider_al_azar():
     global integrantes_aux

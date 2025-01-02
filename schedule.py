@@ -1,6 +1,11 @@
+# Standard library
 from datetime import datetime
 import locale
+
+# Third Party
 import pytz
+
+# Reserbot
 import settings
 import bot
 import utils

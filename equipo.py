@@ -1,10 +1,15 @@
-from settings import RUTA_PROYECTO
+# Reserbot
+import settings
+
+# Standard Library
 import json
 
 
+ruta_json = f'{settings.RUTA_PROYECTO}/equipo.json'
+
 def get_integrantes_equipo(solo_disponibles=False, de_vacaciones=False):
     # abro archivo de integrantes del equipo
-    json_equipo = open(f'{RUTA_PROYECTO}/integrantes_equipo.json')
+    json_equipo = open(ruta_json)
     integrantes_equipo = json.load(json_equipo)
     json_equipo.close()
     # aplico filtros
@@ -17,6 +22,6 @@ def get_integrantes_equipo(solo_disponibles=False, de_vacaciones=False):
 
 def update_integrantes_equipo(integrantes_equipo):
     integrantes_equipo = json.dumps(integrantes_equipo, indent=4)
-    json_equipo = open(f'{RUTA_PROYECTO}/integrantes_equipo.json', 'w')
+    json_equipo = open(ruta_json, 'w')
     json_equipo.write(integrantes_equipo)
     json_equipo.close()

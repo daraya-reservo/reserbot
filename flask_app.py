@@ -1,7 +1,10 @@
+# Third Party
 from flask import Flask, request, Response, jsonify
 from slackeventsapi import SlackEventAdapter
-import settings
+
+# Reserbot
 import bot
+import settings
 import utils
 
 app = Flask(__name__)
