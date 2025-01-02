@@ -25,22 +25,14 @@ def update_dailies(integrante_tag):
         if integrante['tag'] == integrante_tag:
             integrante['dailies'] += 1
             break
-    _update_equipo(integrantes_equipo)
+    update_integrantes_equipo(integrantes_equipo)
 
 def update_disponibilidad(integrante_tag):
     integrantes_equipo = get_integrantes_equipo()
-    print(integrantes_equipo)
     for integrante in integrantes_equipo:
         if integrante['tag'] == integrante_tag:
             integrante['disponible'] = not integrante['disponible']
             break
-    _update_equipo(integrantes_equipo)
-
-def _update_equipo(integrantes_equipo):
-    integrantes_equipo = json.dumps(integrantes_equipo, indent=4)
-    json_equipo = open(f'{RUTA_PROYECTO}/integrantes_equipo.json', 'w')
-    json_equipo.write(integrantes_equipo)
-    json_equipo.close()
     update_integrantes_equipo(integrantes_equipo)
 
 def get_lider():
