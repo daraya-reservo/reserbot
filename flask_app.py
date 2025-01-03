@@ -3,9 +3,13 @@ from flask import Flask, request, Response, jsonify
 from slackeventsapi import SlackEventAdapter
 
 # Reserbot
-import bot
 import settings
-import utils
+from slack_manager import post_message
+from team_manager import (
+    update_dailies,
+    update_disponibilidad,
+)
+from utils import get_random_leader
 
 app = Flask(__name__)
 slack_event_adapter = SlackEventAdapter(settings.SIGNING_SECRET, '/slack/events', app)
@@ -18,24 +22,24 @@ def index():
 @slack_event_adapter.on('message')
 def message_event(data):
     event = data['event']
-    mensaje = event.get('text', '').lower()
-    mensaje_estudio = 'estudio' in mensaje and event.get('bot_id') is None
-    if mensaje_estudio:
-        bot.publicar_mensaje(
+    message = event.get('text', '').lower()
+    message_estudio = 'estudio' in message and not event.get('bot_id')
+    if message_estudio:
+        post_message(
             text=f'<@{event["user"]}> anótate en el excel :bonk-doge:',
             buttons=[{
                 'text': 'Link al excel 📚',
-                'url': settings.URL_ESTUDIO
+                'url': settings.URL_EXCEL_LEARNING
             }],
             debug=True
         )
 
 @app.route('/lider-al-azar', methods=['POST'])
 def lider_al_azar():
-    lider_al_azar = utils.get_lider_al_azar()
-    if lider_al_azar:
-        bot.publicar_mensaje(
-            text=f'Que lidere {lider_al_azar} :rubyrun:',
+    random_leader = get_random_leader()
+    if random_leader:
+        post_message(
+            text=f'Que lidere {random_leader} :rubyrun:',
             debug=True
         )
     return Response(), 200
@@ -43,15 +47,15 @@ def lider_al_azar():
 @app.route('/actualizar-dailies', methods=['POST'])
 def actualizar_dailies():
     if request.form['user_name'] == 'daraya':
-        integrante_tag = request.form['text']
-        utils.update_dailies(integrante_tag)
+        member_tag = request.form['text']
+        update_dailies(member_tag)
     return Response(), 200
 
 @app.route('/actualizar-disponibilidad', methods=['POST'])
 def actualizar_disponibilidad():
     if request.form['user_name'] == 'daraya':
-        integrante_tag = request.form['text']
-        utils.update_disponibilidad(integrante_tag)
+        member_tag = request.form['text']
+        update_disponibilidad(member_tag)
     return Response(), 200
 
 

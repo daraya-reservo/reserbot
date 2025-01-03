@@ -7,7 +7,7 @@ import slack
 
 client = slack.WebClient(token=settings.BOT_TOKEN)
 
-def publicar_mensaje(text=None, buttons=None, debug=True):
+def post_message(text=None, buttons=None, debug=True):
     channel = (
         settings.DEBUG_ENV if debug 
         else settings.PROD_ENV
@@ -18,7 +18,7 @@ def publicar_mensaje(text=None, buttons=None, debug=True):
         blocks=blocks
     )
 
-def programar_mensaje(post_at, text=None, buttons=None, debug=True):
+def schedule_message(post_at, text=None, buttons=None, debug=True):
     channel = (
         settings.DEBUG_ENV if debug 
         else settings.PROD_ENV
@@ -28,13 +28,13 @@ def programar_mensaje(post_at, text=None, buttons=None, debug=True):
         channel=channel,
         post_at=post_at,
         blocks=blocks,
-        text='mensaje programado',
+        text='scheduled message',
     )
 
 def _build_blocks(text=None, buttons=None):
-    mensaje = []
+    blocks = []
     if text:
-        mensaje.append({
+        blocks.append({
             'type': 'section',
             'text': {
                 'type': 'mrkdwn',
@@ -52,8 +52,8 @@ def _build_blocks(text=None, buttons=None):
             'style': 'primary',
             'url': button['url']
         } for button in buttons]
-        mensaje.append({
+        blocks.append({
             'type': 'actions',
             'elements': btn_elements
         })
-    return mensaje
+    return blocks

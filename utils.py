@@ -3,54 +3,37 @@ import csv
 import random
 
 # Reserbot
-import equipo
 import settings
+import team_manager
 
 
-def es_dia_habil(dia):
+def is_workday(day):
     # si el día es sábado(5) o domingo(6)
-    if dia.weekday() in [5, 6]:
+    if day.weekday() in [5, 6]:
         return False
     # abro archivo de feriados
-    ruta_archivo_feriados = f'{settings.RUTA_PROYECTO}/csv/publicholiday.CL.{dia.year}.csv'  # ver README
-    archivo_feriados = open(ruta_archivo_feriados)
-    feriados = csv.DictReader(archivo_feriados)
-    lista_feriados = [feriado['Date'] for feriado in feriados]
-    archivo_feriados.close()
-    # chequea que el dia no esté en lista de feriados
-    dia_format = dia.strftime('%Y-%m-%d')
-    return dia_format not in lista_feriados
+    holidays_path = f'{settings.PROJECT_ROOT}/csv/publicholiday.CL.{day.year}.csv'  # ver README
+    with open(holidays_path) as holidays_file:
+        holidays = csv.DictReader(holidays_file)
+        holidays_list = [holiday['Date'] for holiday in holidays]
+        # chequea que el día no esté en lista de feriados
+        formatted_day = day.strftime('%Y-%m-%d')
+        return formatted_day not in holidays_list
 
-def update_dailies(integrante_tag):
-    integrantes_equipo = equipo.get_integrantes_equipo()
-    for integrante in integrantes_equipo:
-        if integrante['tag'] == integrante_tag:
-            integrante['dailies'] += 1
-            break
-    equipo.update_integrantes_equipo(integrantes_equipo)
-
-def update_disponibilidad(integrante_tag):
-    integrantes_equipo = equipo.get_integrantes_equipo()
-    for integrante in integrantes_equipo:
-        if integrante['tag'] == integrante_tag:
-            integrante['disponible'] = not integrante['disponible']
-            break
-    equipo.update_integrantes_equipo(integrantes_equipo)
-
-def get_lider():
-    integrantes_disponibles = equipo.get_integrantes_equipo(solo_disponibles=True)
+def get_leader():
+    team = team_manager.get_team(only_available=True)
     # lidera el que tenga menor numero de dailies lideradas
-    random.shuffle(integrantes_disponibles)
-    lider = min(integrantes_disponibles, key=lambda i:i['dailies']).get('tag')
-    return lider['tag']
+    random.shuffle(team)
+    leader = min(team, key=lambda member:member['dailies'])
+    return leader['tag']
 
-integrantes_aux = equipo.get_integrantes_equipo(solo_disponibles=True)
+random_pool = team_manager.get_team(only_available=True)
 
-def get_lider_al_azar():
-    global integrantes_aux
+def get_random_leader():
+    global random_pool
     try:
-        lider_al_azar = random.choice(integrantes_aux)
-    except IndexError:  # cuando integrantes_aux está vacia
+        random_leader = random.choice(random_pool)
+    except IndexError:  # cuando random_pool está vacia
         return None
-    integrantes_aux.remove(lider_al_azar)
-    return lider_al_azar['nombre']
+    random_pool.remove(random_leader)
+    return random_leader['name']

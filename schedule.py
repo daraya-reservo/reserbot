@@ -7,26 +7,33 @@ import pytz
 
 # Reserbot
 import settings
-import bot
-import utils
+from slack_manager import schedule_message
+from team_manager import get_team
+from utils import (
+    is_workday,
+    get_leader,
+)
+
 
 locale.setlocale(locale.LC_TIME, 'es_ES.UTF-8')
-hoy = datetime.now(pytz.timezone('America/Santiago'))
+today = datetime.now(pytz.timezone('America/Santiago'))
 
-if utils.es_dia_habil(hoy):
+if is_workday(today):
     # integrantes no disponibles
-    integrantes_no_disponibles = utils.get_integrantes_equipo(de_vacaciones=True)
-    if integrantes_no_disponibles:
-        bot.programar_mensaje(
-            post_at=(hoy.replace(hour=9, minute=0, second=0)).strftime('%s'),
-            text=f'Hoy no estará: {", ".join(integrantes_no_disponibles)} :palmera:',
+    team_on_vacation = get_team(on_vacation=True)
+    if team_on_vacation:
+        text = f'Hoy no estará: {", ".join(team_on_vacation)} :palmera:'
+        schedule_message(
+            post_at=(today.replace(hour=9, minute=0, second=0)).strftime('%s'),
+            text=text,
             debug=True
         )
-    # integrante que lidera daily hoy
-    lider = utils.get_lider()
-    bot.programar_mensaje(
-        post_at=(hoy.replace(hour=9, minute=2, second=0)).strftime('%s'),
-        text=f'Hoy {hoy.strftime("%A %d")} lidera {lider} :shirabesleep: (recuerden actualizar sus tarjetas)',
+    # integrante que lidera la daily hoy
+    lider = get_leader()
+    text = f'Hoy {today.strftime("%A %d")} lidera {lider} :shirabesleep: (recuerden actualizar sus tarjetas)'
+    schedule_message(
+        post_at=(today.replace(hour=9, minute=1, second=0)).strftime('%s'),
+        text=text,
         buttons=[
             {
                 "text": "Link a Meet :meet:",
@@ -40,8 +47,8 @@ if utils.es_dia_habil(hoy):
         debug=True
     )
     # recordatorio de actualizar tarjetas
-    bot.programar_mensaje(
-        post_at=(hoy.replace(hour=17, minute=50, second=0)).strftime('%s'),
+    schedule_message(
+        post_at=(today.replace(hour=17, minute=50, second=0)).strftime('%s'),
         text='Recuerden actualizar sus tarjetas :rubyruntheotherway:',
         buttons=[{
             "text": "Link a Trello :trello:",
