@@ -9,7 +9,7 @@ from team_manager import (
     update_dailies,
     update_disponibilidad,
 )
-from utils import get_random_leader, is_workday
+from utils import get_random_leader
 
 app = Flask(__name__)
 slack_event_adapter = SlackEventAdapter(settings.SIGNING_SECRET, '/slack/events', app)
@@ -36,8 +36,6 @@ def message_event(data):
 
 @app.route('/lider-al-azar', methods=['POST'])
 def lider_al_azar():
-    from datetime import datetime
-    print(is_workday(datetime.now()))
     random_leader = get_random_leader()
     if random_leader:
         post_message(
