@@ -20,17 +20,17 @@ today = datetime.now(pytz.timezone('America/Santiago'))
 
 if is_workday(today):
     # integrantes no disponibles
-    team_on_vacation = get_team(on_vacation=True)
-    if team_on_vacation:
-        text = f'Hoy no estará: {", ".join(team_on_vacation)} :palmera:'
+    members_on_vacation = get_team(on_vacation=True)
+    if members_on_vacation:
+        text = f'Hoy no estará: {", ".join(members_on_vacation)} :palmera:'
         schedule_message(
             post_at=(today.replace(hour=9, minute=0, second=0)).strftime('%s'),
             text=text,
             debug=True
         )
     # integrante que lidera la daily hoy
-    lider = get_leader()
-    text = f'Hoy {today.strftime("%A %d")} lidera {lider} :shirabesleep: (recuerden actualizar sus tarjetas)'
+    leader = get_leader()
+    text = f'Hoy {today.strftime("%A %d")} lidera {leader} :shirabesleep: (recuerden actualizar sus tarjetas)'
     schedule_message(
         post_at=(today.replace(hour=9, minute=1, second=0)).strftime('%s'),
         text=text,
