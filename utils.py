@@ -15,6 +15,7 @@ def is_workday(day):
     holidays_path = f'{settings.PROJECT_ROOT}/csv/publicholiday.CL.{day.year}.csv'  # ver README
     with open(holidays_path) as holidays_file:
         holidays = csv.DictReader(holidays_file)
+        print(holidays[0])
         holidays_list = [holiday['Date'] for holiday in holidays]
         # chequea que el día no esté en lista de feriados
         formatted_day = day.strftime('%Y-%m-%d')
