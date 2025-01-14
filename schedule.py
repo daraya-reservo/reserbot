@@ -26,7 +26,6 @@ if is_workday(today):
         schedule_message(
             post_at=(today.replace(hour=9, minute=0, second=0)).strftime('%s'),
             text=text,
-            debug=True
         )
     # integrante que lidera la daily hoy
     leader = get_leader()
@@ -44,7 +43,6 @@ if is_workday(today):
                 "url": settings.URL_TRELLO,
             }
         ],
-        debug=True
     )
     # recordatorio de actualizar tarjetas
     schedule_message(
@@ -54,5 +52,4 @@ if is_workday(today):
             "text": "Link a Trello :trello:",
             "url": settings.URL_TRELLO,
         }],
-        debug=True
     )

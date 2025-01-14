@@ -31,17 +31,13 @@ def message_event(data):
                 'text': 'Link al excel 📚',
                 'url': settings.URL_EXCEL_LEARNING
             }],
-            debug=True
         )
 
 @app.route('/lider-al-azar', methods=['POST'])
 def lider_al_azar():
     random_leader = get_random_leader()
     if random_leader:
-        post_message(
-            text=f'Que lidere {random_leader} :rubyrun:',
-            debug=True
-        )
+        post_message(text=f'Que lidere {random_leader} :rubyrun:')
     return Response(), 200
 
 @app.route('/actualizar-dailies', methods=['POST'])
