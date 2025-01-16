@@ -20,7 +20,7 @@ today = datetime.now(pytz.timezone('America/Santiago'))
 
 if is_workday(today):
     # integrantes no disponibles
-    members_on_vacation = get_team(on_vacation=True)
+    members_on_vacation = [member['name'] for member in get_team(on_vacation=True)]
     if members_on_vacation:
         text = f'Hoy no estará: {", ".join(members_on_vacation)} :palmera:'
         schedule_message(
