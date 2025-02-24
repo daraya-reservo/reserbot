@@ -5,14 +5,14 @@ import settings
 import json
 
 
-json_path = f'{settings.PROJECT_ROOT}/team.json'
+TEAM_PATH = f'{settings.PROJECT_ROOT}/team.json'
 
-def get_team(only_available=False, on_vacation=False):
+def get_team(available_only=False, on_vacation=False):
     # abro archivo de integrantes del equipo
-    with open(json_path) as json_team:
-        team = json.load(json_team)
+    with open(TEAM_PATH) as team_json:
+        team = json.load(team_json)
         # aplico filtros
-        if only_available:
+        if available_only:
             team = [
                 member for member in team 
                 if member['is_available']
@@ -39,7 +39,7 @@ def update_disponibilidad(member_tag):
     _update_team(team)
 
 def _update_team(team):
-    team = json.dumps(team, indent=4)
-    json_team = open(json_path, 'w')
-    json_team.write(team)
-    json_team.close()
+    new_team = json.dumps(team, indent=4)
+    team_json = open(TEAM_PATH, 'w')
+    team_json.write(new_team)
+    team_json.close()

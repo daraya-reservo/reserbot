@@ -12,7 +12,7 @@ def post_message(text=None, buttons=None, debug=False):
         settings.DEBUG_ENV if debug 
         else settings.PROD_ENV
     )
-    blocks = _build_blocks(text=text, buttons=buttons)
+    blocks = _build_message_blocks(text=text, buttons=buttons)
     client.chat_postMessage(
         channel=channel,
         blocks=blocks
@@ -23,7 +23,7 @@ def schedule_message(post_at, text=None, buttons=None, debug=False):
         settings.DEBUG_ENV if debug 
         else settings.PROD_ENV
     )
-    blocks = _build_blocks(text=text, buttons=buttons)
+    blocks = _build_message_blocks(text=text, buttons=buttons)
     client.chat_scheduleMessage(
         channel=channel,
         post_at=post_at,
@@ -31,7 +31,7 @@ def schedule_message(post_at, text=None, buttons=None, debug=False):
         text='scheduled message',
     )
 
-def _build_blocks(text=None, buttons=None):
+def _build_message_blocks(text=None, buttons=None):
     blocks = []
     if text:
         blocks.append({

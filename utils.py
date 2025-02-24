@@ -21,13 +21,14 @@ def is_workday(day):
         return formatted_day not in holidays_list
 
 def get_leader():
-    team = team_manager.get_team(only_available=True)
+    team = team_manager.get_team(available_only=True)
     # lidera el que tenga menor numero de dailies lideradas
     random.shuffle(team)
     leader = min(team, key=lambda member:member['dailies'])
+    team_manager.update_dailies(leader['tag'])
     return leader['tag']
 
-random_pool = team_manager.get_team(only_available=True)
+random_pool = team_manager.get_team(available_only=True)
 
 def get_random_leader():
     global random_pool
