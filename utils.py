@@ -38,3 +38,19 @@ def get_random_leader():
         return None
     random_pool.remove(random_leader)
     return random_leader['name']
+
+def get_meeting(day):
+    '''
+    **Las reuniones disponibles son:**
+
+    - Reunión área **comercial**: Todos los jueves a las 11:00 (presencial con opción online) - [](http://meet.google.com/kba-ivgs-heu)
+    - Reunión **Soporte**: Viernes 16:30 (Online) - [https://meet.google.com/ucg-ohck-hsx](https://meet.google.com/ucg-ohck-hsx?authuser=1)
+    - Reunión **customer success**: Viernes 10:30 (Online) - [meet.google.com/rgc-uvjd-cqj](http://meet.google.com/rgc-uvjd-cqj)
+    - Reunión **TI, “daily”**: Lunes, martes, jueves, Viernes 9:15 - 9:30 (Online), Miércoles 10:00 - 10:15 (Presencial, pero nos conectamos igual :) ) - https://meet.google.com/sft-muqe-ziq
+    - Reunión **Post venta**: Se realiza solo el primer Martes de cada mes a las 10:30)
+    '''
+    if day.weekday() == 3:
+        return 'Hoy es la reunion del área comercial a las 11:00 aquí meet.google.com/kba-ivgs-heu'
+    elif day.weekday() == 4:
+        pass
+
