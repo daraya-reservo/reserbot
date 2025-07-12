@@ -16,7 +16,7 @@ DEBUG_ENV = '#reserbot-shhhh'
 PROD_ENV = '#reservo-ti'
 
 # links relevantes
-URL_EXCEL_LEARNING = 'https://docs.google.com/spreadsheets/d/1FhaBUnW_hGk_siixvFUAjs0SZRw5iksFnSqI8XkiX3A/edit?gid=1385494284#gid=1385494284'
+URL_EXCEL_LEARNING = 'https://docs.google.com/spreadsheets/d/1FhaBUnW_hGk_siixvFUAjs0SZRw5iksFnSqI8XkiX3A/edit?gid=599070068#gid=599070068'
 URL_MEET = 'https://meet.google.com/sft-muqe-ziq?authuser=0'
 URL_TRELLO = 'https://trello.com/b/dZnTCMi3/tablero-desarrollo'
 
