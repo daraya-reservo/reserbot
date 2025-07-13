@@ -29,7 +29,6 @@ def get_leader():
     return leader['tag']
 
 random_pool = team_manager.get_team(available_only=True)
-
 def get_random_leader():
     global random_pool
     try:

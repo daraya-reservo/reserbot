@@ -41,20 +41,6 @@ def lider_al_azar():
         )
     return Response(), 200
 
-@app.route('/actualizar-dailies', methods=['POST'])
-def actualizar_dailies():
-    if request.form['user_name'] == 'daraya':
-        member_tag = request.form['text']
-        team_manager.update_dailies(member_tag)
-    return Response(), 200
-
-@app.route('/actualizar-disponibilidad', methods=['POST'])
-def actualizar_disponibilidad():
-    if request.form['user_name'] == 'daraya':
-        member_tag = request.form['text']
-        team_manager.update_disponibilidad(member_tag)
-    return Response(), 200
-
 
 if __name__ == '__main__':
     app.run(port=5000)
