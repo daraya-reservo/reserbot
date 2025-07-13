@@ -31,11 +31,11 @@ def update_dailies(member_tag):
             member['dailies'] += 1
     _update_team(team)
 
-def update_disponibilidad(member_tag):
+def update_disponibilidad(member_tag, available):
     team = get_team()
     for member in team:
         if member['tag'] == member_tag:
-            member['is_available'] = not member['is_available']
+            member['is_available'] = available
     _update_team(team)
 
 def _update_team(team):

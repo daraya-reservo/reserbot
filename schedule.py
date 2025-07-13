@@ -16,9 +16,9 @@ locale.setlocale(locale.LC_TIME, 'es_ES.UTF-8')
 today = datetime.now(pytz.timezone('America/Santiago'))
 
 if utils.is_workday(today):
-    # recordatorio de reuniones
-
-
+    # Hiho no está los viernes
+    if today.weekday() == 4:
+        utils.update_disponibilidad('Hiho', available=False)
     # integrantes no disponibles
     members_on_vacation = [
         member['name']
