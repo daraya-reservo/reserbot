@@ -2,73 +2,73 @@
     {
         "name": "Agust\u00edn",
         "tag": "@apradenas",
-        "dailies": 0,
+        "dailies": 11,
         "is_available": true
     },
     {
         "name": "Dani",
         "tag": "@daraya",
-        "dailies": 0,
+        "dailies": 10,
         "is_available": true
     },
     {
         "name": "Hiho",
         "tag": "@ndelgado",
-        "dailies": 0,
+        "dailies": 11,
         "is_available": true
     },
     {
         "name": "Juan",
         "tag": "@jecclefield",
-        "dailies": 0,
+        "dailies": 10,
         "is_available": true
     },
     {
         "name": "Lucho",
         "tag": "@lpinochet",
-        "dailies": 0,
+        "dailies": 11,
         "is_available": true
     },
     {
         "name": "Manu",
         "tag": "@mgrandon",
-        "dailies": 0,
+        "dailies": 11,
         "is_available": true
     },
     {
         "name": "Nach",
         "tag": "@imachuca",
-        "dailies": 0,
+        "dailies": 11,
         "is_available": true
     },
     {
         "name": "Pancho",
         "tag": "@fvilla",
-        "dailies": 0,
+        "dailies": 11,
         "is_available": true
     },
     {
         "name": "Pato",
         "tag": "@ptapia",
-        "dailies": 0,
+        "dailies": 11,
         "is_available": true
     },
     {
         "name": "Seba",
-        "tag": "@sconcha",
-        "dailies": 0,
+        "tag": "@Sebastian Concha",
+        "dailies": 11,
         "is_available": true
     },
     {
         "name": "Val",
         "tag": "@vgutierrez",
-        "dailies": 0,
+        "dailies": 11,
         "is_available": true
     },
     {
         "name": "Vicky",
         "tag": "@vmartinez",
-        "dailies": 0,
+        "dailies": 10,
         "is_available": true
     }
 ]
