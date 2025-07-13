@@ -18,6 +18,7 @@ SIGNING_SECRET = os.environ.get('SIGNING_SECRET')
 # canales de slack
 DEBUG_ENV = '#reserbot-shhhh'
 PROD_ENV = '#reservo-ti'
+DEBUG = False
 
 # links relevantes
 URL_EXCEL_LEARNING = 'https://docs.google.com/spreadsheets/d/1FhaBUnW_hGk_siixvFUAjs0SZRw5iksFnSqI8XkiX3A/edit?gid=599070068#gid=599070068'

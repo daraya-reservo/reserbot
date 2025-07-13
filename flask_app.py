@@ -1,5 +1,6 @@
 # Third Party
 from flask import Flask, request, Response, jsonify
+import requests
 from slackeventsapi import SlackEventAdapter
 
 # Reserbot
@@ -34,6 +35,29 @@ def message_event(data):
 @app.route('/lider-al-azar', methods=['POST'])
 def lider_al_azar():
     print(request.form)
+    channel_id = request.form.get("channel_id")
+
+    # Paso 2: Llamar a Slack API para obtener los miembros del canal
+    url = "https://slack.com/api/conversations.members"
+    headers = {
+        "Authorization": f"Bearer {settings.BOT_TOKEN}",
+    }
+    params = {
+        "channel": channel_id
+    }
+
+    response = requests.get(url, headers=headers, params=params)
+    data = response.json()
+
+    if not data.get("ok"):
+        return jsonify({
+            "response_type": "ephemeral",
+            "text": f"Error al obtener miembros: {data.get('error')}"
+        })
+
+    member_ids = data.get("members", [])
+    member_list = "\n".join(f"• <@{uid}>" for uid in member_ids)
+    print(data)
     random_leader = utils.get_random_leader()
     if random_leader:
         slack_manager.post_message(
