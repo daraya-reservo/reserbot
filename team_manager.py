@@ -5,11 +5,11 @@ import settings
 import json
 
 
-TEAM_PATH = f'{settings.PROJECT_ROOT}/team.json'
+TEAM_JSON = f'{settings.PROJECT_ROOT}/team.json'
 
 def get_team(available_only=False, on_vacation=False):
     # abro archivo de integrantes del equipo
-    with open(TEAM_PATH) as team_json:
+    with open(TEAM_JSON) as team_json:
         team = json.load(team_json)
         # aplico filtros
         if available_only:

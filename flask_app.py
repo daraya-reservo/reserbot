@@ -20,22 +20,24 @@ def index():
 def message_event(data):
     event = data['event']
     message = event.get('text', '').lower()
-    message_estudio = 'estudio' in message and not event.get('bot_id')
-    if message_estudio:
-        slack_manager.post_message(
-            text=f'<@{event["user"]}> anótate en el excel :bonk-doge:',
-            buttons=[{
-                'text': 'Link al excel 📚',
-                'url': settings.URL_EXCEL_LEARNING
-            }],
-        )
+    is_bot_message = event.get('bot_id') is not None
+    message_estudio = 'estudio' in message and not is_bot_message
+    # if message_estudio:
+    #     slack_manager.post_message(
+    #         text=f'<@{event["user"]}> anótate en el excel :bonk-doge:',
+    #         buttons=[{
+    #             'text': 'Link al excel 📚',
+    #             'url': settings.URL_EXCEL_LEARNING
+    #         }],
+    #     )
 
 @app.route('/lider-al-azar', methods=['POST'])
 def lider_al_azar():
     random_leader = utils.get_random_leader()
     if random_leader:
         slack_manager.post_message(
-            text=f'Que lidere {random_leader} :rubyrun:'
+            text=f'Que lidere {random_leader} :rubyrun:',
+            debug=True
         )
     return Response(), 200
 

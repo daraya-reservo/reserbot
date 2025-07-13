@@ -5,6 +5,10 @@ import dotenv
 import os
 import pathlib
 
+
+# ruta del proyecto
+PROJECT_ROOT = os.path.realpath(os.path.dirname(__file__))
+
 # cargar variables del archivo de ambiente .env
 env_path = pathlib.Path('.') / '.env'
 dotenv.load_dotenv(dotenv_path=env_path)
@@ -20,5 +24,7 @@ URL_EXCEL_LEARNING = 'https://docs.google.com/spreadsheets/d/1FhaBUnW_hGk_siixvF
 URL_MEET = 'https://meet.google.com/sft-muqe-ziq?authuser=0'
 URL_TRELLO = 'https://trello.com/b/dZnTCMi3/tablero-desarrollo'
 
-# ruta del proyecto
-PROJECT_ROOT = os.path.realpath(os.path.dirname(__file__))
+URL_MEET_REU_COMERCIAL = 'https://meet.google.com/kba-ivgs-heu'
+URL_MEET_REU_CS = 'https://meet.google.com/rgc-uvjd-cqj'
+URL_MEET_REU_SOPORTE = 'https://meet.google.com/ucg-ohck-hsx?authuser=1'
+URL_MEET_REU_POSTVENTA = 'https://meet.google.com/ucg-ohck-hsx?authuser=1'
