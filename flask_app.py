@@ -33,6 +33,7 @@ def message_event(data):
 
 @app.route('/lider-al-azar', methods=['POST'])
 def lider_al_azar():
+    print(request.form)
     random_leader = utils.get_random_leader()
     if random_leader:
         slack_manager.post_message(
