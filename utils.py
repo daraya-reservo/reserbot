@@ -37,7 +37,7 @@ def get_random_leader():
     except IndexError:  # cuando random_pool está vacia
         return None
     random_pool.remove(random_leader)
-    return f"<{random_leader['tag']}>"
+    return random_leader['tag']
 
 def get_meeting(day):
     '''
