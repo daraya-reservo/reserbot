@@ -29,15 +29,6 @@ def message_event(data):
     event = data['event']
     message = event.get('text', '').lower()
     is_bot_message = event.get('bot_id') is not None
-    message_estudio = 'estudio' in message and not is_bot_message
-    if message_estudio:
-        slack_manager.post_message(
-            text=f'<@{event["user"]}> anótate en el excel :bonk-doge:',
-            buttons=[{
-                'text': 'Link al excel 📚',
-                'url': settings.URL_EXCEL_LEARNING
-            }],
-        )
 
 @app.route('/estudio', methods=['POST'])
 def estudio():

@@ -14,9 +14,9 @@ import utils
 
 locale.setlocale(locale.LC_TIME, 'es_ES.UTF-8')
 today = datetime.now(pytz.timezone('America/Santiago'))
+team = TeamManager()
 
 if utils.is_workday(today):
-    team = TeamManager()
     # miembros del equipo no disponibles
     unavailable_members = {
         member['name']
