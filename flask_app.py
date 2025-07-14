@@ -17,6 +17,7 @@ import utils
 app = Flask(__name__)
 slack_event_adapter = SlackEventAdapter(settings.SIGNING_SECRET, '/slack/events', app)
 locale.setlocale(locale.LC_TIME, 'es_ES.UTF-8')
+team = TeamManager()
 
 
 @app.route('/', methods=['GET', 'POST'])
@@ -38,18 +39,27 @@ def message_event(data):
             }],
         )
 
-team = TeamManager()
+@app.route('/estudio', methods=['POST'])
+def estudio():
+    user = request.form.get('user_name')
+    slack_manager.post_message(
+        text=f'@{user} va a tomar la hora de estudio :rubyhappy: anótate :bonk-doge:',
+        buttons=[{
+            'text': 'Ir al excel 📚',
+            'url': settings.URL_EXCEL_LEARNING
+        }],
+    )
+    return Response(), 200
 
 @app.route('/lider-al-azar', methods=['POST'])
 def lider_al_azar():
     today = datetime.now(pytz.timezone('America/Santiago'))
     channel_id = request.form.get('channel_id')
     # print(get_members(channel_id))
-    print(team.members)
     random_leader = team.get_random_leader(today)
     if random_leader:
         user = request.form.get('user_name')
-        text = f'@{user} solicitó un lider al azar para la daily: que lidere {random_leader} :rubyrun: {team.random_pool}'
+        text = f'@{user} solicitó que lidere al azar: {random_leader} :rubyrun:'
         slack_manager.post_message(text=text)
     return Response(), 200
 

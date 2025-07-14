@@ -8,37 +8,6 @@ import random
 
 TEAM_MEMBERS_FILE = f'{settings.PROJECT_ROOT}/team_members.json'
 
-def get_team(available_only=False, on_vacation=False):
-    # abro archivo de integrantes del equipo
-    with open(TEAM_MEMBERS_FILE) as team_members_file:
-        team_members = json.load(team_members_file)
-        # aplico filtros
-        if available_only:
-            team_members = [
-                member for member in team_members 
-                if member['is_available']
-            ]
-        elif on_vacation:
-            team_members = [
-                member for member in team_members 
-                if not member['is_available']
-            ]
-        return team_members
-
-def update_dailies(member_tag):
-    team = get_team()
-    for member in team:
-        if member['tag'] == member_tag:
-            member['dailies'] += 1
-    _update_team(team)
-
-def update_disponibilidad(member_tag, available):
-    team = get_team()
-    for member in team:
-        if member['tag'] == member_tag:
-            member['is_available'] = available
-    _update_team(team)
-
 def _update_team(team):
     new_team = json.dumps(team, indent=4)
     team_json = open(TEAM_MEMBERS_FILE, 'w')
@@ -78,6 +47,7 @@ class TeamManager:
         return leader['tag']
 
     def get_random_leader(self, day):
+        print(day.strftime('%A %d'))
         team_members = [member for member in self.random_pool if member['is_available']]
         # Exclude Hiho on Fridays
         if day.weekday() == 4:
