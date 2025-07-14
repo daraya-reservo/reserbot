@@ -5,24 +5,24 @@ import settings
 import json
 
 
-TEAM_JSON = f'{settings.PROJECT_ROOT}/team.json'
+TEAM_MEMBERS_FILE = f'{settings.PROJECT_ROOT}/team_members.json'
 
 def get_team(available_only=False, on_vacation=False):
     # abro archivo de integrantes del equipo
-    with open(TEAM_JSON) as team_json:
-        team = json.load(team_json)
+    with open(TEAM_MEMBERS_FILE) as team_members_file:
+        team_members = json.load(team_members_file)
         # aplico filtros
         if available_only:
-            team = [
-                member for member in team 
+            team_members = [
+                member for member in team_members 
                 if member['is_available']
             ]
         elif on_vacation:
-            team = [
-                member for member in team 
+            team_members = [
+                member for member in team_members 
                 if not member['is_available']
             ]
-        return team
+        return team_members
 
 def update_dailies(member_tag):
     team = get_team()

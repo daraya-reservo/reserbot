@@ -1,5 +1,6 @@
 # Third Party
 from flask import Flask, request, Response, jsonify
+from flask_sqlalchemy import SQLAlchemy
 import requests
 from slackeventsapi import SlackEventAdapter
 
@@ -10,6 +11,26 @@ import team_manager
 import utils
 
 app = Flask(__name__)
+SQLALCHEMY_DATABASE_URI = "mysql+mysqlconnector://{username}:{password}@{hostname}/{databasename}".format(
+    username="darayadcc",
+    password="mysqladmin",
+    hostname="darayadcc.mysql.pythonanywhere-services.com",
+    databasename="darayadcc$reserbot",
+)
+app.config["SQLALCHEMY_DATABASE_URI"] = SQLALCHEMY_DATABASE_URI
+app.config["SQLALCHEMY_POOL_RECYCLE"] = 299
+app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
+
+db = SQLAlchemy(app)
+
+class TeamMember(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(4096))
+    tag = db.Column(db.String(4096))
+    dailies = db.Column(db.Integer)
+    is_available = db.Column(db.Boolean)
+
+
 slack_event_adapter = SlackEventAdapter(settings.SIGNING_SECRET, '/slack/events', app)
 
 
