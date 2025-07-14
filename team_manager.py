@@ -49,41 +49,30 @@ class TeamManager:
     """Class to manage team members."""
     def __init__(self, day):
         with open(TEAM_MEMBERS_FILE) as team_members_file:
-            self.team = json.load(team_members_file)
+            self.members = json.load(team_members_file)
         self.today = day
-        self.random_leader_pool = self.get_team_members(self.today)
-        print(f'Random leader pool initialized with {self.random_leader_pool}')
-
-    def get_team_members(self, available=True):
-        team_members = [member for member in self.team if member['is_available'] == available]
-        # Exclude Hiho on Fridays
-        if self.today.weekday() == 4:
-            team_members = [member for member in team_members if member['name'] != 'Hiho']
-        return team_members
+        self.random_pool = self.members.copy()
 
     def save(self):
         with open(TEAM_MEMBERS_FILE, 'w') as team_members_file:
-            json.dump(self.team, team_members_file, indent=4)
-
-    def update_dailies(self, member_tag):
-        for member in self.team:
-            if member['tag'] == member_tag:
-                member['dailies'] += 1
-        self.save()
+            json.dump(self.members, team_members_file, indent=4)
 
     def update_disponibilidad(self, member_tag, available):
-        for member in self.team:
+        for member in self.members:
             if member['tag'] == member_tag:
                 member['is_available'] = available
         self.save()
 
     def get_daily_leader(self):
-        available_members = self.get_team_members(self.today)
-        random.shuffle(available_members)
+        team_members = [member for member in self.members if member['is_available']]
+        # Exclude Hiho on Fridays
+        if self.today.weekday() == 4:
+            team_members = [member for member in team_members if member['name'] != 'Hiho']
+        random.shuffle(team_members)
         # Select the member with the lowest number of dailies
-        leader = min(available_members, key=lambda member: member['dailies'])
+        leader = min(team_members, key=lambda member: member['dailies'])
         # Update the dailies count for the leader
-        for member in self.team:
+        for member in self.members:
             if member['tag'] == leader['tag']:
                 member['dailies'] += 1
                 break
@@ -91,10 +80,14 @@ class TeamManager:
         return leader['tag']
 
     def get_random_leader(self):
+        team_members = [member for member in self.random_pool if member['is_available']]
+        # Exclude Hiho on Fridays
+        if self.today.weekday() == 4:
+            team_members = [member for member in team_members if member['name'] != 'Hiho']
         try:
-            random_leader = random.choice(self.random_leader_pool)
+            random_leader = random.choice(team_members)
         except IndexError:  # when random_leader_pool is empty
             return None
-        self.random_leader_pool.remove(random_leader)
+        self.random_pool.remove(random_leader)
         return random_leader['tag']
 
