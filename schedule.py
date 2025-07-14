@@ -8,7 +8,7 @@ import pytz
 # Reserbot
 import settings
 import slack_manager
-import team_manager
+from team_manager import TeamManager
 import utils
 
 
@@ -16,16 +16,17 @@ locale.setlocale(locale.LC_TIME, 'es_ES.UTF-8')
 today = datetime.now(pytz.timezone('America/Santiago'))
 
 if utils.is_workday(today):
-    # Hiho no está los viernes
-    if today.weekday() == 4:
-        utils.update_disponibilidad('Hiho', available=False)
-    # integrantes no disponibles
-    members_on_vacation = [
+    team = TeamManager()
+    # miembros del equipo no disponibles
+    unavailable_members = {
         member['name']
-        for member in 
-        team_manager.get_team(on_vacation=True)
-    ]
-    if members_on_vacation:
+        for member in team.members 
+        if not member['is_available']
+    }
+    if today.weekday() == 4:  # viernes
+        unavailable_members.add('Hiho')
+    if unavailable_members:
+        text = f'Hoy {today.strftime("%A")} no estará: {", ".join(unavailable_members)} :f2:'
         post_at = (today.replace(hour=9, minute=0, second=0)).strftime('%s')
         slack_manager.schedule_message(
             post_at=post_at,
@@ -33,11 +34,10 @@ if utils.is_workday(today):
         )
 
     # integrante que lidera la daily hoy
-    leader = utils.get_leader()
+    leader = team.get_daily_leader(today)
     text = f'Hoy {today.strftime("%A %d")} lidera {leader} :anime:'
-    post_at = (today.replace(hour=9, minute=1, second=0)).strftime('%s')
     slack_manager.schedule_message(
-        post_at=post_at,
+        post_at=(today.replace(hour=9, minute=1, second=0)).strftime('%s'),
         text=text,
         buttons=[
             {
@@ -45,19 +45,23 @@ if utils.is_workday(today):
                 "url": settings.URL_TRELLO,
             },
             {
-                "text": "Abrir Meet :meet:",
+                "text": "Unirse a Meet :meet:",
                 "url": settings.URL_MEET,
             },
         ],
     )
-    # recordatorio de actualizar tarjetas
-    text = 'Dejen un comentario en sus tarjetas :homer-disappear:',
-    post_at = (today.replace(hour=17, minute=50, second=0)).strftime('%s')
-    slack_manager.schedule_message(
-        post_at=post_at,
-        text=text,
-        buttons=[{
-            "text": "Abrir Trello :trello:",
-            "url": settings.URL_TRELLO,
-        }],
-    )
+
+    # recordatorio de reuniones que ocurren hoy
+    meetings = utils.get_meetings(today)
+    minute = 45
+    for meeting in meetings:
+        slack_manager.schedule_message(
+            post_at=(today.replace(hour=9, minute=minute, second=0)).strftime('%s'),
+            text=meeting['text'],
+            buttons=[{
+                'text': 'Unirse a la reunión :meet:',
+                'url': meeting['url']
+            }],
+        )
+        minute += 1
+
