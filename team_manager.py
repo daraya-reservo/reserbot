@@ -43,3 +43,18 @@ def _update_team(team):
     team_json = open(TEAM_PATH, 'w')
     team_json.write(new_team)
     team_json.close()
+
+class TeamManager:
+    """Class to manage team members."""
+    def __init__(self):
+        with open(TEAM_MEMBERS_FILE) as team_members_file:
+            self.team = json.load(team_members_file)
+
+    def get_members(self, available_only=False, on_vacation=False):
+        return self.team
+
+    def update_dailies(self, member_tag):
+        update_dailies(member_tag)
+
+    def update_disponibilidad(self, member_tag, available):
+        update_disponibilidad(member_tag, available)
