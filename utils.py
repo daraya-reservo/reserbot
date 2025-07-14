@@ -1,10 +1,8 @@
 # Standard Library
 import csv
-import random
 
 # Reserbot
 import settings
-import team_manager
 
 
 def is_workday(day):
@@ -20,36 +18,28 @@ def is_workday(day):
         formatted_day = day.strftime('%Y-%m-%d')
         return formatted_day not in holidays_list
 
-def get_leader():
-    team = team_manager.get_team(available_only=True)
-    # lidera el que tenga menor numero de dailies lideradas
-    random.shuffle(team)
-    leader = min(team, key=lambda member:member['dailies'])
-    team_manager.update_dailies(leader['tag'])
-    return leader['tag']
-
-random_pool = team_manager.get_team(available_only=True)
-def get_random_leader():
-    global random_pool
-    try:
-        random_leader = random.choice(random_pool)
-    except IndexError:  # cuando random_pool está vacia
-        return None
-    random_pool.remove(random_leader)
-    return random_leader['tag']
-
-def get_meeting(day):
-    '''
-    **Las reuniones disponibles son:**
-
-    - Reunión área **comercial**: Todos los jueves a las 11:00 (presencial con opción online) - [](http://meet.google.com/kba-ivgs-heu)
-    - Reunión **Soporte**: Viernes 16:30 (Online) - [https://meet.google.com/ucg-ohck-hsx](https://meet.google.com/ucg-ohck-hsx?authuser=1)
-    - Reunión **customer success**: Viernes 10:30 (Online) - [meet.google.com/rgc-uvjd-cqj](http://meet.google.com/rgc-uvjd-cqj)
-    - Reunión **TI, “daily”**: Lunes, martes, jueves, Viernes 9:15 - 9:30 (Online), Miércoles 10:00 - 10:15 (Presencial, pero nos conectamos igual :) ) - https://meet.google.com/sft-muqe-ziq
-    - Reunión **Post venta**: Se realiza solo el primer Martes de cada mes a las 10:30)
-    '''
-    if day.weekday() == 3:
-        return 'Hoy es la reunion del área comercial a las 11:00 aquí meet.google.com/kba-ivgs-heu'
+def get_meetings(day):
+    meetings = []
+    # primer martes del mes
+    if day.weekday() == 1 and day.day in range(7):
+        meetings.append({
+            'text': f'Hoy es la reunión del área de Postventa a las 10:30 AM',
+            'url': settings.URL_MEET_REU_POSTVENTA,
+        })
+    # jueves
+    elif day.weekday() == 3:
+        meetings.append({
+            'text': f'Hoy es la reunión del área Comercial a las 11:00 AM',
+            'url': settings.URL_MEET_REU_COMERCIAL,
+        })
+    # viernes
     elif day.weekday() == 4:
-        pass
-
+        meetings.append({
+            'text': f'Hoy es la reunión del área de Customer Success a las 10:30 AM',
+            'url': settings.URL_MEET_REU_CS,
+        })
+        meetings.append({
+            'text': f'Hoy es la reunión del área de Soporte a las 16:30 PM',
+            'url': settings.URL_MEET_REU_SOPORTE,
+        })
+    return meetings
