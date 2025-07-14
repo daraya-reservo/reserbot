@@ -49,9 +49,10 @@ class TeamManager:
     """Class to manage team members."""
     def __init__(self, day):
         with open(TEAM_MEMBERS_FILE) as team_members_file:
-            self.today = day
             self.team = json.load(team_members_file)
-            self.random_leader_pool = self.get_team_members(self.today)
+        self.today = day
+        self.random_leader_pool = self.get_team_members(self.today)
+        print(f'Random leader pool initialized with {self.random_leader_pool}')
 
     def get_team_members(self, available=True):
         team_members = [member for member in self.team if member['is_available'] == available]
