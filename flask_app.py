@@ -4,7 +4,7 @@ import locale
 
 # Third Party
 from flask import Flask, request, Response, jsonify
-import ṕytz
+import pytz
 import requests
 from slackeventsapi import SlackEventAdapter
 
