@@ -50,11 +50,25 @@ class TeamManager:
         with open(TEAM_MEMBERS_FILE) as team_members_file:
             self.team = json.load(team_members_file)
 
-    def get_members(self, available_only=False, on_vacation=False):
-        return self.team
+    def get_team_members(self, day, available=True):
+        team_members = [member for member in self.team if member['is_available'] == available]
+        # Exclude Hiho on Fridays
+        if day.weekday() == 4:
+            team_members = [member for member in team_members if member['name'] != 'Hiho']
+        return team_members
+
+    def save(self):
+        with open(TEAM_MEMBERS_FILE, 'w') as team_members_file:
+            json.dump(self.team, team_members_file, indent=4)
 
     def update_dailies(self, member_tag):
-        update_dailies(member_tag)
+        for member in self.team:
+            if member['tag'] == member_tag:
+                member['dailies'] += 1
+        self.save()
 
     def update_disponibilidad(self, member_tag, available):
-        update_disponibilidad(member_tag, available)
+        for member in self.team:
+            if member['tag'] == member_tag:
+                member['is_available'] = available
+        self.save()

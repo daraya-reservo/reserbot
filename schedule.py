@@ -26,15 +26,15 @@ if utils.is_workday(today):
         team_manager.get_team(on_vacation=True)
     ]
     if members_on_vacation:
-        text = f'Hoy no estará: {", ".join(members_on_vacation)} :shirabesleep:'
         post_at = (today.replace(hour=9, minute=0, second=0)).strftime('%s')
         slack_manager.schedule_message(
             post_at=post_at,
             text=text,
         )
+
     # integrante que lidera la daily hoy
     leader = utils.get_leader()
-    text = f'Hoy {today.strftime("%A %d")} lidera {leader} :anime: (dejen comentario en sus tarjetas :bonk-doge: )'
+    text = f'Hoy {today.strftime("%A %d")} lidera {leader} :anime:'
     post_at = (today.replace(hour=9, minute=1, second=0)).strftime('%s')
     slack_manager.schedule_message(
         post_at=post_at,

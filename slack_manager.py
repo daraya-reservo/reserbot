@@ -7,7 +7,7 @@ import slack
 
 client = slack.WebClient(token=settings.BOT_TOKEN)
 
-def post_message(text=None, buttons=None, debug=False):
+def post_message(text=None, buttons=None):
     channel = (
         settings.DEBUG_CHANNEL if settings.DEBUG 
         else settings.PROD_CHANNEL
@@ -18,7 +18,7 @@ def post_message(text=None, buttons=None, debug=False):
         blocks=blocks
     )
 
-def schedule_message(post_at, text=None, buttons=None, debug=False):
+def schedule_message(post_at, text=None, buttons=None):
     channel = (
         settings.DEBUG_CHANNEL if settings.DEBUG 
         else settings.PROD_CHANNEL
