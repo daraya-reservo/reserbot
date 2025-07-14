@@ -45,11 +45,11 @@ def lider_al_azar():
     channel_id = request.form.get('channel_id')
     print(get_members(channel_id))
     print(team_manager.TeamManager(day=today).members)
-    print(team_manager.TeamManager(day=today).get_random_leader())
+    a = team_manager.TeamManager(day=today).get_random_leader()
     random_leader = utils.get_random_leader()
     if random_leader:
         slack_manager.post_message(
-            text=f'Que lidere {random_leader} :rubyrun:',
+            text=f'Que lidere {random_leader} :rubyrun:' {a},
         )
     return Response(), 200
 
