@@ -47,10 +47,9 @@ def _update_team(team):
 
 class TeamManager:
     """Class to manage team members."""
-    def __init__(self, day):
+    def __init__(self):
         with open(TEAM_MEMBERS_FILE) as team_members_file:
             self.members = json.load(team_members_file)
-        self.today = day
         self.random_pool = self.members.copy()
 
     def save(self):
@@ -63,12 +62,11 @@ class TeamManager:
                 member['is_available'] = available
         self.save()
 
-    def get_daily_leader(self):
+    def get_daily_leader(self, day):
         team_members = [member for member in self.members if member['is_available']]
         # Exclude Hiho on Fridays
-        if self.today.weekday() == 4:
+        if day.weekday() == 4:
             team_members = [member for member in team_members if member['name'] != 'Hiho']
-        random.shuffle(team_members)
         # Select the member with the lowest number of dailies
         leader = min(team_members, key=lambda member: member['dailies'])
         # Update the dailies count for the leader
@@ -79,10 +77,10 @@ class TeamManager:
         self.save()
         return leader['tag']
 
-    def get_random_leader(self):
+    def get_random_leader(self, day):
         team_members = [member for member in self.random_pool if member['is_available']]
         # Exclude Hiho on Fridays
-        if self.today.weekday() == 4:
+        if day.weekday() == 4:
             team_members = [member for member in team_members if member['name'] != 'Hiho']
         try:
             random_leader = random.choice(team_members)

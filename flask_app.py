@@ -11,7 +11,7 @@ from slackeventsapi import SlackEventAdapter
 # Reserbot
 import settings
 import slack_manager
-import team_manager
+from team_manager import TeamManager
 import utils
 
 app = Flask(__name__)
@@ -41,16 +41,15 @@ def message_event(data):
 @app.route('/lider-al-azar', methods=['POST'])
 def lider_al_azar():
     today = datetime.now(pytz.timezone('America/Santiago'))
-    print(request.form)
     channel_id = request.form.get('channel_id')
-    print(get_members(channel_id))
-    print(team_manager.TeamManager(day=today).members)
-    a = team_manager.TeamManager(day=today).get_random_leader()
-    random_leader = utils.get_random_leader()
+    # print(get_members(channel_id))
+    team = TeamManager()
+    print(team.members)
+    random_leader = team.get_random_leader(today)
     if random_leader:
-        slack_manager.post_message(
-            text=f'Que lidere {random_leader} :rubyrun: {a} @{request.form.get("user_name")}',
-        )
+        user = request.form.get('user_name')
+        text = f'@{user} solicitó un lider al azar para la daily: que lidere {random_leader} :rubyrun:'
+        slack_manager.post_message(text=text)
     return Response(), 200
 
 def get_members(channel_id):
