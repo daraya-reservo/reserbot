@@ -38,12 +38,13 @@ def message_event(data):
             }],
         )
 
+team = TeamManager()
+
 @app.route('/lider-al-azar', methods=['POST'])
 def lider_al_azar():
     today = datetime.now(pytz.timezone('America/Santiago'))
     channel_id = request.form.get('channel_id')
     # print(get_members(channel_id))
-    team = TeamManager()
     print(team.members)
     random_leader = team.get_random_leader(today)
     if random_leader:
