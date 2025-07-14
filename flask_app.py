@@ -44,7 +44,8 @@ def lider_al_azar():
     print(request.form)
     channel_id = request.form.get('channel_id')
     print(get_members(channel_id))
-    print(team_manager.TeamManager().get_team_members(today))
+    print(team_manager.TeamManager(day=today).get_team_members())
+    print(team_manager.TeamManager(day=today).get_random_leader())
     random_leader = utils.get_random_leader()
     if random_leader:
         slack_manager.post_message(
