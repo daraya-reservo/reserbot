@@ -49,7 +49,7 @@ def lider_al_azar():
     random_leader = utils.get_random_leader()
     if random_leader:
         slack_manager.post_message(
-            text=f'Que lidere {random_leader} :rubyrun: {a}',
+            text=f'Que lidere {random_leader} :rubyrun: {a} @{request.form.get("user_name")}',
         )
     return Response(), 200
 
