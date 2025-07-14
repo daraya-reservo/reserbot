@@ -48,7 +48,7 @@ def lider_al_azar():
     random_leader = team.get_random_leader(today)
     if random_leader:
         user = request.form.get('user_name')
-        text = f'@{user} solicitó un lider al azar para la daily: que lidere {random_leader} :rubyrun:'
+        text = f'@{user} solicitó un lider al azar para la daily: que lidere {random_leader} :rubyrun: {team.random_pool}'
         slack_manager.post_message(text=text)
     return Response(), 200
 
