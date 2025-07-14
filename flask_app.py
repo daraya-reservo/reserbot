@@ -1,5 +1,10 @@
+# Standard Library
+from datetime import datetime
+import locale
+
 # Third Party
 from flask import Flask, request, Response, jsonify
+import ṕytz
 import requests
 from slackeventsapi import SlackEventAdapter
 
@@ -11,6 +16,7 @@ import utils
 
 app = Flask(__name__)
 slack_event_adapter = SlackEventAdapter(settings.SIGNING_SECRET, '/slack/events', app)
+locale.setlocale(locale.LC_TIME, 'es_ES.UTF-8')
 
 
 @app.route('/', methods=['GET', 'POST'])
@@ -34,10 +40,11 @@ def message_event(data):
 
 @app.route('/lider-al-azar', methods=['POST'])
 def lider_al_azar():
+    today = datetime.now(pytz.timezone('America/Santiago'))
     print(request.form)
     channel_id = request.form.get('channel_id')
     print(get_members(channel_id))
-    print(team_manager.TeamManager().get_team_members())
+    print(team_manager.TeamManager().get_team_members(today))
     random_leader = utils.get_random_leader()
     if random_leader:
         slack_manager.post_message(
