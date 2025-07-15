@@ -53,6 +53,20 @@ def lider_al_azar():
         )
     return Response(), 200
 
+@app.route('/vacaciones', methods=['POST'])
+def vacaciones():
+    user = request.form.get('user_name')
+    member_tag = request.form.get('text').strip()
+    team.update_availability(member_tag, available=False)
+    return Response(), 200
+
+@app.route('/disponible', methods=['POST'])
+def disponible():
+    user = request.form.get('user_name')
+    member_tag = request.form.get('text').strip()
+    team.update_availability(member_tag, available=True)
+    return Response(), 200
+
 
 if __name__ == '__main__':
     app.run(port=5000)
