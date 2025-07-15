@@ -19,6 +19,12 @@ class TeamManager:
         with open(TEAM_MEMBERS_FILE, 'w') as team_members_file:
             json.dump(self.members, team_members_file, indent=4)
 
+    def get_unavailable_members(self, day):
+        team_members = [member for member in self.members if member['is_available'] == False]
+        # Exclude Hiho on Fridays
+        if day.weekday() == 4:
+            team_members = [member for member in team_members if member['name'] != 'Hiho']
+        return team_members
 
     def get_daily_leader(self, day):
         team_members = [member for member in self.members if member['is_available']]

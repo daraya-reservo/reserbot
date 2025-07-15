@@ -18,13 +18,7 @@ team = TeamManager()
 
 if utils.is_workday(today):
     # miembros del equipo no disponibles
-    unavailable_members = {
-        member['name']
-        for member in team.members 
-        if not member['is_available']
-    }
-    if today.weekday() == 4:  # viernes
-        unavailable_members.add('Hiho')
+    unavailable_members = team.get_unavailable_members(today)
     if unavailable_members:
         text = f'Hoy {today.strftime("%A")} no estará: {", ".join(unavailable_members)} :f2:'
         post_at = (today.replace(hour=9, minute=0, second=0)).strftime('%s')
