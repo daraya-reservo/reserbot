@@ -11,12 +11,14 @@ from slackeventsapi import SlackEventAdapter
 # Reserbot
 import settings
 import bot_manager
+from bot_manager import BotManager
 from team_manager import TeamManager
 
 app = Flask(__name__)
 slack_event_adapter = SlackEventAdapter(settings.SIGNING_SECRET, '/slack/events', app)
 locale.setlocale(locale.LC_TIME, 'es_ES.UTF-8')
 team = TeamManager()
+reserbot = BotManager()
 
 
 @app.route('/', methods=['GET', 'POST'])
@@ -32,7 +34,7 @@ def message_event(data):
 @app.route('/estudio', methods=['POST'])
 def estudio():
     user = request.form.get('user_name')
-    bot_manager.post_message(
+    reserbot.post_message(
         text=f'@{user} va a tomar la hora de estudio :rubyhappy: anótate :bonk-doge:',
         buttons=[{
             'text': 'Ir al excel 📚',
@@ -47,7 +49,7 @@ def lider_al_azar():
     today = datetime.now(pytz.timezone('America/Santiago'))
     random_leader = team.get_random_leader(today)
     if random_leader:
-        bot_manager.post_message(
+        reserbot.post_message(
             text=f'@{user} pidió un lider al azar: lidera {random_leader} :rubyrun:'
         )
     return Response(), 200
