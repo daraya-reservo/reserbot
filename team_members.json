@@ -9,7 +9,7 @@
         "name": "Dani",
         "tag": "@daraya",
         "dailies": 10,
-        "is_available": true
+        "is_available": false
     },
     {
         "name": "Hiho",
@@ -21,7 +21,7 @@
         "name": "Juan",
         "tag": "@jecclefield",
         "dailies": 10,
-        "is_available": true
+        "is_available": false
     },
     {
         "name": "Lucho",
