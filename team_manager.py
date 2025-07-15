@@ -20,11 +20,13 @@ class TeamManager:
             json.dump(self.members, team_members_file, indent=4)
 
     def get_unavailable_members(self, day):
-        team_members = [member for member in self.members if member['is_available'] == False]
-        # Exclude Hiho on Fridays
+        unavailable_members = {
+            member['name'] for member in self.members if not member['is_available']
+        }
+        # Include Hiho on Fridays (unavailable for today)
         if day.weekday() == 4:
-            team_members = [member for member in team_members if member['name'] != 'Hiho']
-        return team_members
+            unavailable_members.add('Hiho')
+        return unavailable_members
 
     def get_daily_leader(self, day):
         team_members = [member for member in self.members if member['is_available']]
@@ -42,7 +44,6 @@ class TeamManager:
         return leader['tag']
 
     def get_random_leader(self, day):
-        print(day.strftime('%A %d'))
         team_members = [member for member in self.random_pool if member['is_available']]
         # Exclude Hiho on Fridays
         if day.weekday() == 4:
