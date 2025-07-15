@@ -56,17 +56,39 @@ def lider_al_azar():
 @app.route('/vacaciones', methods=['POST'])
 def vacaciones():
     user = request.form.get('user_name')
-    print(user)
-    member_tag = request.form.get('text').strip()
-    team.update_availability(member_tag, available=False)
+    if user == 'daraya':
+        # Only allow 'daraya' to mark members as unavailable
+        member_tag = request.form.get('text').strip()
+        team.update_availability(member_tag, available=False)
     return Response(), 200
 
 @app.route('/fin-vacaciones', methods=['POST'])
 def fin_vacaciones():
     user = request.form.get('user_name')
-    print(user)
-    member_tag = request.form.get('text').strip()
-    team.update_availability(member_tag, available=True)
+    if user == 'daraya':
+        # Only allow 'daraya' to mark members as available
+        member_tag = request.form.get('text').strip()
+        team.update_availability(member_tag, available=True)
+    return Response(), 200
+
+@app.route('/marcar-entrada', methods=['POST'])
+def marcar_entrada():
+    # user = request.form.get('user_name')
+    # rut = request.form.get('text').strip()
+    # url = f'https://app.ctrlit.cl/ctrl/dial/registrarweb/eJUVR0SMli?sentido=0&latitud=&longitud=&rut={rut}'
+    # r = requests.get(url)
+    # print(r)
+    # print(r.__dict__)
+    return Response(), 200
+
+@app.route('/marcar-salida', methods=['POST'])
+def marcar_salida():
+    user = request.form.get('user_name')
+    rut = request.form.get('text').strip()
+    url = f'https://app.ctrlit.cl/ctrl/dial/registrarweb/eJUVR0SMli?sentido=0&latitud=&longitud=&rut={rut}'
+    r = requests.get(url)
+    print(r)
+    print(r.__dict__)
     return Response(), 200
 
 
