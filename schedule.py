@@ -7,7 +7,7 @@ import pytz
 
 # Reserbot
 import settings
-import bot_manager
+from bot_manager import BotManager
 from team_manager import TeamManager
 import utils
 
@@ -15,6 +15,7 @@ import utils
 locale.setlocale(locale.LC_TIME, 'es_ES.UTF-8')
 today = datetime.now(pytz.timezone('America/Santiago'))
 team = TeamManager()
+reserbot = BotManager()
 
 if utils.is_workday(today):
     # miembros del equipo no disponibles
@@ -22,7 +23,7 @@ if utils.is_workday(today):
     if unavailable_members:
         text = f'Hoy {today.strftime("%A")} no estará: {", ".join(unavailable_members)} :f2:'
         post_at = (today.replace(hour=9, minute=0, second=0)).strftime('%s')
-        bot_manager.schedule_message(
+        reserbot.schedule_message(
             post_at=post_at,
             text=text,
         )
@@ -30,7 +31,7 @@ if utils.is_workday(today):
     # integrante que lidera la daily hoy
     leader = team.get_daily_leader(today)
     text = f'Hoy {today.strftime("%A %d")} lidera {leader} :anime:'
-    bot_manager.schedule_message(
+    reserbot.schedule_message(
         post_at=(today.replace(hour=9, minute=1, second=0)).strftime('%s'),
         text=text,
         buttons=[
@@ -48,7 +49,7 @@ if utils.is_workday(today):
     # recordatorio de reuniones que ocurren hoy
     meetings = utils.get_meetings(today)
     for meeting in meetings:
-        bot_manager.schedule_message(
+        reserbot.schedule_message(
             post_at=(today.replace(hour=9, minute=45, second=0)).strftime('%s'),
             text=meeting['text'],
             buttons=[{

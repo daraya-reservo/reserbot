@@ -10,7 +10,6 @@ from slackeventsapi import SlackEventAdapter
 
 # Reserbot
 import settings
-import bot_manager
 from bot_manager import BotManager
 from team_manager import TeamManager
 
