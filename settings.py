@@ -16,8 +16,8 @@ BOT_TOKEN = os.environ.get('SLACK_TOKEN')
 SIGNING_SECRET = os.environ.get('SIGNING_SECRET')
 
 # canales de slack
-DEBUG_CHANNEL = '#reserbot-shhhh'
-PROD_CHANNEL = '#reservo-ti'
+QA_CHANNEL = '#reserbot-shhhh'
+MAIN_CHANNEL = '#reservo-ti'
 DEBUG = True
 
 # links relevantes

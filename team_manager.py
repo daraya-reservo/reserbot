@@ -8,12 +8,6 @@ import random
 
 TEAM_MEMBERS_FILE = f'{settings.PROJECT_ROOT}/team_members.json'
 
-def _update_team(team):
-    new_team = json.dumps(team, indent=4)
-    team_json = open(TEAM_MEMBERS_FILE, 'w')
-    team_json.write(new_team)
-    team_json.close()
-
 class TeamManager:
     """Class to manage team members."""
     def __init__(self):
@@ -25,11 +19,6 @@ class TeamManager:
         with open(TEAM_MEMBERS_FILE, 'w') as team_members_file:
             json.dump(self.members, team_members_file, indent=4)
 
-    def update_disponibilidad(self, member_tag, available):
-        for member in self.members:
-            if member['tag'] == member_tag:
-                member['is_available'] = available
-        self.save()
 
     def get_daily_leader(self, day):
         team_members = [member for member in self.members if member['is_available']]
@@ -58,4 +47,10 @@ class TeamManager:
             return None
         self.random_pool.remove(random_leader)
         return random_leader['tag']
+
+    def update_availability(self, member_tag, available):
+        for member in self.members:
+            if member['tag'] == member_tag:
+                member['is_available'] = available
+        self.save()
 

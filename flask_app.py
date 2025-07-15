@@ -10,9 +10,8 @@ from slackeventsapi import SlackEventAdapter
 
 # Reserbot
 import settings
-import slack_manager
+import bot_manager
 from team_manager import TeamManager
-import utils
 
 app = Flask(__name__)
 slack_event_adapter = SlackEventAdapter(settings.SIGNING_SECRET, '/slack/events', app)
@@ -33,7 +32,7 @@ def message_event(data):
 @app.route('/estudio', methods=['POST'])
 def estudio():
     user = request.form.get('user_name')
-    slack_manager.post_message(
+    bot_manager.post_message(
         text=f'@{user} va a tomar la hora de estudio :rubyhappy: anótate :bonk-doge:',
         buttons=[{
             'text': 'Ir al excel 📚',
@@ -44,23 +43,14 @@ def estudio():
 
 @app.route('/lider-al-azar', methods=['POST'])
 def lider_al_azar():
+    user = request.form.get('user_name')
     today = datetime.now(pytz.timezone('America/Santiago'))
-    channel_id = request.form.get('channel_id')
-    # print(get_members(channel_id))
     random_leader = team.get_random_leader(today)
     if random_leader:
-        user = request.form.get('user_name')
-        text = f'@{user} solicitó que lidere al azar: {random_leader} :rubyrun:'
-        slack_manager.post_message(text=text)
+        bot_manager.post_message(
+            text=f'@{user} pidió un lider al azar: lidera {random_leader} :rubyrun:'
+        )
     return Response(), 200
-
-def get_members(channel_id):
-    url = 'https://slack.com/api/conversations.members'
-    headers = {'Authorization': f'Bearer {settings.BOT_TOKEN}'}
-    params = {'channel': channel_id}
-    response = requests.get(url, headers=headers, params=params)
-    data = response.json()
-    return data.get('members', [])
 
 
 if __name__ == '__main__':

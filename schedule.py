@@ -7,7 +7,7 @@ import pytz
 
 # Reserbot
 import settings
-import slack_manager
+import bot_manager
 from team_manager import TeamManager
 import utils
 
@@ -28,7 +28,7 @@ if utils.is_workday(today):
     if unavailable_members:
         text = f'Hoy {today.strftime("%A")} no estará: {", ".join(unavailable_members)} :f2:'
         post_at = (today.replace(hour=9, minute=0, second=0)).strftime('%s')
-        slack_manager.schedule_message(
+        bot_manager.schedule_message(
             post_at=post_at,
             text=text,
         )
@@ -36,7 +36,7 @@ if utils.is_workday(today):
     # integrante que lidera la daily hoy
     leader = team.get_daily_leader(today)
     text = f'Hoy {today.strftime("%A %d")} lidera {leader} :anime:'
-    slack_manager.schedule_message(
+    bot_manager.schedule_message(
         post_at=(today.replace(hour=9, minute=1, second=0)).strftime('%s'),
         text=text,
         buttons=[
@@ -53,15 +53,12 @@ if utils.is_workday(today):
 
     # recordatorio de reuniones que ocurren hoy
     meetings = utils.get_meetings(today)
-    minute = 45
     for meeting in meetings:
-        slack_manager.schedule_message(
-            post_at=(today.replace(hour=9, minute=minute, second=0)).strftime('%s'),
+        bot_manager.schedule_message(
+            post_at=(today.replace(hour=9, minute=45, second=0)).strftime('%s'),
             text=meeting['text'],
             buttons=[{
                 'text': 'Unirse a la reunión :meet:',
                 'url': meeting['url']
             }],
         )
-        minute += 1
-
