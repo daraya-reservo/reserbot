@@ -56,13 +56,15 @@ def lider_al_azar():
 @app.route('/vacaciones', methods=['POST'])
 def vacaciones():
     user = request.form.get('user_name')
+    print(user)
     member_tag = request.form.get('text').strip()
     team.update_availability(member_tag, available=False)
     return Response(), 200
 
-@app.route('/disponible', methods=['POST'])
-def disponible():
+@app.route('/fin-vacaciones', methods=['POST'])
+def fin_vacaciones():
     user = request.form.get('user_name')
+    print(user)
     member_tag = request.form.get('text').strip()
     team.update_availability(member_tag, available=True)
     return Response(), 200
