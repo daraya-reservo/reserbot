@@ -5,10 +5,7 @@ import locale
 # Third Party
 from flask import Flask, request, Response, jsonify
 import pytz
-import requests
-from requests.adapters import HTTPAdapter
 from slackeventsapi import SlackEventAdapter
-from urllib3.util.retry import Retry
 
 # Reserbot
 import settings
@@ -75,40 +72,20 @@ def fin_vacaciones():
 
 @app.route('/marcar-entrada', methods=['POST'])
 def marcar_entrada():
-    # user = request.form.get('user_name')
-    # rut = request.form.get('text').strip()
-    # url = f'https://app.ctrlit.cl/ctrl/dial/registrarweb/eJUVR0SMli?sentido=0&latitud=&longitud=&rut={rut}'
-    # r = requests.get(url)
-    # print(r)
-    # print(r.__dict__)
+    user = request.form.get('user_name')
+    rut = request.form.get('text').strip()
+    import subprocess
+    try:
+        # Execute a JavaScript file using Node.js
+        result = subprocess.run(['node', 'marcar_entrada.js'], capture_output=True, text=True, check=True)
+        print('result: ', result)
+    except subprocess.CalledProcessError as e:
+        return jsonify({"error": f"JavaScript execution failed: {e.stderr}"}), 500
+
     return Response(), 200
 
 @app.route('/marcar-salida', methods=['POST'])
 def marcar_salida():
-    user = request.form.get('user_name')
-    print(f'{user} marcó salida')
-    rut = request.form.get('text').strip()
-    print(f'RUT: {rut}')
-    url = f'https://app.ctrlit.cl/ctrl/dial/registrarweb/eJUVR0SMli?sentido=0&latitud=&longitud=&rut={rut}'
-    # headers = {
-    #     'User-Agent': 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:140.0) Gecko/20100101 Firefox/140.0Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:140.0) Gecko/20100101 Firefox/140.0',
-    #     'Referer': 'https://app.ctrlit.cl/ctrl/dial/guardarweb/eJUVR0SMli?i=0',
-    #     'Cookie': 'AWSALB=wm5L7CqtdNKT9HgWkB1npkwTHNu6Dnp6y8ooyA+cothS2GyFIfLrWbBIPLC/fXHLWxK22JMxlnrumBsnH57kHbePVDXkzlq7O10XKelxI/kfPPHgQ5QIeQlgmq51; AWSALBCORS=wm5L7CqtdNKT9HgWkB1npkwTHNu6Dnp6y8ooyA+cothS2GyFIfLrWbBIPLC/fXHLWxK22JMxlnrumBsnH57kHbePVDXkzlq7O10XKelxI/kfPPHgQ5QIeQlgmq51'
-    # }
-    # session = requests.Session()
-    # retry = Retry(connect=3, backoff_factor=0.5)
-    # adapter = HTTPAdapter(max_retries=retry)
-    # session.mount('http://', adapter)
-    # session.mount('https://', adapter)
-    # r = session.get(url)  # Disable SSL verification for testing
-    # print(r)
-    # print(r.__dict__)
-    import urllib 
-    from urllib.request import urlopen
-    html = urlopen(url)
-    contents = html.read()
-    print(contents)
-
     return Response(), 200
 
 
