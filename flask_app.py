@@ -6,7 +6,9 @@ import locale
 from flask import Flask, request, Response, jsonify
 import pytz
 import requests
+from requests.adapters import HTTPAdapter
 from slackeventsapi import SlackEventAdapter
+from urllib3.util.retry import Retry
 
 # Reserbot
 import settings
@@ -93,7 +95,12 @@ def marcar_salida():
     #     'Referer': 'https://app.ctrlit.cl/ctrl/dial/guardarweb/eJUVR0SMli?i=0',
     #     'Cookie': 'AWSALB=wm5L7CqtdNKT9HgWkB1npkwTHNu6Dnp6y8ooyA+cothS2GyFIfLrWbBIPLC/fXHLWxK22JMxlnrumBsnH57kHbePVDXkzlq7O10XKelxI/kfPPHgQ5QIeQlgmq51; AWSALBCORS=wm5L7CqtdNKT9HgWkB1npkwTHNu6Dnp6y8ooyA+cothS2GyFIfLrWbBIPLC/fXHLWxK22JMxlnrumBsnH57kHbePVDXkzlq7O10XKelxI/kfPPHgQ5QIeQlgmq51'
     # }
-    r = requests.get(url, verify=False)  # Disable SSL verification for testing
+    session = requests.Session()
+    retry = Retry(connect=3, backoff_factor=0.5)
+    adapter = HTTPAdapter(max_retries=retry)
+    session.mount('http://', adapter)
+    session.mount('https://', adapter)
+    r = session.get(url)  # Disable SSL verification for testing
     print(r)
     # print(r.__dict__)
     return Response(), 200
