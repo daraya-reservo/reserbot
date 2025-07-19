@@ -93,7 +93,7 @@ def marcar_salida():
     #     'Referer': 'https://app.ctrlit.cl/ctrl/dial/guardarweb/eJUVR0SMli?i=0',
     #     'Cookie': 'AWSALB=wm5L7CqtdNKT9HgWkB1npkwTHNu6Dnp6y8ooyA+cothS2GyFIfLrWbBIPLC/fXHLWxK22JMxlnrumBsnH57kHbePVDXkzlq7O10XKelxI/kfPPHgQ5QIeQlgmq51; AWSALBCORS=wm5L7CqtdNKT9HgWkB1npkwTHNu6Dnp6y8ooyA+cothS2GyFIfLrWbBIPLC/fXHLWxK22JMxlnrumBsnH57kHbePVDXkzlq7O10XKelxI/kfPPHgQ5QIeQlgmq51'
     # }
-    r = requests.get(url)
+    r = requests.get(url, verify=False)  # Disable SSL verification for testing
     print(r)
     # print(r.__dict__)
     return Response(), 200
