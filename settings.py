@@ -15,10 +15,7 @@ dotenv.load_dotenv(dotenv_path=env_path)
 BOT_TOKEN = os.environ.get('SLACK_TOKEN')
 SIGNING_SECRET = os.environ.get('SIGNING_SECRET')
 
-# canales de slack
-QA_CHANNEL = '#reserbot-shhhh'
-MAIN_CHANNEL = '#reservo-ti'
-DEBUG = False  # cambiar a True para usar QA_CHANNEL
+DEBUG = True  # si es True usa canal de pruebas
 
 # links relevantes
 URL_EXCEL_LEARNING = 'https://docs.google.com/spreadsheets/d/1FhaBUnW_hGk_siixvFUAjs0SZRw5iksFnSqI8XkiX3A/edit?gid=599070068#gid=599070068'

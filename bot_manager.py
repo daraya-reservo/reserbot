@@ -7,9 +7,12 @@ import slack
 
 class BotManager:
 
+    channel = '#reservo-ti'
+
     def __init__(self):
         self.client = slack.WebClient(token=settings.BOT_TOKEN)
-        self.channel = settings.QA_CHANNEL if settings.DEBUG else settings.MAIN_CHANNEL
+        if settings.DEBUG:
+            self.channel = '#reserbot-shhhh' # Use a debug channel for testing
 
     def post_message(self, text, buttons=None):
         self.client.chat_postMessage(
