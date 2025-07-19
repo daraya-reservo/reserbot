@@ -95,14 +95,20 @@ def marcar_salida():
     #     'Referer': 'https://app.ctrlit.cl/ctrl/dial/guardarweb/eJUVR0SMli?i=0',
     #     'Cookie': 'AWSALB=wm5L7CqtdNKT9HgWkB1npkwTHNu6Dnp6y8ooyA+cothS2GyFIfLrWbBIPLC/fXHLWxK22JMxlnrumBsnH57kHbePVDXkzlq7O10XKelxI/kfPPHgQ5QIeQlgmq51; AWSALBCORS=wm5L7CqtdNKT9HgWkB1npkwTHNu6Dnp6y8ooyA+cothS2GyFIfLrWbBIPLC/fXHLWxK22JMxlnrumBsnH57kHbePVDXkzlq7O10XKelxI/kfPPHgQ5QIeQlgmq51'
     # }
-    session = requests.Session()
-    retry = Retry(connect=3, backoff_factor=0.5)
-    adapter = HTTPAdapter(max_retries=retry)
-    session.mount('http://', adapter)
-    session.mount('https://', adapter)
-    r = session.get(url)  # Disable SSL verification for testing
-    print(r)
+    # session = requests.Session()
+    # retry = Retry(connect=3, backoff_factor=0.5)
+    # adapter = HTTPAdapter(max_retries=retry)
+    # session.mount('http://', adapter)
+    # session.mount('https://', adapter)
+    # r = session.get(url)  # Disable SSL verification for testing
+    # print(r)
     # print(r.__dict__)
+    import urllib 
+    from urllib.request import urlopen
+    html = urlopen(url)
+    contents = html.read()
+    print(contents)
+
     return Response(), 200
 
 
