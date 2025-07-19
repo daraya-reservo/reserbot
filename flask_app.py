@@ -74,18 +74,19 @@ def fin_vacaciones():
 def marcar_entrada():
     user = request.form.get('user_name')
     rut = request.form.get('text').strip()
-    import subprocess
-    try:
-        # Execute a JavaScript file using Node.js
-        result = subprocess.run(['node', 'marcar_entrada.js'], capture_output=True, text=True, check=True)
-        print('result: ', result)
-    except subprocess.CalledProcessError as e:
-        return jsonify({"error": f"JavaScript execution failed: {e.stderr}"}), 500
-
     return Response(), 200
 
 @app.route('/marcar-salida', methods=['POST'])
 def marcar_salida():
+    user = request.form.get('user_name')
+    rut = request.form.get('text').strip()
+    reserbot.post_message(
+        text='holi',
+        buttons=[{
+            'text': 'marcar salida',
+            'url': 'https://app.ctrlit.cl/ctrl/dial/registrarweb/eJUVR0SMli?sentido=0&latitud=&longitud=&rut=2'
+        }]
+    )
     return Response(), 200
 
 
