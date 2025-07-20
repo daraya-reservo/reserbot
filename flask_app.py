@@ -80,7 +80,7 @@ def marcar_salida():
     user = request.form.get('user_name')
     rut = request.form.get('text').strip()
     url = f'https://app.ctrlit.cl/ctrl/dial/registrarweb/eJUVR0SMli?sentido=0&rut={rut}'
-    return redirect(url)
+    return redirect(url, code=302)
 
 if __name__ == '__main__':
     app.run(port=5000)
