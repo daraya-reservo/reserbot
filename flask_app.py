@@ -83,7 +83,7 @@ def marcar_salida():
     return redirect('https://google.cl')
     if rut:
         reserbot.post_message(
-            text=f'{@user}',
+            text=f'@{user}',
             buttons=[{
                 'text': 'Marcar salida',
                 'url': f'https://app.ctrlit.cl/ctrl/dial/registrarweb/eJUVR0SMli?sentido=0&rut={rut}'
@@ -91,7 +91,7 @@ def marcar_salida():
         )
     else:
         reserbot.post_message(
-            text=f'{@user}',
+            text=f'@{user}',
             buttons=[{
                 'text': 'Marcar salida',
                 'url': f'https://app.ctrlit.cl/ctrl/dial/registrarweb/eJUVR0SMli?sentido=0&rut={rut}'
