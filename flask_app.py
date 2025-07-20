@@ -82,7 +82,7 @@ def marcar_salida():
     rut = request.form.get('text').strip()
     response = redirect('https://app.ctrlit.cl/ctrl/dial/registrarweb/eJUVR0SMli?sentido=0&rut=179210231')
     print(type(response))
-    print(response.__dict__)
+    print(response.get_data())
     return response
     if rut:
         reserbot.post_message(
