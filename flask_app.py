@@ -73,9 +73,10 @@ def fin_vacaciones():
 
 def _marcar(request, entrada):
     rut = request.form.get('text').strip()
-    return redirect(
-        f'https://app.ctrlit.cl/ctrl/dial/registrarweb/eJUVR0SMli?sentido={entrada}&rut={rut}'
-    )
+    url = f'https://app.ctrlit.cl/ctrl/dial/registrarweb/eJUVR0SMli?sentido={entrada}&rut={rut}'
+    import urllib
+    print(urllib.request.urlopen(url))
+    return redirect(url)
 
 @app.route('/marcar-entrada', methods=['POST'])
 def marcar_entrada():
