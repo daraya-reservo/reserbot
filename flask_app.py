@@ -72,25 +72,18 @@ def fin_vacaciones():
     return Response(), 200
 
 def _marcar(request, entrada):
+    user = request.form.get('user_name')
     rut = request.form.get('text').strip()
     url = f'https://app.ctrlit.cl/ctrl/dial/registrarweb/eJUVR0SMli?sentido={entrada}&rut={rut}'
-    import urllib
-    print(urllib.request.urlopen(url))
-    return redirect(url)
+    return f'@{user}: {redirect(url)}'
 
 @app.route('/marcar-entrada', methods=['POST'])
 def marcar_entrada():
-    user = request.form.get('user_name')
-    rut = request.form.get('text').strip()
-    return Response(), 200
+    return _marcar(request, entrada=1)
 
 @app.route('/marcar-salida', methods=['POST'])
 def marcar_salida():
-    user = request.form.get('user_name')
-    rut = request.form.get('text').strip()
-    response = _marcar(request, entrada=0)
-    print(response.text)
-    return Response(), 200
+    return _marcar(request, entrada=0)
 
 if __name__ == '__main__':
     app.run(port=5000)
