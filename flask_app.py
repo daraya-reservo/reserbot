@@ -71,19 +71,16 @@ def fin_vacaciones():
     _actualizar_vacaciones(request, available=True)
     return Response(), 200
 
-def _marcar(request, entrada):
+@app.route('/marcar-entrada', methods=['POST'])
+def marcar_entrada():
+    return Response(), 200
+
+@app.route('/marcar-salida', methods=['POST'])
+def marcar_salida():
     user = request.form.get('user_name')
     rut = request.form.get('text').strip()
     url = f'https://app.ctrlit.cl/ctrl/dial/registrarweb/eJUVR0SMli?sentido={entrada}&rut={rut}'
     return f'@{user}: {redirect(url)}'
-
-@app.route('/marcar-entrada', methods=['POST'])
-def marcar_entrada():
-    return _marcar(request, entrada=1)
-
-@app.route('/marcar-salida', methods=['POST'])
-def marcar_salida():
-    return _marcar(request, entrada=0)
 
 if __name__ == '__main__':
     app.run(port=5000)
