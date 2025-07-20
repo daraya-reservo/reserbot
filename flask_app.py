@@ -3,7 +3,7 @@ from datetime import datetime
 import locale
 
 # Third Party
-from flask import Flask, request, Response, jsonify
+from flask import Flask, request, Response, jsonify, redirect
 import pytz
 from slackeventsapi import SlackEventAdapter
 
@@ -80,13 +80,24 @@ def marcar_entrada():
 def marcar_salida():
     user = request.form.get('user_name')
     rut = request.form.get('text').strip()
-    reserbot.post_message(
-        text='holi',
-        buttons=[{
-            'text': 'marcar salida',
-            'url': 'https://app.ctrlit.cl/ctrl/dial/registrarweb/eJUVR0SMli?sentido=0&latitud=&longitud=&rut=2'
-        }]
-    )
+    return redirect('https://google.cl')
+    if rut:
+        reserbot.post_message(
+            text=f'{@user}',
+            buttons=[{
+                'text': 'Marcar salida',
+                'url': f'https://app.ctrlit.cl/ctrl/dial/registrarweb/eJUVR0SMli?sentido=0&rut={rut}'
+            }]
+        )
+    else:
+        reserbot.post_message(
+            text=f'{@user}',
+            buttons=[{
+                'text': 'Marcar salida',
+                'url': f'https://app.ctrlit.cl/ctrl/dial/registrarweb/eJUVR0SMli?sentido=0&rut={rut}'
+            }]
+        )
+
     return Response(), 200
 
 
