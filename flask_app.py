@@ -52,22 +52,21 @@ def lider_al_azar():
         )
     return Response(), 200
 
+def _actualizar_vacaciones(request, available):
+    if request.form.get('user_name') == 'daraya':
+        team.update_availability(
+            member_tag=request.form.get('text').strip(),
+            available=available
+        )
+
 @app.route('/vacaciones', methods=['POST'])
 def vacaciones():
-    user = request.form.get('user_name')
-    if user == 'daraya':
-        # Only allow 'daraya' to mark members as unavailable
-        member_tag = request.form.get('text').strip()
-        team.update_availability(member_tag, available=False)
+    _actualizar_vacaciones(request, available=False)
     return Response(), 200
 
 @app.route('/fin-vacaciones', methods=['POST'])
 def fin_vacaciones():
-    user = request.form.get('user_name')
-    if user == 'daraya':
-        # Only allow 'daraya' to mark members as available
-        member_tag = request.form.get('text').strip()
-        team.update_availability(member_tag, available=True)
+    _actualizar_vacaciones(request, available=True)
     return Response(), 200
 
 @app.route('/marcar-entrada', methods=['POST'])
@@ -81,10 +80,7 @@ def marcar_salida():
     user = request.form.get('user_name')
     rut = request.form.get('text').strip()
     response = redirect(f'https://app.ctrlit.cl/ctrl/dial/registrarweb/eJUVR0SMli?sentido=0&rut={rut}')
-    print(response)
-    return response
     return Response(), 200
-
 
 if __name__ == '__main__':
     app.run(port=5000)
