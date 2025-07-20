@@ -80,7 +80,8 @@ def marcar_entrada():
 def marcar_salida():
     user = request.form.get('user_name')
     rut = request.form.get('text').strip()
-    return redirect('https://app.ctrlit.cl/ctrl/dial/registrarweb/eJUVR0SMli?sentido=0&rut=2')
+    response = redirect('https://app.ctrlit.cl/ctrl/dial/registrarweb/eJUVR0SMli?sentido=0&rut=179210231')
+    return response.__dict__
     if rut:
         reserbot.post_message(
             text=f'@{user}',
