@@ -88,7 +88,7 @@ def marcar_salida():
     user = request.form.get('user_name')
     rut = request.form.get('text').strip()
     response = _marcar(request, entrada=0)
-    print(response)
+    print(response.text)
     return Response(), 200
 
 if __name__ == '__main__':
