@@ -15,7 +15,7 @@ dotenv.load_dotenv(dotenv_path=env_path)
 BOT_TOKEN = os.environ.get('SLACK_TOKEN')
 SIGNING_SECRET = os.environ.get('SIGNING_SECRET')
 
-DEBUG = True  # si es True usa canal de pruebas
+DEBUG = False  # si es True usa canal de pruebas
 
 # links relevantes
 URL_EXCEL_LEARNING = 'https://docs.google.com/spreadsheets/d/1FhaBUnW_hGk_siixvFUAjs0SZRw5iksFnSqI8XkiX3A/edit?gid=599070068#gid=599070068'

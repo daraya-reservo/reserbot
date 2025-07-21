@@ -12,6 +12,7 @@ import settings
 from bot_manager import BotManager
 from team_manager import TeamManager
 
+
 app = Flask(__name__)
 slack_event_adapter = SlackEventAdapter(settings.SIGNING_SECRET, '/slack/events', app)
 locale.setlocale(locale.LC_TIME, 'es_ES.UTF-8')
@@ -73,15 +74,17 @@ def fin_vacaciones():
 
 @app.route('/marcar-entrada', methods=['POST'])
 def marcar_entrada():
+    rut = request.form.get('text').strip()
+    url = f'https://app.ctrlit.cl/ctrl/dial/registrarweb/eJUVR0SMli?sentido=1&rut={rut}'
+    response = redirect(url)
     return Response(), 200
 
 @app.route('/marcar-salida', methods=['POST'])
 def marcar_salida():
-    user = request.form.get('user_name')
     rut = request.form.get('text').strip()
     url = f'https://app.ctrlit.cl/ctrl/dial/registrarweb/eJUVR0SMli?sentido=0&rut={rut}'
     response = redirect(url)
-    return Response(response), 200
+    return Response(), 200
 
 if __name__ == '__main__':
     app.run(port=5000)
