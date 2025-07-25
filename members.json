@@ -2,37 +2,37 @@
     {
         "name": "Agust\u00edn",
         "tag": "@apradenas",
-        "dailies": 11,
+        "dailies": 12,
         "is_available": true
     },
     {
         "name": "Dani",
         "tag": "@daraya",
-        "dailies": 10,
-        "is_available": false
+        "dailies": 11,
+        "is_available": true
     },
     {
         "name": "Hiho",
         "tag": "@ndelgado",
-        "dailies": 11,
+        "dailies": 12,
         "is_available": true
     },
     {
         "name": "Juan",
         "tag": "@jecclefield",
         "dailies": 10,
-        "is_available": false
+        "is_available": true
     },
     {
         "name": "Lucho",
         "tag": "@lpinochet",
-        "dailies": 11,
+        "dailies": 12,
         "is_available": true
     },
     {
         "name": "Manu",
         "tag": "@mgrandon",
-        "dailies": 11,
+        "dailies": 12,
         "is_available": true
     },
     {
