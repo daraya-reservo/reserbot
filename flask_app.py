@@ -1,10 +1,10 @@
 # Standard Library
-from datetime import datetime
-import locale
+# from datetime import datetime
+# import locale
 
 # Third Party
 from flask import Flask, request, Response, jsonify, redirect
-import pytz
+# import pytz
 from slackeventsapi import SlackEventAdapter
 
 # Reserbot
@@ -15,7 +15,7 @@ from team_manager import TeamManager
 
 app = Flask(__name__)
 slack_event_adapter = SlackEventAdapter(settings.SIGNING_SECRET, '/slack/events', app)
-locale.setlocale(locale.LC_TIME, 'es_ES.UTF-8')
+# locale.setlocale(locale.LC_TIME, 'es_ES.UTF-8')
 team = TeamManager()
 reserbot = BotManager()
 
@@ -45,7 +45,8 @@ def estudio():
 @app.route('/lider-al-azar', methods=['POST'])
 def lider_al_azar():
     user = request.form.get('user_name')
-    today = datetime.now(pytz.timezone('America/Santiago'))
+    import utils
+    today = utils.get_local_datetime_now()
     random_leader = team.get_random_leader(today)
     if random_leader:
         reserbot.post_message(
@@ -64,6 +65,8 @@ def _actualizar_vacaciones(request, available):
 
 @app.route('/vacaciones', methods=['POST'])
 def vacaciones():
+    import utils
+    print(utils.get_local_datetime_now())
     _actualizar_vacaciones(request, available=False)
     return Response(), 200
 
