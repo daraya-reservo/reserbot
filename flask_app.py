@@ -36,7 +36,7 @@ def estudio():
         text=f'@{user} va a tomar la hora de estudio :rubyhappy: anótate :bonk-doge:',
         buttons=[{
             'text': 'Ir al excel 📚',
-            'url': settings.URL_EXCEL_LEARNING
+            'url': 'https://docs.google.com/spreadsheets/d/1FhaBUnW_hGk_siixvFUAjs0SZRw5iksFnSqI8XkiX3A/edit?gid=599070068#gid=599070068'
         }],
     )
     return Response(), 200
