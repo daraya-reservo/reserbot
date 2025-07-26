@@ -10,7 +10,7 @@ import pytz
 import settings
 
 
-def get_local_datetime_now():
+def datetime_now():
     locale.setlocale(locale.LC_TIME, 'es_ES.UTF-8')
     return datetime.now(pytz.timezone('America/Santiago'))
 

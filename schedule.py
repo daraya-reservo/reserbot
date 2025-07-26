@@ -1,18 +1,10 @@
-# Standard library
-from datetime import datetime
-import locale
-
-# Third Party
-import pytz
-
 # Reserbot
 from bot_manager import BotManager
 from team_manager import TeamManager
 import utils
 
 
-locale.setlocale(locale.LC_TIME, 'es_ES.UTF-8')
-today = datetime.now(pytz.timezone('America/Santiago'))
+today = utils.datetime_now()
 team = TeamManager()
 reserbot = BotManager()
 

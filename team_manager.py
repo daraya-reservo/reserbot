@@ -1,5 +1,6 @@
 # Reserbot
 import settings
+import utils
 
 # Standard Library
 import json
@@ -13,6 +14,7 @@ class TeamManager:
     def __init__(self):
         with open(MEMBERS_JSON) as members_json:
             self.members = json.load(members_json)
+        self.today = utils.datetime_now()
         self.random_pool = self.members.copy()
 
     def save_members(self):
