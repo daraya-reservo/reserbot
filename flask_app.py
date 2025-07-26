@@ -72,14 +72,13 @@ def marcar_entrada():
     rut = request.form.get('text').strip()
     url = f'https://app.ctrlit.cl/ctrl/dial/registrarweb/eJUVR0SMli?sentido=1&rut={rut}'
     response = redirect(url)
-    return Response(), 200
+    return redirect(url), 200
 
 @app.route('/marcar-salida', methods=['POST'])
 def marcar_salida():
     rut = request.form.get('text').strip()
     url = f'https://app.ctrlit.cl/ctrl/dial/registrarweb/eJUVR0SMli?sentido=0&rut={rut}'
-    response = redirect(url)
-    return Response(), 200
+    return redirect(url), 200
 
 if __name__ == '__main__':
     app.run(port=5000)
