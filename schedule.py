@@ -10,21 +10,18 @@ reserbot = BotManager()
 
 if utils.is_workday(today):
     # miembros del equipo no disponibles
-    unavailable_members = team.get_unavailable_members(today)
+    unavailable_members = team.get_unavailable_members()
     if unavailable_members:
-        text = f'Hoy {today.strftime("%A")} no estará: {", ".join(unavailable_members)} :f2:'
-        post_at = (today.replace(hour=9, minute=0, second=0)).strftime('%s')
         reserbot.schedule_message(
-            post_at=post_at,
-            text=text,
+            post_at=(today.replace(hour=9, minute=0, second=0)).strftime('%s'),
+            text=f'Hoy {today.strftime("%A")} no estará: {", ".join(unavailable_members)} :f2:',
         )
 
-    # integrante que lidera la daily hoy
-    leader = team.get_daily_leader(today)
-    text = f'Hoy {today.strftime("%A %d")} lidera {leader} :anime:'
+    # miembro que lidera la daily hoy
+    leader = team.get_daily_leader()
     reserbot.schedule_message(
         post_at=(today.replace(hour=9, minute=1, second=0)).strftime('%s'),
-        text=text,
+        text=f'Hoy {today.strftime("%A %d")} lidera {leader} :anime:',
         buttons=[
             {
                 "text": "Abrir Trello :trello:",

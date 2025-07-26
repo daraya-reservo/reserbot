@@ -6,7 +6,6 @@ from slackeventsapi import SlackEventAdapter
 import settings
 from bot_manager import BotManager
 from team_manager import TeamManager
-import utils
 
 
 app = Flask(__name__)
@@ -40,8 +39,7 @@ def estudio():
 @app.route('/lider-al-azar', methods=['POST'])
 def lider_al_azar():
     user = request.form.get('user_name')
-    today = utils.datetime_now()
-    random_leader = team.get_random_leader(today)
+    random_leader = team.get_random_leader()
     if random_leader:
         reserbot.post_message(
             text=f'@{user} pidió un lider al azar: lidera {random_leader} :rubyrun:'
@@ -52,7 +50,7 @@ def _actualizar_vacaciones(request, available):
     user = request.form.get('user_name')
     member_tag = request.form.get('text').strip()
     if user == 'daraya':
-        team.update_availability(
+        team.update_member_availability(
             member_tag=member_tag,
             available=available
         )
@@ -71,7 +69,6 @@ def fin_vacaciones():
 def marcar_entrada():
     rut = request.form.get('text').strip()
     url = f'https://app.ctrlit.cl/ctrl/dial/registrarweb/eJUVR0SMli?sentido=1&rut={rut}'
-    response = redirect(url)
     return redirect(url), 200
 
 @app.route('/marcar-salida', methods=['POST'])

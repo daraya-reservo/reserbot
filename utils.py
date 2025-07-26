@@ -14,19 +14,21 @@ def datetime_now():
     locale.setlocale(locale.LC_TIME, 'es_ES.UTF-8')
     return datetime.now(pytz.timezone('America/Santiago'))
 
-def is_workday(day):
-    # si el día es sábado(5) o domingo(6)
-    if day.weekday() in [5, 6]:
-        return False
+def feriados():
+    today = datetime_now()
     # abro archivo de feriados
-    holidays_path = f'{settings.PROJECT_ROOT}/csv/publicholiday.CL.{day.year}.csv'  # ver README
+    holidays_path = f'{settings.PROJECT_ROOT}/csv/publicholiday.CL.{today.year}.csv'  # ver README
     with open(holidays_path) as holidays_file:
         holidays = csv.DictReader(holidays_file)
-        holidays_list = [holiday['date'] for holiday in holidays]
-        # chequea que el día no esté en lista de feriados
-        formatted_day = day.strftime('%Y-%m-%d')
-        return formatted_day not in holidays_list
+        return [holiday['date'] for holiday in holidays]
 
+def is_workday(day):
+    # si el día es sábado(5) o domingo(6) NO es día de trabajo
+    if day.weekday() in [5, 6]:
+        return False
+    # si NO está en los feriados, es día de trabajo
+    return day.strftime('%Y-%m-%d') not in feriados()
+    
 def get_meetings(day):
     meetings = []
     # primer martes del mes
