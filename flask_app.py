@@ -4,7 +4,6 @@
 
 # Third Party
 from flask import Flask, request, Response, jsonify, redirect
-# import pytz
 from slackeventsapi import SlackEventAdapter
 
 # Reserbot

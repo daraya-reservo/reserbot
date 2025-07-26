@@ -6,7 +6,6 @@ import locale
 import pytz
 
 # Reserbot
-import settings
 from bot_manager import BotManager
 from team_manager import TeamManager
 import utils
@@ -37,11 +36,11 @@ if utils.is_workday(today):
         buttons=[
             {
                 "text": "Abrir Trello :trello:",
-                "url": settings.URL_TRELLO,
+                "url": 'https://trello.com/b/dZnTCMi3/tablero-desarrollo',
             },
             {
                 "text": "Unirse a Meet :meet:",
-                "url": settings.URL_MEET,
+                "url": 'https://meet.google.com/sft-muqe-ziq',
             },
         ],
     )

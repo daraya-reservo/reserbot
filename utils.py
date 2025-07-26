@@ -33,22 +33,22 @@ def get_meetings(day):
     if day.weekday() == 1 and day.day in range(7):
         meetings.append({
             'text': f'Hoy es la reunión del área de Postventa a las 10:30 AM',
-            'url': settings.URL_MEET_REU_POSTVENTA,
+            'url': 'https://meet.google.com/pct-qnin-cgp',
         })
     # jueves
     elif day.weekday() == 3:
         meetings.append({
             'text': f'Hoy es la reunión del área Comercial a las 11:00 AM',
-            'url': settings.URL_MEET_REU_COMERCIAL,
+            'url': 'https://meet.google.com/kba-ivgs-heu',
         })
     # viernes
     elif day.weekday() == 4:
         meetings.append({
             'text': f'Hoy es la reunión del área de Customer Success a las 10:30 AM',
-            'url': settings.URL_MEET_REU_CS,
+            'url': 'https://meet.google.com/rgc-uvjd-cqj',
         })
         meetings.append({
             'text': f'Hoy es la reunión del área de Soporte a las 16:30 PM',
-            'url': settings.URL_MEET_REU_SOPORTE,
+            'url': 'https://meet.google.com/ucg-ohck-hsx',
         })
     return meetings
