@@ -9,10 +9,10 @@ today = utils.datetime_now()
 team = TeamManager()
 reserbot = BotManager(token=settings.BOT_TOKEN)
 
-is_feriado = today.strftime('%Y-%m-%d') in utils.feriados()
+not_feriado = today.strftime('%Y-%m-%d') not in utils.feriados()
 is_dia_habil = today.weekday() in range(5)  # [lunes a viernes]
 
-if not is_feriado and is_dia_habil:
+if is_dia_habil and not_feriado:
     # miembros del equipo no disponibles
     unavailable_members = team.get_unavailable_members()
     if unavailable_members:
@@ -29,7 +29,7 @@ if not is_feriado and is_dia_habil:
         buttons=[
             {
                 "text": "Abrir Trello :trello:",
-                "url": 'https://trello.com/b/dZnTCMi3/tablero-desarrollo',
+                "url": 'https://trello.com/b/MIvdN9uz/tablero-desarrollo',
             },
             {
                 "text": "Unirse a Meet :meet:",
