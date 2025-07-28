@@ -1,33 +1,24 @@
-# Reserbot
-import settings
-
 # Third Party
 import slack
 
 
 class BotManager:
 
-    channel = '#reservo-ti'
+    def __init__(self, token):
+        self.client = slack.WebClient(token=token)
+        self.channel = '#reservo-ti'
 
-    def __init__(self):
-        self.client = slack.WebClient(token=settings.BOT_TOKEN)
-        # Use a debug channel for testing
-        if settings.DEBUG:
-            self.channel = '#reserbot-shhhh'
-
-    def post_message(self, text, buttons=None):
-        self.client.chat_postMessage(
-            channel=self.channel,
-            blocks=self.__build_message_blocks(text, buttons)
-        )
-
-    def schedule_message(self, post_at, text, buttons=None):
-        self.client.chat_scheduleMessage(
-            channel=self.channel,
-            post_at=post_at,
-            blocks=self.__build_message_blocks(text, buttons),
-            text='scheduled message',
-        )
+    def post(self, text, buttons=None, post_at=None, production=True):
+        prepared_message = {
+            'channel': self.channel if production else '#reserbot-shhhh',
+            'blocks': self.__build_message_blocks(text, buttons),
+        }
+        if post_at:
+            prepared_message['post_at'] = post_at
+            prepared_message['text'] = 'scheduled message'
+            self.client.chat_scheduleMessage(**prepared_message)
+        else:
+            self.client.chat_postMessage(**prepared_message)
 
     def __build_message_blocks(self, text=None, buttons=None):
         blocks = []

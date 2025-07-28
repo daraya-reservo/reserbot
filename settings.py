@@ -14,5 +14,3 @@ env_path = pathlib.Path('.') / '.env'
 dotenv.load_dotenv(dotenv_path=env_path)
 BOT_TOKEN = os.environ.get('SLACK_TOKEN')
 SIGNING_SECRET = os.environ.get('SIGNING_SECRET')
-
-DEBUG = False  # si es True usa canal de pruebas
