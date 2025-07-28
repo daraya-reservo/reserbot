@@ -22,13 +22,6 @@ def feriados():
         holidays = csv.DictReader(holidays_file)
         return [holiday['date'] for holiday in holidays]
 
-def is_workday(day):
-    # si el día es sábado(5) o domingo(6) NO es día de trabajo
-    if day.weekday() in [5, 6]:
-        return False
-    # si NO está en los feriados, es día de trabajo
-    return day.strftime('%Y-%m-%d') not in feriados()
-    
 def get_meetings(day):
     meetings = []
     # primer martes del mes

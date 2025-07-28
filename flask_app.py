@@ -39,7 +39,7 @@ def estudio():
 @app.route('/lider-al-azar', methods=['POST'])
 def lider_al_azar():
     user = request.form.get('user_name')
-    random_leader = team.get_random_leader()
+    random_leader = team.get_random_daily_leader()
     if random_leader:
         reserbot.post(
             text=f'@{user} pidió un lider al azar: lidera {random_leader} :rubyrun:'
