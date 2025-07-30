@@ -71,15 +71,16 @@ def marcar():
     url_entrada = f'{links.url_marcar_entrada}{rut}'
     url_salida = f'{links.url_marcar_salida}{rut}'
     reserbot.post(
-        text=f'@{request.form["user_name"]} quiere marcar su entrada/salida :clock:',
+        text=f'@{request.form["user_name"]} quiere marcar su entrada/salida :finoseñores:',
         buttons=[
             {
-                'text': 'Marcar entrada :clock:',
+                'text': 'Marcar entrada',
                 'url': url_entrada,
             },
             {
-                'text': 'Marcar salida :clock:',
+                'text': 'Marcar salida',
                 'url': url_salida,
+                'style': 'danger'  # Optional: style can be 'primary' or 'danger'
             }
         ],
         production=False

@@ -35,7 +35,7 @@ class BotManager:
                     'text': button['text'],
                     'emoji': True
                 },
-                'style': 'primary',
+                'style': button.get('style', 'primary'),
                 'url': button['url'],
             } for button in buttons]
             blocks.append({'type': 'actions', 'elements': button_elements})
