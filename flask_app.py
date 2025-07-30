@@ -67,6 +67,8 @@ def fin_vacaciones():
 
 @app.route('/marcar', methods=['POST'])
 def marcar():
+    print('request.form')
+    print(request.form)
     rut = request.form.get('text').strip()
     url_entrada = f'{links.url_marcar_entrada}{rut}'
     url_salida = f'{links.url_marcar_salida}{rut}'
