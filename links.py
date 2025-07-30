@@ -1,6 +1,6 @@
 url_trello = 'https://trello.com/b/MIvdN9uz/tablero-desarrollo'
 url_meet_daily = 'https://meet.google.com/sft-muqe-ziq'
-url_excel_estudio = 'https://docs.google.com/spreadsheets/d/1FhaBUnW_hGk_siixvFUAjs0SZRw5iksFnSqI8XkiX3A/edit?gid=599070068#gid=599070068'
+url_excel_estudio = 'docs.google.com/spreadsheets/d/1FhaBUnW_hGk_siixvFUAjs0SZRw5iksFnSqI8XkiX3A/edit?gid=599070068#gid=599070068'
 url_marcar_entrada = 'https://app.ctrlit.cl/ctrl/dial/registrarweb/eJUVR0SMli?sentido=1&rut='
 url_marcar_salida = 'https://app.ctrlit.cl/ctrl/dial/registrarweb/eJUVR0SMli?sentido=0&rut='
 
