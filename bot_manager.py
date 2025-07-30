@@ -1,16 +1,18 @@
 # Third Party
 import slack
 
+# Reserbot
+import settings
+
 
 class BotManager:
 
-    def __init__(self, token):
-        self.client = slack.WebClient(token=token)
-        self.channel = '#reservo-ti'
+    def __init__(self):
+        self.client = slack.WebClient(token=settings.BOT_TOKEN)
 
-    def post(self, text, buttons=None, post_at=None, production=True):
+    def post(self, channel, text=None, buttons=None, post_at=None):
         prepared_message = {
-            'channel': self.channel if production else '#reserbot-shhhh',
+            'channel': channel,
             'blocks': self.__build_message_blocks(text, buttons),
         }
         if post_at:
