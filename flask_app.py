@@ -47,36 +47,44 @@ def lider_al_azar():
         )
     return Response(), 200
 
-def _actualizar_vacaciones(request, available):
-    user = request.form.get('user_name')
-    member_tag = request.form.get('text').strip()
-    if user == 'daraya':
-        team.update_member_availability(
-            member_tag=member_tag,
-            available=available
-        )
-
 @app.route('/vacaciones', methods=['POST'])
 def vacaciones():
-    _actualizar_vacaciones(request, available=False)
+    if request.form['user_name'] == 'daraya':
+        team.update_member_availability(
+            member_tag=request.form['text'].strip(),
+            available=False
+        )
     return Response(), 200
 
 @app.route('/fin-vacaciones', methods=['POST'])
 def fin_vacaciones():
-    _actualizar_vacaciones(request, available=True)
+    if request.form['user_name'] == 'daraya':
+        team.update_member_availability(
+            member_tag=request.form['text'].strip(),
+            available=True
+        )
     return Response(), 200
 
-@app.route('/marcar-entrada', methods=['POST'])
-def marcar_entrada():
+@app.route('/marcar', methods=['POST'])
+def marcar():
     rut = request.form.get('text').strip()
-    url = f'https://app.ctrlit.cl/ctrl/dial/registrarweb/eJUVR0SMli?sentido=1&rut={rut}'
-    return redirect(url), 200
-
-@app.route('/marcar-salida', methods=['POST'])
-def marcar_salida():
-    rut = request.form.get('text').strip()
-    url = f'https://app.ctrlit.cl/ctrl/dial/registrarweb/eJUVR0SMli?sentido=0&rut={rut}'
-    return redirect(url), 200
+    url_entrada = f'{links.url_marcar_entrada}{rut}'
+    url_salida = f'{links.url_marcar_salida}{rut}'
+    reserbot.post(
+        text=f'@{request.form["user_name"]} quiere marcar su entrada/salida :clock:',
+        buttons=[
+            {
+                'text': 'Marcar entrada :clock:',
+                'url': url_entrada,
+            },
+            {
+                'text': 'Marcar salida :clock:',
+                'url': url_salida,
+            }
+        ],
+        production=False
+    )
+    return Response(), 200
 
 if __name__ == '__main__':
     app.run(port=5000)
