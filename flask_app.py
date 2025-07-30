@@ -3,6 +3,7 @@ from flask import Flask, request, Response, jsonify, redirect
 from slackeventsapi import SlackEventAdapter
 
 # Reserbot
+import links
 import settings
 from bot_manager import BotManager
 from team_manager import TeamManager
@@ -31,7 +32,7 @@ def estudio():
         text=f'@{user} va a tomar la hora de estudio :rubyhappy: anótate :bonk-doge:',
         buttons=[{
             'text': 'Ir al excel 📚',
-            'url': 'https://docs.google.com/spreadsheets/d/1FhaBUnW_hGk_siixvFUAjs0SZRw5iksFnSqI8XkiX3A/edit?gid=599070068#gid=599070068'
+            'url': links.url_excel_estudio
         }],
     )
     return Response(), 200

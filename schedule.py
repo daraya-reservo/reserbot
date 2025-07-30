@@ -1,7 +1,8 @@
 # Reserbot
 from bot_manager import BotManager
-from team_manager import TeamManager
+import links
 import settings
+from team_manager import TeamManager
 import utils
 
 
@@ -9,7 +10,7 @@ today = utils.datetime_now()
 team = TeamManager()
 reserbot = BotManager(token=settings.BOT_TOKEN)
 
-not_feriado = today.strftime('%Y-%m-%d') not in utils.feriados()
+not_feriado = today.strftime('%Y-%m-%d') not in utils.feriados(today.year)
 is_dia_habil = today.weekday() in range(5)  # [lunes a viernes]
 
 if is_dia_habil and not_feriado:
@@ -29,11 +30,11 @@ if is_dia_habil and not_feriado:
         buttons=[
             {
                 "text": "Abrir Trello :trello:",
-                "url": 'https://trello.com/b/MIvdN9uz/tablero-desarrollo',
+                "url": links.url_trello,
             },
             {
                 "text": "Unirse a Meet :meet:",
-                "url": 'https://meet.google.com/sft-muqe-ziq',
+                "url": links.url_meet_daily,
             },
         ],
     )

@@ -1,0 +1,10 @@
+url_trello = 'https://trello.com/b/MIvdN9uz/tablero-desarrollo'
+url_meet_daily = 'https://meet.google.com/sft-muqe-ziq'
+url_excel_estudio = 'https://docs.google.com/spreadsheets/d/1FhaBUnW_hGk_siixvFUAjs0SZRw5iksFnSqI8XkiX3A/edit?gid=599070068#gid=599070068'
+url_marcar_entrada = 'https://app.ctrlit.cl/ctrl/dial/registrarweb/eJUVR0SMli?sentido=1&rut='
+url_marcar_salida = 'https://app.ctrlit.cl/ctrl/dial/registrarweb/eJUVR0SMli?sentido=0&rut='
+
+url_meet_postventa = 'https://meet.google.com/pct-qnin-cgp'
+url_meet_comercial = 'https://meet.google.com/kba-ivgs-heu'
+url_meet_customer_success = 'https://meet.google.com/rgc-uvjd-cqj'
+url_meet_soporte = 'https://meet.google.com/ucg-ohck-hsx'
