@@ -1,10 +1,5 @@
 # Third Party
-from flask import (
-    Flask,
-    jsonify,
-    request,
-    Response,
-)
+from flask import Flask, jsonify, request, Response
 
 # Reserbot
 import bot_manager

@@ -5,7 +5,7 @@ import slack
 import settings
 
 
-class BotManager:
+class Bot:
 
     def __init__(self):
         self.client = slack.WebClient(token=settings.BOT_TOKEN)

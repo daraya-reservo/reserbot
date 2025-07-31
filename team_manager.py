@@ -9,7 +9,7 @@ import random
 
 MEMBERS_JSON = f'{settings.PROJECT_ROOT}/members.json'
 
-class TeamManager:
+class Team:
 
     def __init__(self):
         self.members = self.__read_team_file()
