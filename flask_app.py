@@ -2,15 +2,11 @@
 from flask import Flask, jsonify, request, Response
 
 # Reserbot
-import bot_manager
-import links
-import team_manager
+import controller
 
 
 app = Flask(__name__)
-team = team_manager.TeamManager()
-bot = bot_manager.BotManager()
-
+app_controller = controller.Controller()
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
@@ -18,65 +14,27 @@ def index():
 
 @app.route('/estudio', methods=['POST'])
 def estudio():
-    user = request.form.get('user_name')
-    bot.post(
-        channel=f"#{request.form.get('channel_name')}",
-        text=f'@{user} va a tomar la hora de estudio :rubyhappy: anótate :bonk-doge:',
-        buttons=[{
-            'text': 'Ir al excel 📚',
-            'url': links.url_excel_estudio
-        }],
-    )
+    app_controller.post_message_estudio(data=request.form)
     return Response(), 200
 
 @app.route('/lider-al-azar', methods=['POST'])
 def lider_al_azar():
-    user = request.form.get('user_name')
-    random_leader = team.get_random_daily_leader()
-    if random_leader:
-        bot.post(
-            channel=f"#{request.form.get('channel_name')}",
-            text=f'@{user} pidió un lider al azar: lidera {random_leader} :rubyrun:'
-        )
+    app_controller.post_message_lider_al_azar(data=request.form)
     return Response(), 200
 
 @app.route('/vacaciones', methods=['POST'])
 def vacaciones():
-    if request.form['user_name'] == 'daraya':
-        team.update_member_availability(
-            member_tag=request.form['text'].strip(),
-            available=False
-        )
+    app_controller.update_member_availability(data=request.form, available=False)
     return Response(), 200
 
 @app.route('/fin-vacaciones', methods=['POST'])
 def fin_vacaciones():
-    if request.form['user_name'] == 'daraya':
-        team.update_member_availability(
-            member_tag=request.form['text'].strip(),
-            available=True
-        )
+    app_controller.update_member_availability(data=request.form, available=True)
     return Response(), 200
 
 @app.route('/marcar', methods=['POST'])
 def marcar():
-    print('request.form')
-    print(request.form)
-    rut = request.form.get('text').strip()
-    bot.post(
-        channel=request.form.get('user_id'),
-        buttons=[
-            {
-                'text': 'Marcar entrada',
-                'url': f'{links.url_marcar_entrada}{rut}',
-            },
-            {
-                'text': 'Marcar salida',
-                'url': f'{links.url_marcar_salida}{rut}',
-                'style': 'danger'  # Optional: style can be 'primary' or 'danger'
-            }
-        ],
-    )
+    app_controller.post_message_marcar(data=request.form)
     return Response(), 200
 
 if __name__ == '__main__':
