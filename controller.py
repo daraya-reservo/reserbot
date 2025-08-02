@@ -1,0 +1,157 @@
+# Standard Library
+import datetime
+import locale
+
+# Third Party
+import pytz
+
+# Reserbot
+import bot_manager
+import links
+import team_manager
+import utils
+
+
+class Controller:
+
+    channels = {
+        'PROD': '#reservo-ti',
+        'TEST': '#reserbot-shhhh',
+    }
+
+    def __init__(self):
+        locale.setlocale(locale.LC_TIME, 'es_ES.UTF-8')
+        self.today = datetime.datetime.now(pytz.timezone('America/Santiago'))
+        self.bot = bot_manager.Bot()
+        self.team = team_manager.Team(self.today)
+        self.schedule_channel = self.channels['PROD']
+
+    # app methods
+    def post_message_estudio(self, data):
+        user = data['user_name']
+        channel = data['channel_name']
+        self.bot.post(
+            channel=channel,
+            text=f'@{user} va a tomar la hora de estudio :rubyhappy: anótate :bonk-doge:',
+            buttons=[{
+                'text': 'Ir al excel 📚',
+                'url': links.url_excel_estudio
+            }],
+        )
+
+    def post_message_lider_al_azar(self, data):
+        user = data['user_name']
+        channel = data['channel_name']
+        random_leader = self.team.get_random_daily_leader()
+        if random_leader:
+            self.bot.post(
+                channel=channel,
+                text=f'@{user} pidió un lider al azar: lidera {random_leader} :rubyrun:'
+            )
+
+    def update_member_availability(self, data, available):
+        user = data['user_name']
+        member_tag = data['text'].strip()
+        if user == 'daraya':
+            self.team.update_member_availability(
+                member_tag=member_tag,
+                available=available
+            )
+
+    def post_message_marcar(self, data):
+        user = data['user_name']
+        rut = data['text'].strip()
+        channel = data['channel_name']
+        self.bot.post(
+            channel=channel,
+            text=f'@{user}, generé botones con rut {rut}',
+            buttons=[
+                {
+                    'text': 'Marcar entrada',
+                    'url': links.url_marcar_entrada + rut
+                },
+                {
+                    'text': 'Marcar salida',
+                    'url': links.url_marcar_salida + rut,
+                    'style': 'danger'
+                }
+            ]
+        )
+
+    # schedule methods
+    def workday(self):
+        not_feriado = self.today.strftime('%Y-%m-%d') not in utils.feriados(self.today.year)
+        return not_feriado and self.today.weekday() in range(5) # [lunes a viernes]
+
+
+    def schedule_message_unavailable_members(self):
+        unavailable_members = self.team.get_unavailable_members()
+        if unavailable_members:
+            self.bot.post(
+                channel=self.schedule_channel,
+                text=f'Hoy no estará: {", ".join(unavailable_members)} :f2:',
+                post_at=self.today.replace(hour=9, minute=0, second=0).strftime('%s')
+            )
+
+    def schedule_message_daily_leader(self,channel):
+        leader = self.team.get_daily_leader()
+        self.bot.post(
+            channel=self.schedule_channel,
+            text=f'Hoy {self.today.strftime("%A %d")} lidera {leader} :anime:',
+            buttons=[
+                {
+                    "text": "Abrir Trello :trello:",
+                    "url": links.url_trello,
+                },
+                {
+                    "text": "Unirse a Meet :meet:",
+                    "url": links.url_meet_daily,
+                },
+            ],
+            post_at=self.today.replace(hour=9, minute=1, second=0).strftime('%s')
+        )
+
+    def schedule_message_meetings(self):
+        channel = self.schedule_channel
+        # primer martes del mes
+        if self.today.weekday() == 1 and self.today.day in range(7):
+            self.bot.post(
+                channel=channel,
+                text='Hoy es la reunión del área de Postventa a las 10:30 AM',
+                buttons=[{
+                    'text': 'Unirse a la reunión :meet:',
+                    'url': links.url_meet_postventa
+                }],
+                post_at=self.today.replace(hour=9, minute=35, second=0).strftime('%s')
+            )
+        # jueves
+        elif self.today.weekday() == 3:
+            self.bot.post(
+                channel=channel,
+                text='Hoy es la reunión del área Comercial a las 11:00 AM',
+                buttons=[{
+                    'text': 'Unirse a la reunión :meet:',
+                    'url': links.url_meet_comercial
+                }],
+                post_at=self.today.replace(hour=10, minute=0, second=0).strftime('%s')
+            )
+        # viernes
+        elif self.today.weekday() == 4:
+            self.bot.post(
+                channel=channel,
+                text='Hoy es la reunión del área de Customer Success a las 10:30 AM',
+                buttons=[{
+                    'text': 'Unirse a la reunión :meet:',
+                    'url': links.url_meet_customer_success
+                }],
+                post_at=self.today.replace(hour=9, minute=30, second=30).strftime('%s')
+            )
+            self.bot.post(
+                channel=channel,
+                text='Hoy es la reunión del área de Soporte a las 16:30 PM',
+                buttons=[{
+                    'text': 'Unirse a la reunión :meet:',
+                    'url': links.url_meet_soporte
+                }],
+                post_at=self.today.replace(hour=9, minute=31, second=0).strftime('%s')
+            )

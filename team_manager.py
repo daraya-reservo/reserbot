@@ -1,6 +1,5 @@
 # Reserbot
 import settings
-import utils
 
 # Standard Library
 import json
@@ -9,13 +8,12 @@ import random
 
 MEMBERS_JSON = f'{settings.PROJECT_ROOT}/members.json'
 
-class TeamManager:
+class Team:
 
-    def __init__(self):
+    def __init__(self, today):
         self.members = self.__read_team_file()
         # Hiho isn't available on friday
-        self.today = utils.datetime_now()
-        if self.today.weekday() == 4:
+        if today.weekday() == 4:
             for member in self.members:
                 if member['name'] == 'Hiho':
                     member['is_available'] = False
