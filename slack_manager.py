@@ -5,12 +5,18 @@ import slack
 import settings
 
 
-class Bot:
+class SlackManager:
 
     def __init__(self):
         self.client = slack.WebClient(token=settings.BOT_TOKEN)
 
-    def post(self, channel, text=None, buttons=None, post_at=None):
+    def post(
+        self,
+        channel: str,
+        text: str = '',
+        buttons: list = [],
+        post_at: str = '',
+    ) -> None:
         prepared_message = {
             'channel': channel,
             'blocks': self.__build_message_blocks(text, buttons),
@@ -22,7 +28,11 @@ class Bot:
         else:
             self.client.chat_postMessage(**prepared_message)
 
-    def __build_message_blocks(self, text=None, buttons=None):
+    def __build_message_blocks(
+        self,
+        text: str = '',
+        buttons: list = [],
+    ) -> list:
         blocks = []
         if text:
             blocks.append({
