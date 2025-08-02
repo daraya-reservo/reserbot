@@ -2,59 +2,72 @@
 import settings
 
 # Standard Library
+import csv
+import datetime
 import json
 import random
 
 
-MEMBERS_JSON = f'{settings.PROJECT_ROOT}/members.json'
+class TeamManager:
 
-class Team:
+    team_path = f'{settings.PROJECT_ROOT}/team.json'
 
-    def __init__(self, today):
-        self.members = self.__read_team_file()
+    def __init__(self, today: datetime.datetime):
+        self.today = today
+        self.team = self._read_team_file()
         # Hiho isn't available on friday
-        if today.weekday() == 4:
-            for member in self.members:
+        if self.today.weekday() == 4:
+            for member in self.team:
                 if member['name'] == 'Hiho':
                     member['is_available'] = False
-        self.random_pool = self.members.copy()
+        self.random_pool = self.team.copy()
 
-    def __read_team_file(self):
-        with open(MEMBERS_JSON) as members_json:
-            return json.load(members_json)
+    def _read_team_file(self) -> list:
+        with open(self.team_path) as team:
+            return json.load(team)
 
-    def __write_team_file(self, members):
-        with open(MEMBERS_JSON, 'w') as members_json:
-            json.dump(members, members_json, indent=4)
+    def _write_team_file(self, team: list) -> None:
+        with open(self.team_path, 'w') as team_file:
+            json.dump(team, team_file, indent=4)
 
-    def update_member_dailies(self, member_tag):
-        members = self.__read_team_file()
-        for member in members:
+    def update_member_dailies(self, member_tag: str) -> None:
+        team = self._read_team_file()
+        for member in team:
             if member['tag'] == member_tag:
                 member['dailies'] += 1
-        self.__write_team_file(members)
+        self._write_team_file(team)
 
-    def update_member_availability(self, member_tag, available):
-        members = self.__read_team_file()
-        for member in members:
+    def update_member_availability(self, member_tag: str, available: bool) -> None:
+        team = self._read_team_file()
+        for member in team:
             if member['tag'] == member_tag:
                 member['is_available'] = available
-        self.__write_team_file(members)
+        self._write_team_file(team)
+
+    def is_workday(self):
+        if self.today.weekday() not in range(5):
+            return False
+        holidays_path = f'{settings.PROJECT_ROOT}/csv/publicholiday.CL.{self.today.year}.csv'
+        with open(holidays_path) as holidays_file:
+            holidays = csv.DictReader(holidays_file)
+            holidays_list = [holiday['date'] for holiday in holidays]
+        return self.today.strftime('%Y-%m-%d') not in holidays_list
 
     def get_unavailable_members(self):
-        return [member['name'] for member in self.members if not member['is_available']]
+        return [member['name'] for member in self.team if not member['is_available']]
 
     def get_daily_leader(self):
-        members = [member for member in self.members if member['is_available']]
+        team = [member for member in self.team if member['is_available']]
         # Select the member with the lowest number of dailies
-        leader = min(members, key=lambda member: member['dailies']).get('tag')
+        leader = min(team, key=lambda member: member['dailies']).get('tag')
         self.update_member_dailies(member_tag=leader)
         return leader
 
     def get_random_daily_leader(self):
-        members = [member for member in self.random_pool if member['is_available']]
-        if not members:
+        team = [member for member in self.random_pool if member['is_available']]
+        if not team:
             return
-        leader = random.choice(members)
+        leader = random.choice(team)
         self.random_pool.remove(leader)
         return leader['tag']
+ 

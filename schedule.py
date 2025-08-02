@@ -1,9 +1,10 @@
 # Reserbot
 import controller
 
+
 app_controller = controller.Controller()
 
-if app_controller.workday():
+if app_controller.is_workday():
     # miembros del equipo no disponibles
     app_controller.schedule_message_unavailable_members()
     # miembro que lidera la daily hoy
