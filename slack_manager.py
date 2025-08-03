@@ -1,8 +1,9 @@
+# Reserbot
+import settings
+
 # Third Party
 import slack
 
-# Reserbot
-import settings
 
 
 class SlackManager:
@@ -19,7 +20,7 @@ class SlackManager:
     ) -> None:
         prepared_message = {
             'channel': channel,
-            'blocks': self.__build_message_blocks(text, buttons),
+            'blocks': self._build_message_blocks(text, buttons),
         }
         if post_at:
             prepared_message['post_at'] = post_at
@@ -28,16 +29,12 @@ class SlackManager:
         else:
             self.client.chat_postMessage(**prepared_message)
 
-    def __build_message_blocks(
-        self,
-        text: str = '',
-        buttons: list = [],
-    ) -> list:
+    def _build_message_blocks(self, text='', buttons=[]) -> list:
         blocks = []
         if text:
             blocks.append({
                 'type': 'section',
-                'text': {'type': 'mrkdwn', 'text': text,},
+                'text': {'type': 'mrkdwn', 'text': text},
             })
         if buttons:
             button_elements = [{

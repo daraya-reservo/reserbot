@@ -1,14 +1,14 @@
+# Reserbot
+import links
+import slack_manager
+import team_manager
+
 # Standard Library
 import datetime
 import locale
 
 # Third Party
 import pytz
-
-# Reserbot
-import links
-import slack_manager
-import team_manager
 
 
 class Controller:

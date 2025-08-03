@@ -2,11 +2,11 @@
 from flask import Flask, jsonify, request, Response
 
 # Reserbot
-import controller
+import controllers
 
 
 app = Flask(__name__)
-app_controller = controller.Controller()
+controller = controllers.Controller()
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
@@ -14,27 +14,27 @@ def index():
 
 @app.route('/estudio', methods=['POST'])
 def estudio():
-    app_controller.post_message_estudio(request.form)
+    controller.post_message_estudio(request.form)
     return Response(), 200
 
 @app.route('/lider-al-azar', methods=['POST'])
 def lider_al_azar():
-    app_controller.post_message_lider_al_azar(request.form)
+    controller.post_message_lider_al_azar(request.form)
     return Response(), 200
 
 @app.route('/vacaciones', methods=['POST'])
 def vacaciones():
-    app_controller.update_member_availability(request.form, available=False)
+    controller.update_member_availability(request.form, available=False)
     return Response(), 200
 
 @app.route('/fin-vacaciones', methods=['POST'])
 def fin_vacaciones():
-    app_controller.update_member_availability(request.form, available=True)
+    controller.update_member_availability(request.form, available=True)
     return Response(), 200
 
 @app.route('/marcar', methods=['POST'])
 def marcar():
-    app_controller.post_message_marcar(request.form)
+    controller.post_message_marcar(request.form)
     return Response(), 200
 
 if __name__ == '__main__':
