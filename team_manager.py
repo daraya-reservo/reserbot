@@ -37,7 +37,11 @@ class TeamManager:
                 member['dailies'] += 1
         self._write_team_file(team)
 
-    def update_member_availability(self, member_tag: str, available: bool) -> None:
+    def update_member_availability(
+            self,
+            member_tag: str,
+            available: bool
+        ) -> None:
         team = self._read_team_file()
         for member in team:
             if member['tag'] == member_tag:
