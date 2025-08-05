@@ -64,21 +64,6 @@ class Controller:
             member_tag=member_tag,
             rut=rut
         )
-        # self.slack.post(
-        #     channel=channel,
-        #     text=f'@{user}, generé botones con rut {rut}',
-        #     buttons=[
-        #         {
-        #             'text': 'Marcar entrada',
-        #             'url': links.url_marcar_entrada + rut
-        #         },
-        #         {
-        #             'text': 'Marcar salida',
-        #             'url': links.url_marcar_salida + rut,
-        #             'style': 'danger'
-        #         }
-        #     ]
-        # )
 
     def desuscribir_rut(self, data: dict) -> None:
         member_tag = f'@{data["user_name"]}'
@@ -91,19 +76,30 @@ class Controller:
     def is_workday(self) -> bool:
         return self.team.is_workday()
 
-    # def schedule_message_marcar(self) -> None:
-    #     members_with_rut = [member for member in self.team if member['rut']]
-    #     for member in members_with_rut:
-    #         self.slack.post(
-    #             channel=self.schedule_channel,
-    #             buttons=[
-    #                 {
-    #                     'text': 'Marcar entrada',
-    #                     'url': links.url_marcar_entrada
-    #                 },
-    #             ],
-    #             post_at=self.today.replace(hour=8, minute=59, second=0).strftime('%s')
-    #         )
+    def schedule_message_marcar(self) -> None:
+        members_with_rut = [member for member in self.team if member['rut']]
+        for member in members_with_rut:
+            self.slack.post(
+                channel=member['tag'],
+                buttons=[
+                    {
+                        'text': 'Marcar entrada',
+                        'url': links.url_marcar_entrada + member['rut']
+                    },
+                ],
+                post_at=self.today.replace(hour=8, minute=55, second=0).strftime('%s')
+            )
+            self.slack.post(
+                channel=member['tag'],
+                buttons=[
+                    {
+                        'text': 'Marcar salida',
+                        'url': links.url_marcar_salida + member['rut'],
+                        'style': 'danger'
+                    },
+                ],
+                post_at=self.today.replace(hour=17, minute=55, second=0).strftime('%s')
+            )
 
     def schedule_message_unavailable_members(self) -> None:
         unavailable_members = self.team.get_unavailable_members()

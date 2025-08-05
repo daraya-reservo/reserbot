@@ -5,6 +5,8 @@ import controllers
 controller = controllers.Controller()
 
 if controller.is_workday():
+    # botones de entrada/salida
+    controller.schedule_message_marcar()
     # miembros del equipo no disponibles
     controller.schedule_message_unavailable_members()
     # miembro que lidera la daily hoy
