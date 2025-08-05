@@ -77,7 +77,7 @@ class Controller:
         return self.team.is_workday()
 
     def schedule_message_marcar(self) -> None:
-        members_with_rut = [member for member in self.team if member['rut']]
+        members_with_rut = self.team.get_members_with_rut()
         for member in members_with_rut:
             self.slack.post(
                 channel=member['tag'],

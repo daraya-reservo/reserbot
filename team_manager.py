@@ -63,6 +63,9 @@ class TeamManager:
             holidays = csv.DictReader(holidays_file)
             holidays_list = [holiday['date'] for holiday in holidays]
         return self.today.strftime('%Y-%m-%d') not in holidays_list
+    
+    def get_members_with_rut(self):
+        return [member for member in self.team if member['rut']]
 
     def get_unavailable_members(self):
         return [member['name'] for member in self.team if not member['is_available']]
