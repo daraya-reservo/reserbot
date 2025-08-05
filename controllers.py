@@ -61,7 +61,7 @@ class Controller:
         user = data['user_name']
         rut = data['text'].strip()
         self.team.update_member_rut(
-            member_tag=user,
+            member_tag=f'@{user}',
             rut=rut
         )
         # self.slack.post(
