@@ -57,11 +57,11 @@ class Controller:
                 available=available
             )
 
-    def update_ruts_team(self, data: dict) -> None:
-        user = data['user_name']
+    def suscribir_rut(self, data: dict) -> None:
         rut = data['text'].strip()
+        member_tag = f'@{data["user_name"]}'
         self.team.update_member_rut(
-            member_tag=f'@{user}',
+            member_tag=member_tag,
             rut=rut
         )
         # self.slack.post(
@@ -79,6 +79,13 @@ class Controller:
         #         }
         #     ]
         # )
+
+    def desuscribir_rut(self, data: dict) -> None:
+        member_tag = f'@{data["user_name"]}'
+        self.team.update_member_rut(
+            member_tag=member_tag,
+            rut=''
+        )
 
     # schedule logic controller
     def is_workday(self) -> bool:
