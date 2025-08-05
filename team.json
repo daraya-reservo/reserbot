@@ -3,72 +3,84 @@
         "name": "Agust\u00edn",
         "tag": "@apradenas",
         "dailies": 12,
-        "is_available": true
+        "is_available": true,
+        "rut": ""
     },
     {
         "name": "Dani",
         "tag": "@daraya",
         "dailies": 12,
-        "is_available": true
+        "is_available": true,
+        "rut": ""
     },
     {
         "name": "Hiho",
         "tag": "@ndelgado",
         "dailies": 12,
-        "is_available": true
+        "is_available": true,
+        "rut": ""
     },
     {
         "name": "Juan",
         "tag": "@jecclefield",
         "dailies": 12,
-        "is_available": true
+        "is_available": true,
+        "rut": ""
     },
     {
         "name": "Lucho",
         "tag": "@lpinochet",
         "dailies": 12,
-        "is_available": true
+        "is_available": true,
+        "rut": ""
     },
     {
         "name": "Manu",
         "tag": "@mgrandon",
         "dailies": 12,
-        "is_available": true
+        "is_available": true,
+        "rut": ""
     },
     {
         "name": "Nach",
         "tag": "@imachuca",
         "dailies": 12,
-        "is_available": true
+        "is_available": true,
+        "rut": ""
     },
     {
         "name": "Pancho",
         "tag": "@fvilla",
         "dailies": 11,
-        "is_available": true
+        "is_available": true,
+        "rut": ""
     },
     {
         "name": "Pato",
         "tag": "@ptapia",
         "dailies": 12,
-        "is_available": true
+        "is_available": true,
+        "rut": ""
     },
     {
         "name": "Seba",
         "tag": "@conchita",
         "dailies": 11,
-        "is_available": true
+        "is_available": true,
+        "rut": ""
     },
     {
         "name": "Val",
         "tag": "@vgutierrez",
         "dailies": 11,
-        "is_available": true
+        "is_available": true,
+        "rut": ""
     },
     {
         "name": "Vicky",
         "tag": "@vmartinez",
         "dailies": 11,
-        "is_available": true
+        "is_available": true,
+        "rut": ""
     }
 ]

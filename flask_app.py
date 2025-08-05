@@ -34,8 +34,15 @@ def fin_vacaciones():
 
 @app.route('/marcar', methods=['POST'])
 def marcar():
-    controller.post_message_marcar(request.form)
+    controller.update_ruts_team(request.form)
     return Response(), 200
+
+@app.route('/desuscribir', methods=['POST'])
+def desuscribir_marcar():
+    request.form['text'] = ''
+    controller.update_ruts_team(request.form)
+    return Response(), 200
+
 
 if __name__ == '__main__':
     app.run(port=5000)

@@ -48,6 +48,13 @@ class TeamManager:
                 member['is_available'] = available
         self._write_team_file(team)
 
+    def update_member_rut(self, member_tag: str, rut: str) -> None:
+        team = self._read_team_file()
+        for member in team:
+            if member['tag'] == member_tag:
+                member['rut'] = rut
+        self._write_team_file(team)
+
     def is_workday(self):
         if self.today.weekday() not in range(5):
             return False
