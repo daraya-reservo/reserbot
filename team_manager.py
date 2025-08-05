@@ -50,8 +50,6 @@ class TeamManager:
 
     def update_member_rut(self, member_tag: str, rut: str) -> None:
         team = self._read_team_file()
-        print('team before update:', team)
-        print('member_tag:', member_tag)
         for member in team:
             if member['tag'] == member_tag:
                 member['rut'] = rut
