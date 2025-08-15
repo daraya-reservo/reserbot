@@ -32,13 +32,13 @@ def fin_vacaciones():
     controller.update_member_availability(request.form, available=True)
     return Response(), 200
 
-@app.route('/marcar', methods=['POST'])
-def marcar():
+@app.route('/suscribir-rut', methods=['POST'])
+def suscribir_rut():
     controller.suscribir_rut(request.form)
     return Response(), 200
 
-@app.route('/desuscribir', methods=['POST'])
-def desuscribir():
+@app.route('/desuscribir-rut', methods=['POST'])
+def desuscribir_rut():
     controller.desuscribir_rut(request.form)
     return Response(), 200
 
