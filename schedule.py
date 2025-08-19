@@ -2,7 +2,7 @@
 import controllers
 
 
-controller = controllers.Controller()
+controller = controllers.ScheduleController()
 
 if controller.is_workday():
     # botones de entrada/salida

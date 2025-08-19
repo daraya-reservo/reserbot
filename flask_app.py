@@ -6,7 +6,7 @@ import controllers
 
 
 app = Flask(__name__)
-controller = controllers.Controller()
+controller = controllers.FlaskAppController()
 
 @app.route('/', methods=['GET', 'POST'])
 def index():

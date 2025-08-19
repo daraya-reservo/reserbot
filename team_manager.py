@@ -3,7 +3,6 @@ import settings
 
 # Standard Library
 import csv
-import datetime
 import json
 import random
 
@@ -12,7 +11,7 @@ class TeamManager:
 
     team_path = f'{settings.PROJECT_ROOT}/team.json'
 
-    def __init__(self, today: datetime.datetime):
+    def __init__(self, today):
         self.today = today
         self.team = self._read_team_file()
         # Hiho isn't available on friday
@@ -37,11 +36,7 @@ class TeamManager:
                 member['dailies'] += 1
         self._write_team_file(team)
 
-    def update_member_availability(
-            self,
-            member_tag: str,
-            available: bool
-        ) -> None:
+    def update_member_availability(self, member_tag: str, available: bool) -> None:
         team = self._read_team_file()
         for member in team:
             if member['tag'] == member_tag:
@@ -55,7 +50,7 @@ class TeamManager:
                 member['rut'] = rut
         self._write_team_file(team)
 
-    def is_workday(self):
+    def is_workday(self) -> bool:
         if self.today.weekday() not in range(5):
             return False
         holidays_path = f'{settings.PROJECT_ROOT}/csv/publicholiday.CL.{self.today.year}.csv'
@@ -63,21 +58,21 @@ class TeamManager:
             holidays = csv.DictReader(holidays_file)
             holidays_list = [holiday['date'] for holiday in holidays]
         return self.today.strftime('%Y-%m-%d') not in holidays_list
-    
-    def get_members_with_rut(self):
+
+    def get_members_with_rut(self) -> list:
         return [member for member in self.team if member['rut']]
 
-    def get_unavailable_members(self):
+    def get_unavailable_members(self) -> list:
         return [member['name'] for member in self.team if not member['is_available']]
 
-    def get_daily_leader(self):
+    def get_daily_leader(self) -> str:
         team = [member for member in self.team if member['is_available']]
         # Select the member with the lowest number of dailies
-        leader = min(team, key=lambda member: member['dailies']).get('tag')
-        self.update_member_dailies(member_tag=leader)
+        leader = min(team, key=lambda member: member['dailies'])
+        self.update_member_dailies(member_tag=leader['tag'])
         return leader
 
-    def get_random_daily_leader(self):
+    def get_random_daily_leader(self) -> str:
         team = [member for member in self.random_pool if member['is_available']]
         if not team:
             return
