@@ -67,6 +67,7 @@ class TeamManager:
 
     def get_daily_leader(self) -> str:
         team = [member for member in self.team if member['is_available']]
+        random.shuffle(team)
         # Select the member with the lowest number of dailies
         leader = min(team, key=lambda member: member['dailies'])
         self.update_member_dailies(member_tag=leader['tag'])
