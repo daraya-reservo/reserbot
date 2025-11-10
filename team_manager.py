@@ -71,7 +71,7 @@ class TeamManager:
         # Select the member with the lowest number of dailies
         leader = min(team, key=lambda member: member['dailies'])
         self.update_member_dailies(member_tag=leader['tag'])
-        return leader
+        return leader['tag']
 
     def get_random_daily_leader(self) -> str:
         team = [member for member in self.random_pool if member['is_available']]
@@ -80,4 +80,3 @@ class TeamManager:
         leader = random.choice(team)
         self.random_pool.remove(leader)
         return leader['tag']
- 
