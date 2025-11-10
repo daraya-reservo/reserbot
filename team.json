@@ -2,84 +2,98 @@
     {
         "name": "Agust\u00edn",
         "tag": "@apradenas",
-        "dailies": 13,
+        "dailies": 18,
+        "is_available": false,
+        "rut": ""
+    },
+    {
+        "name": "Camilo",
+        "tag": "@cmonares",
+        "dailies": 16,
         "is_available": true,
         "rut": ""
     },
     {
         "name": "Dani",
         "tag": "@daraya",
-        "dailies": 13,
+        "dailies": 18,
         "is_available": true,
         "rut": "179210231"
     },
     {
         "name": "Hiho",
         "tag": "@ndelgado",
-        "dailies": 12,
-        "is_available": false,
+        "dailies": 18,
+        "is_available": true,
         "rut": ""
     },
     {
         "name": "Juan",
         "tag": "@jecclefield",
-        "dailies": 13,
+        "dailies": 18,
         "is_available": true,
         "rut": "196049460"
     },
     {
         "name": "Lucho",
         "tag": "@lpinochet",
-        "dailies": 12,
-        "is_available": false,
+        "dailies": 18,
+        "is_available": true,
         "rut": ""
     },
     {
         "name": "Manu",
         "tag": "@mgrandon",
-        "dailies": 13,
+        "dailies": 18,
         "is_available": true,
-        "rut": ""
+        "rut": "192905567"
     },
     {
         "name": "Nach",
         "tag": "@imachuca",
-        "dailies": 12,
+        "dailies": 17,
         "is_available": true,
         "rut": ""
     },
     {
         "name": "Pancho",
         "tag": "@fvilla",
-        "dailies": 12,
+        "dailies": 17,
         "is_available": true,
-        "rut": ""
+        "rut": "199037439"
     },
     {
         "name": "Pato",
         "tag": "@ptapia",
-        "dailies": 12,
+        "dailies": 17,
+        "is_available": true,
+        "rut": "201210836"
+    },
+    {
+        "name": "Rob",
+        "tag": "@rtonaca",
+        "dailies": 16,
         "is_available": true,
         "rut": ""
     },
     {
         "name": "Seba",
         "tag": "@conchita",
-        "dailies": 12,
+        "dailies": 17,
         "is_available": true,
         "rut": ""
     },
     {
         "name": "Val",
         "tag": "@vgutierrez",
-        "dailies": 12,
+        "dailies": 17,
         "is_available": true,
-        "rut": ""
+        "rut": "193819478"
     },
     {
         "name": "Vicky",
         "tag": "@vmartinez",
-        "dailies": 12,
+        "dailies": 17,
         "is_available": true,
         "rut": "201840414"
     }
